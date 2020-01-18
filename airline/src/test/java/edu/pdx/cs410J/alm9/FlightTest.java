@@ -10,8 +10,8 @@ import static org.hamcrest.MatcherAssert.assertThat;
  */
 public class FlightTest {
   
-  @Test(expected = UnsupportedOperationException.class)
-  public void getArrivalStringNeedsToBeImplemented() {
+  @Test(expected = NullPointerException.class)
+  public void flightsMayBeInitializedToNull() {
     Flight flight = new Flight();
     flight.getArrivalString();
   }
@@ -19,7 +19,7 @@ public class FlightTest {
   @Test
   public void initiallyAllFlightsHaveTheSameNumber() {
     Flight flight = new Flight();
-    assertThat(flight.getNumber(), equalTo(42));
+    assertThat(flight.getNumber(), equalTo(0));
   }
 
   @Test
