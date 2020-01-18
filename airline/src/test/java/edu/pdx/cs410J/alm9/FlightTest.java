@@ -9,23 +9,23 @@ import static org.hamcrest.MatcherAssert.assertThat;
  * Unit tests for the {@link Flight} class.
  */
 public class FlightTest {
-  
-  @Test(expected = NullPointerException.class)
-  public void flightsMayBeInitializedToNull() {
-    Flight flight = new Flight();
-    flight.getArrivalString();
-  }
 
-  @Test
-  public void initiallyAllFlightsHaveTheSameNumber() {
-    Flight flight = new Flight();
-    assertThat(flight.getNumber(), equalTo(0));
-  }
+    @Test(expected = NullPointerException.class)
+    public void flightsMayBeInitializedToNull() {
+        Flight flight = new Flight();
+        flight.getArrivalString();
+    }
 
-  @Test
-  public void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
-    Flight flight = new Flight();
-    assertThat(flight.getDeparture(), is(nullValue()));
-  }
-  
+    @Test
+    public void initiallyAllFlightsHaveTheSameNumber() {
+        Flight flight = new Flight();
+        assertThat(flight.getNumber(), equalTo(0));
+    }
+
+    @Test
+    public void forProject1ItIsOkayIfGetDepartureTimeReturnsNull() {
+        Flight flight = new Flight();
+        assertThat(flight.getDeparture(), is(nullValue()));
+    }
+
 }

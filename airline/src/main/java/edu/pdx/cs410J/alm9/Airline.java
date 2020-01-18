@@ -28,7 +28,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     }
 
     @Override
-    public Collection getFlights() {
+    public Collection<T> getFlights() {
         return this.flights;
     }
 }

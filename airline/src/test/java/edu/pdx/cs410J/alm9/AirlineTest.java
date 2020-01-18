@@ -22,7 +22,7 @@ public class AirlineTest {
     @Test
     public void airlineMayNotHaveFlights() {
         Airline airline = new Airline<Flight>();
-        assertThat(airline.getFlights(), equalTo(new HashSet<Flight>()));
+        assertThat(airline.getFlights().isEmpty(), equalTo(true));
     }
 
     @Test
