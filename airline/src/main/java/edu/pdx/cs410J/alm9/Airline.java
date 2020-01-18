@@ -9,6 +9,10 @@ public class Airline extends AbstractAirline {
     private String name;
     private Collection<Flight> flights;
 
+    public Airline() {
+
+    }
+
     public Airline(String name) {
         this.name = name;
     }
