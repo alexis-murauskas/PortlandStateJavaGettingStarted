@@ -4,13 +4,13 @@ import edu.pdx.cs410J.AbstractAirline;
 import edu.pdx.cs410J.AbstractFlight;
 
 import java.util.Collection;
+import java.util.HashSet;
 
-public class Airline extends AbstractAirline {
+public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     private String name;
-    private Collection<Flight> flights;
+    private Collection<T> flights = new HashSet<T>();
 
     public Airline() {
-
     }
 
     public Airline(String name) {
@@ -23,8 +23,8 @@ public class Airline extends AbstractAirline {
     }
 
     @Override
-    public void addFlight(AbstractFlight abstractFlight) {
-        this.flights.add((Flight) abstractFlight);
+    public void addFlight(T flight) {
+        this.flights.add(flight);
     }
 
     @Override

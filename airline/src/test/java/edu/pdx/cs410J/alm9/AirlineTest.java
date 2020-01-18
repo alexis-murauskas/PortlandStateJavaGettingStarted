@@ -2,6 +2,8 @@ package edu.pdx.cs410J.alm9;
 
 import org.junit.Test;
 
+import java.util.HashSet;
+
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -13,20 +15,20 @@ public class AirlineTest {
 
     @Test
     public void airlineMayBeInitializedToNull() {
-        Airline airline = new Airline();
+        Airline airline = new Airline<Flight>();
         assertThat(airline.getName(), is(nullValue()));
     }
 
     @Test
     public void airlineMayNotHaveFlights() {
-        Airline airline = new Airline();
-        assertThat(airline.getFlights(), is(nullValue()));
+        Airline airline = new Airline<Flight>();
+        assertThat(airline.getFlights(), equalTo(new HashSet<Flight>()));
     }
 
-    @Test(expected = NullPointerException.class)
+    @Test
     public void addingFlightDoesNotThrowException() {
         Flight flight = new Flight();
-        Airline airline = new Airline();
+        Airline airline = new Airline<Flight>();
         airline.addFlight(flight);
     }
 }
