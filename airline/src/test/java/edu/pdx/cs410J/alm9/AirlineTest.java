@@ -31,4 +31,19 @@ public class AirlineTest {
         Airline airline = new Airline<Flight>();
         airline.addFlight(flight);
     }
+
+    @Test
+    public void airlineWithNameShouldReturnName(){
+        String name = "NAME";
+        Airline airline = new Airline<Flight>(name);
+        assertThat(airline.getName(), equalTo(name));
+    }
+
+    @Test
+    public void airlineWithFlightsShouldReturnFlights() {
+        Flight flight = new Flight();
+        Airline airline = new Airline<Flight>();
+        airline.addFlight(flight);
+        assertThat(airline.getFlights().size(), equalTo(1));
+    }
 }
