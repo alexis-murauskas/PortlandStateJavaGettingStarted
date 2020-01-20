@@ -33,7 +33,7 @@ public class AirlineTest {
     }
 
     @Test
-    public void airlineWithNameShouldReturnName(){
+    public void airlineWithNameShouldReturnName() {
         String name = "NAME";
         Airline airline = new Airline<Flight>(name);
         assertThat(airline.getName(), equalTo(name));
