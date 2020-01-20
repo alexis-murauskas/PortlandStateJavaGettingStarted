@@ -35,11 +35,11 @@ public class FlightTest {
     public void initializedFlightReturnsValues() {
         DateTimeFormatter formatter = Flight.DATEFORMAT;
         Flight flight = new Flight(
-            1,
-            "SRC",
-            LocalDateTime.parse("11/11/1111 11:11", formatter),
-            "DST",
-            LocalDateTime.parse("12/12/1212 12:12", formatter)
+                1,
+                "SRC",
+                LocalDateTime.parse("11/11/1111 11:11", formatter),
+                "DST",
+                LocalDateTime.parse("12/12/1212 12:12", formatter)
         );
 
         assertThat(flight.getNumber(), is(1));

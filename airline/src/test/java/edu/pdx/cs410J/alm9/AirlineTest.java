@@ -2,8 +2,6 @@ package edu.pdx.cs410J.alm9;
 
 import org.junit.Test;
 
-import java.util.HashSet;
-
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 
