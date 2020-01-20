@@ -1,8 +1,6 @@
 package edu.pdx.cs410J.alm9;
 
 import java.time.LocalDateTime;
-import java.util.Collection;
-import java.util.HashSet;
 
 public class AirlineController {
     private Airline airline;
@@ -14,7 +12,8 @@ public class AirlineController {
         if (airline == null)
             throw new NullPointerException();
 
-        this.airline = new Airline(airline.airline);
+        this.airline = new Airline<Flight>(airline.airline);
+
         Flight flight = new Flight(
                 Integer.parseInt(airline.flightNumber),
                 airline.source,
@@ -23,6 +22,7 @@ public class AirlineController {
                 LocalDateTime.parse(airline.arrivalTime, Flight.DATEFORMAT)
         );
 
-        return "";
+        this.airline.addFlight(flight);
+        return flight.toString();
     }
 }
