@@ -8,4 +8,9 @@ public class AirlineCommandTest {
     public void attemptingToParseNullThrowsException() {
         AirlineCommand.parse(null);
     }
+
+    @Test
+    public void parsingValidStringDoesNotThrowException() {
+        AirlineCommand.parse("-README");
+    }
 }

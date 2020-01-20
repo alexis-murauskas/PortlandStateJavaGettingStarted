@@ -1,6 +1,9 @@
 package edu.pdx.cs410J.alm9;
 
+import java.util.ArrayList;
+
 public class InputModel {
+    public ArrayList<String> options;
     public String airline;
     public String flightNumber;
     public String source;
@@ -11,7 +14,8 @@ public class InputModel {
     public InputModel() {
     }
 
-    public InputModel(String airline, String flightNumber, String source, String departureTime, String destination, String arrivalTime) {
+    public InputModel(ArrayList<String> options, String airline, String flightNumber, String source, String departureTime, String destination, String arrivalTime) {
+        this.options = options;
         this.airline = airline;
         this.flightNumber = flightNumber;
         this.source = source;

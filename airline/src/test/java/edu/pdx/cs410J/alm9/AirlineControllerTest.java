@@ -2,6 +2,8 @@ package edu.pdx.cs410J.alm9;
 
 import org.junit.Test;
 
+import java.util.ArrayList;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -20,6 +22,7 @@ public class AirlineControllerTest {
     @Test
     public void createSucceedsIfSentInput() {
         InputModel input = new InputModel(
+                new ArrayList<>(),
                 "AIRLINE",
                 "1",
                 "SRC",
@@ -35,6 +38,7 @@ public class AirlineControllerTest {
     @Test
     public void createReturnsNonEmptyString() {
         InputModel input = new InputModel(
+                new ArrayList<>(),
                 "AIRLINE",
                 "1",
                 "SRC",
