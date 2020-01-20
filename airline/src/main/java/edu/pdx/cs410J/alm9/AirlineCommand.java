@@ -12,6 +12,8 @@ public class AirlineCommand {
         ARRIVE
     }
 
+    private String[] Options = { "README", "PRINT" };
+
     public static InputModel parse(String input) {
         if (input == null)
             throw new NullPointerException();
@@ -29,7 +31,12 @@ public class AirlineCommand {
     }
 
     private static ArrayList<String> parseOptions(String[] commands) {
-        return new ArrayList<String>();
+        ArrayList<String> options = new ArrayList<>();
+
+        /* for (int i = 0; commands[i].startsWith("-"); i++) {
+        } */
+
+        return options;
     }
 
     private static String parseAirline(String[] commands) {
