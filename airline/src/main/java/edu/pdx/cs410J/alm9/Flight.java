@@ -3,9 +3,11 @@ package edu.pdx.cs410J.alm9;
 import edu.pdx.cs410J.AbstractFlight;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class Flight extends AbstractFlight {
 
+    public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
     private int flightNumber;
     private String source;
     private LocalDateTime departureTime;
@@ -35,7 +37,10 @@ public class Flight extends AbstractFlight {
 
     @Override
     public String getDepartureString() {
-        return this.departureTime.toString();
+        if (this.departureTime == null)
+            return null;
+
+        return this.departureTime.format(DATEFORMAT);
     }
 
     @Override
@@ -45,6 +50,9 @@ public class Flight extends AbstractFlight {
 
     @Override
     public String getArrivalString() {
-        return this.arrivalTime.toString();
+        if (this.arrivalTime == null)
+            return null;
+
+        return this.arrivalTime.format(DATEFORMAT);
     }
 }
