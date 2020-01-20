@@ -14,7 +14,7 @@ public class AirlineControllerTest {
     @Test(expected = NullPointerException.class)
     public void createFailsIfSentNullInput() {
         AirlineController controller = new AirlineController();
-        controller.Create(null);
+        controller.create(null);
     }
 
     @Test
@@ -29,7 +29,7 @@ public class AirlineControllerTest {
         );
 
         AirlineController controller = new AirlineController();
-        controller.Create(input);
+        controller.create(input);
     }
 
     @Test
@@ -44,6 +44,6 @@ public class AirlineControllerTest {
         );
 
         AirlineController controller = new AirlineController();
-        assertThat(controller.Create(input) != "", is(true));
+        assertThat(controller.create(input) != "", is(true));
     }
 }

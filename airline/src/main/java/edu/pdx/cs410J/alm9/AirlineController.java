@@ -8,7 +8,7 @@ public class AirlineController {
     public AirlineController() {
     }
 
-    public String Create(InputModel airline) {
+    public String create(InputModel airline) {
         if (airline == null)
             throw new NullPointerException();
 
