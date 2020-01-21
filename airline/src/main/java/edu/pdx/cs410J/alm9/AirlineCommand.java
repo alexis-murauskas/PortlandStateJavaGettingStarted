@@ -7,14 +7,13 @@ import java.util.stream.Collectors;
 
 public class AirlineCommand {
     private static final int AIRLINE = 0;
-    
-    private enum Arg {
-        FLIGHT,
-        SRC,
-        DEPART,
-        DEST,
-        ARRIVE
-    }
+    private static final int FLIGHT = 0;
+    private static final int SRC = 1;
+    private static final int DEPART = 2;
+    private static final int DEST = 3;
+    private static final int ARRIVE = 4;
+
+    private static final int CODELEN = 3;
 
     private static final List<String> validOptions = Arrays.asList(
             "-README",
@@ -57,11 +56,11 @@ public class AirlineCommand {
         String[] args = trimArguments(airline, input);
 
         model.airline = stringifyList(airline);
-        model.flightNumber = parseFlight(args);
-        model.source = parseAirportCode(args);
-        model.departureTime = parseDateTime(args);
-        model.destination = parseAirportCode(args);
-        model.arrivalTime = parseDateTime(args);
+        model.flightNumber = checkFlight(args[FLIGHT]);
+        // model.source = checkAirportCode(args[SRC]);
+        // model.departureTime = checkDateTime(args[DEPART]);
+        // model.destination = checkAirportCode(args[DEST]);
+        // model.arrivalTime = checkDateTime(args[ARRIVE]);
 
         return model;
     }
@@ -71,10 +70,10 @@ public class AirlineCommand {
         airline.add(input[AIRLINE]);
         int i;
 
-        if (!airline.get(0).startsWith("\""))
+        if (!input[AIRLINE].startsWith("'"))
             return airline;
 
-        for (i = 0; i < input.length && !input[i].endsWith("\""); i++)
+        for (i = AIRLINE+1; i < input.length && !input[i].endsWith("'"); i++)
             airline.add(input[i]);
 
         airline.add(input[i]);
@@ -85,15 +84,19 @@ public class AirlineCommand {
         return list.stream().collect(Collectors.joining(" "));
     }
 
-    private static String parseFlight(String[] input) {
-        return "";
+    private static String checkFlight(String input) {
+        Integer.parseInt(input);
+        return input;
     }
 
-    private static String parseAirportCode(String[] input) {
-        return "";
+    private static String checkAirportCode(String input) {
+        if (input.length() > CODELEN || input.matches("[A-Za-z]]+"))
+            throw new IllegalArgumentException();
+
+        return input;
     }
 
-    private static String parseDateTime(String[] input) {
+    private static String checkDateTime(String input) {
         return "";
     }
 }

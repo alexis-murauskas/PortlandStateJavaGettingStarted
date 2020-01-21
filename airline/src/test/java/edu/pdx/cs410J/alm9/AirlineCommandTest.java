@@ -32,7 +32,21 @@ public class AirlineCommandTest {
 
     private static String[] inputWithQuotes = new String[]{
             "-README",
-            "\"Airline Name\"",
+            "'Airline",
+            "Name'",
+            "1",
+            "Src",
+            "11/11/1111",
+            "11:11",
+            "Dst",
+            "12/12/1212",
+            "12:12"
+    };
+
+    private static String[] badAirlineInput = new String[]{
+            "-README",
+            "'Airline",
+            "Name",
             "1",
             "Src",
             "11/11/1111",
@@ -48,30 +62,36 @@ public class AirlineCommandTest {
     }
 
     @Test
-    public void parsingValidStringDoesNotThrowException() {
+    public void validStringDoesNotThrowException() {
         AirlineCommand.parse(new String[]{"-README"});
     }
 
     @Test
-    public void parsingInputWithOptionsReturnsSameOptionsInModel() {
+    public void inputWithOptionsReturnsSameOptionsInModel() {
         InputModel rv = AirlineCommand.parse(new String[]{"-README"});
         assertThat(rv.options.contains("-README"), is(true));
     }
 
     @Test
-    public void parsingInputWithoutOptionsReturnsEmptyOptionsInModel() {
+    public void inputWithoutOptionsReturnsEmptyOptionsInModel() {
         InputModel rv = AirlineCommand.parse(inputWithoutOptions);
         assertThat(rv.options.isEmpty(), is(true));
     }
 
     @Test
-    public void parsingAirlineWithoutQuotesIsSuccessful() {
+    public void airlineWithoutQuotesIsSuccessful() {
         InputModel rv = AirlineCommand.parse(input);
         assertThat(rv.airline, is("Airline"));
     }
 
     @Test
-    public void parsingAirlineWithQuotesIsSuccessful() {
+    public void airlineWithQuotesIsSuccessful() {
+        InputModel rv = AirlineCommand.parse(inputWithQuotes);
+        assertThat(rv.airline, is("'Airline Name'"));
+    }
 
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
+    public void badlyFormedAirlineThrowsException() {
+        AirlineCommand.parse(badAirlineInput);
     }
 }
