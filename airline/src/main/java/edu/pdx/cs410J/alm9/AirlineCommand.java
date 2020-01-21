@@ -6,8 +6,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class AirlineCommand {
+    private static final int AIRLINE = 0;
+    
     private enum Arg {
-        AIRLINE,
         FLIGHT,
         SRC,
         DEPART,
@@ -26,18 +27,10 @@ public class AirlineCommand {
 
         ArrayList<String> options = parseOptions(input);
         String[] arguments = trimArguments(options, input);
-        ArrayList<String> airline = parseAirline(arguments);
-        arguments = trimArguments(airline, arguments);
+        InputModel model =  parseArgs(arguments);
+        model.options = options;
 
-        return new InputModel(
-                options,
-                stringifyList(airline),
-                parseFlight(arguments),
-                parseSource(arguments),
-                parseDeparture(arguments),
-                parseDestination(arguments),
-                parseArrival(arguments)
-        );
+        return model;
     }
 
     private static ArrayList<String> parseOptions(String[] input) {
@@ -52,15 +45,30 @@ public class AirlineCommand {
     }
 
     private static String[] trimArguments(ArrayList<String> toRemove, String[] input) {
-        if (toRemove.isEmpty())
-            return input;
+        return Arrays.copyOfRange(input, toRemove.size(), input.length);
+    }
 
-        return Arrays.copyOfRange(input, toRemove.size()-1, input.length);
+    private static InputModel parseArgs(String[] input) {
+        InputModel model = new InputModel();
+        if (input.length == 0)
+            return model;
+
+        ArrayList<String> airline = parseAirline(input);
+        String[] args = trimArguments(airline, input);
+
+        model.airline = stringifyList(airline);
+        model.flightNumber = parseFlight(args);
+        model.source = parseAirportCode(args);
+        model.departureTime = parseDateTime(args);
+        model.destination = parseAirportCode(args);
+        model.arrivalTime = parseDateTime(args);
+
+        return model;
     }
 
     private static ArrayList<String> parseAirline(String[] input) {
         ArrayList<String> airline = new ArrayList<>();
-        airline.add(input[Arg.AIRLINE.ordinal()]);
+        airline.add(input[AIRLINE]);
         int i;
 
         if (!airline.get(0).startsWith("\""))
@@ -81,19 +89,11 @@ public class AirlineCommand {
         return "";
     }
 
-    private static String parseSource(String[] input) {
+    private static String parseAirportCode(String[] input) {
         return "";
     }
 
-    private static String parseDeparture(String[] input) {
-        return "";
-    }
-
-    private static String parseDestination(String[] input) {
-        return "";
-    }
-
-    private static String parseArrival(String[] input) {
+    private static String parseDateTime(String[] input) {
         return "";
     }
 }
