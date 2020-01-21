@@ -1,9 +1,12 @@
 package edu.pdx.cs410J.alm9;
 
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.stream.Collectors;
 
 public class AirlineCommand {
-    private enum Command {
+    private enum Arg {
         AIRLINE,
         FLIGHT,
         SRC,
@@ -12,54 +15,85 @@ public class AirlineCommand {
         ARRIVE
     }
 
-    private String[] Options = { "README", "PRINT" };
+    private static final List<String> validOptions = Arrays.asList(
+            "-README",
+            "-PRINT"
+    );
 
-    public static InputModel parse(String input) {
+    public static InputModel parse(String[] input) {
         if (input == null)
             throw new NullPointerException();
 
-        String[] commands = input.split(" ");
+        ArrayList<String> options = parseOptions(input);
+        String[] arguments = trimArguments(options, input);
+        ArrayList<String> airline = parseAirline(arguments);
+        arguments = trimArguments(airline, arguments);
+
         return new InputModel(
-                parseOptions(commands),
-                parseAirline(commands),
-                parseFlight(commands),
-                parseSource(commands),
-                parseDeparture(commands),
-                parseDestination(commands),
-                parseArrival(commands)
+                options,
+                stringifyList(airline),
+                parseFlight(arguments),
+                parseSource(arguments),
+                parseDeparture(arguments),
+                parseDestination(arguments),
+                parseArrival(arguments)
         );
     }
 
-    private static ArrayList<String> parseOptions(String[] commands) {
+    private static ArrayList<String> parseOptions(String[] input) {
         ArrayList<String> options = new ArrayList<>();
 
-        /* for (int i = 0; commands[i].startsWith("-"); i++) {
-        } */
+        for (String option : input) {
+            if (option.startsWith("-") && validOptions.contains(option))
+                options.add(option);
+        }
 
         return options;
     }
 
-    private static String parseAirline(String[] commands) {
+    private static String[] trimArguments(ArrayList<String> toRemove, String[] input) {
+        if (toRemove.isEmpty())
+            return input;
+
+        return Arrays.copyOfRange(input, toRemove.size()-1, input.length);
+    }
+
+    private static ArrayList<String> parseAirline(String[] input) {
+        ArrayList<String> airline = new ArrayList<>();
+        airline.add(input[Arg.AIRLINE.ordinal()]);
+        int i;
+
+        if (!airline.get(0).startsWith("\""))
+            return airline;
+
+        for (i = 0; i < input.length && !input[i].endsWith("\""); i++)
+            airline.add(input[i]);
+
+        airline.add(input[i]);
+        return airline;
+    }
+
+    private static String stringifyList(ArrayList<String> list) {
+        return list.stream().collect(Collectors.joining(" "));
+    }
+
+    private static String parseFlight(String[] input) {
         return "";
     }
 
-    private static String parseFlight(String[] commands) {
+    private static String parseSource(String[] input) {
         return "";
     }
 
-    private static String parseSource(String[] commands) {
+    private static String parseDeparture(String[] input) {
         return "";
     }
 
-    private static String parseDeparture(String[] commands) {
+    private static String parseDestination(String[] input) {
         return "";
     }
 
-    private static String parseDestination(String[] commands) {
-        return "";
-    }
-
-    private static String parseArrival(String[] commands) {
+    private static String parseArrival(String[] input) {
         return "";
     }
 }
