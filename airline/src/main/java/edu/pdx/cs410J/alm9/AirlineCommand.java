@@ -57,7 +57,7 @@ public class AirlineCommand {
 
         model.airline = stringifyList(airline);
         model.flightNumber = checkFlight(args[FLIGHT]);
-        // model.source = checkAirportCode(args[SRC]);
+        model.source = checkAirportCode(args[SRC]);
         // model.departureTime = checkDateTime(args[DEPART]);
         // model.destination = checkAirportCode(args[DEST]);
         // model.arrivalTime = checkDateTime(args[ARRIVE]);

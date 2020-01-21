@@ -43,7 +43,7 @@ public class AirlineCommandTest {
             "12:12"
     };
 
-    private static String[] badAirlineInput = new String[]{
+    private static String[] badInput = new String[]{
             "-README",
             "'Airline",
             "Name",
@@ -92,6 +92,35 @@ public class AirlineCommandTest {
 
     @Test (expected = ArrayIndexOutOfBoundsException.class)
     public void badlyFormedAirlineThrowsException() {
-        AirlineCommand.parse(badAirlineInput);
+        AirlineCommand.parse(badInput);
+    }
+
+    @Test
+    public void correctFlightNumberDoesNotThrowException() {
+        InputModel rv = AirlineCommand.parse(input);
+        assertThat(rv.flightNumber, is("1"));
+    }
+
+    @Test (expected = NumberFormatException.class)
+    public void flightNumberCantBeALetter() {
+        String[] badFlight = new String[]{
+                "-README",
+                "Airline",
+                "q",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12"
+        };
+
+        AirlineCommand.parse(badFlight);
+    }
+
+    @Test
+    public void validAiportCodeDoesNotThrowException() {
+        InputModel rv = AirlineCommand.parse(inputWithQuotes);
+        assertThat(rv.source, is("Src"));
     }
 }
