@@ -10,8 +10,8 @@ public class AirlineCommand {
     private static final int FLIGHT = 0;
     private static final int SRC = 1;
     private static final int DEPART = 2;
-    private static final int DEST = 3;
-    private static final int ARRIVE = 4;
+    private static final int DEST = 4;
+    private static final int ARRIVE = 5;
 
     private static final int CODELEN = 3;
 
@@ -59,7 +59,7 @@ public class AirlineCommand {
         model.flightNumber = checkFlight(args[FLIGHT]);
         model.source = checkAirportCode(args[SRC]);
         // model.departureTime = checkDateTime(args[DEPART]);
-        // model.destination = checkAirportCode(args[DEST]);
+        model.destination = checkAirportCode(args[DEST]);
         // model.arrivalTime = checkDateTime(args[ARRIVE]);
 
         return model;
