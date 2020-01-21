@@ -119,7 +119,7 @@ public class AirlineCommandTest {
     }
 
     @Test
-    public void validAiportCodeDoesNotThrowException() {
+    public void validAirportCodeDoesNotThrowException() {
         InputModel rv = AirlineCommand.parse(inputWithQuotes);
         assertThat(rv.source, is("Src"));
     }

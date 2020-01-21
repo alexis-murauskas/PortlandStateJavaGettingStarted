@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.alm9;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -58,9 +59,9 @@ public class AirlineCommand {
         model.airline = stringifyList(airline);
         model.flightNumber = checkFlight(args[FLIGHT]);
         model.source = checkAirportCode(args[SRC]);
-        // model.departureTime = checkDateTime(args[DEPART]);
+        model.departureTime = checkDateTime(args[DEPART] + " " + args[DEPART+1]);
         model.destination = checkAirportCode(args[DEST]);
-        // model.arrivalTime = checkDateTime(args[ARRIVE]);
+        model.arrivalTime = checkDateTime(args[ARRIVE] + " " + args[ARRIVE+1]);
 
         return model;
     }
@@ -97,6 +98,7 @@ public class AirlineCommand {
     }
 
     private static String checkDateTime(String input) {
-        return "";
+        LocalDateTime.parse(input, Flight.DATEFORMAT);
+        return input;
     }
 }
