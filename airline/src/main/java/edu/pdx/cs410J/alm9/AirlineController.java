@@ -8,6 +8,13 @@ public class AirlineController {
     public AirlineController() {
     }
 
+    /**
+     * Create makes a new flight based on the provided InputModel.
+     *
+     * @param airline Represents correct user input that can be read to create a Flight.
+     * @throws NullPointerException if input is null
+     * @return The new Flight represented as a string.
+     */
     public String create(InputModel airline) {
         if (airline == null)
             throw new NullPointerException();

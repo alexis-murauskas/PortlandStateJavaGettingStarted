@@ -5,6 +5,8 @@ import edu.pdx.cs410J.AbstractFlight;
 
 /**
  * The main class for the CS410J airline Project
+ * Project 1: main will accept command line arguments that allow the user to create a flight, print a
+ * README, and/or print out the flight just added.
  */
 public class Project1 {
 

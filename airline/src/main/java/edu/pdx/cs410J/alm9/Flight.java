@@ -25,16 +25,27 @@ public class Flight extends AbstractFlight {
         this.arrivalTime = arrivalTime;
     }
 
+    /**
+     * @return The flight number.
+     */
     @Override
     public int getNumber() {
         return this.flightNumber;
     }
 
+    /**
+     * Returns the departure location represented as an Airport Code.
+     * @return An airport code.
+     */
     @Override
     public String getSource() {
         return this.source;
     }
 
+    /**
+     * Returns the date and time of departure.
+     * @return Formatted time and date.
+     */
     @Override
     public String getDepartureString() {
         if (this.departureTime == null)
@@ -43,11 +54,19 @@ public class Flight extends AbstractFlight {
         return this.departureTime.format(DATEFORMAT);
     }
 
+    /**
+     * Returns the Airport Code representing the destination for the flight.
+     * @return An airport code.
+     */
     @Override
     public String getDestination() {
         return this.destination;
     }
 
+    /**
+     * Returns the date and time of the arrival.
+     * @return A formatted date and time.
+     */
     @Override
     public String getArrivalString() {
         if (this.arrivalTime == null)

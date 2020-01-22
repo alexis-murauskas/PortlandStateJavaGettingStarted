@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
 import java.time.LocalDateTime;
+import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -21,6 +22,20 @@ public class AirlineCommand {
             "-PRINT"
     );
 
+    /**
+     * Parse is responsible for checking if the user input is complete and correct. If all the input
+     * passes checks, then it is organized into an InputModel object that can be consumed by Main and/or
+     * the Airline Controller.
+     *
+     * @param input String array of user input, including options and arguments.
+     * @return Returns input organized into a model if all error checks pass.
+     * @throws ArrayIndexOutOfBoundsException if something goes wrong in parsing options or Airline Name
+     * because of invalid user input
+     * @throws IllegalArgumentException if Airport Code is the incorrect length
+     * or contains non-alphabetic characters
+     * @throws DateTimeParseException if the date and/or time are improperly formatted
+     * @throws NumberFormatException if the Flight Code is not numerical
+     */
     public static InputModel parse(String[] input) {
         if (input == null)
             throw new NullPointerException();
@@ -33,6 +48,12 @@ public class AirlineCommand {
         return model;
     }
 
+    /**
+     * ParseOptions checks for optional flags from the user and adds them if they correctly denoted with
+     * a leading hyphen and if they are among the listed valid options.
+     * @param input User input that has been forwarded by Parse.
+     * @return A list of extracted options to be placed into the InputModel.
+     */
     private static ArrayList<String> parseOptions(String[] input) {
         ArrayList<String> options = new ArrayList<>();
 
@@ -44,10 +65,24 @@ public class AirlineCommand {
         return options;
     }
 
+    /**
+     * Trims arguments that have already been evaluated by the parser. This is intended for use with
+     * extracting items of variable length, such as options and the Airline Name.
+     *
+     * @param toRemove A list of already evaluated items.
+     * @param input Current array of user input.
+     * @return User input with already evaluated arguments removed.
+     */
     private static String[] trimArguments(ArrayList<String> toRemove, String[] input) {
         return Arrays.copyOfRange(input, toRemove.size(), input.length);
     }
 
+    /**
+     * ParseArgs checks if flight arguments are present and then evaluates them to be placed into the
+     * InputModel.
+     * @param input Current array of user input, possibly with options removed.
+     * @return If all input items pass checks, an InputModel with the items included will be returned.
+     */
     private static InputModel parseArgs(String[] input) {
         InputModel model = new InputModel();
         if (input.length == 0)
@@ -66,6 +101,13 @@ public class AirlineCommand {
         return model;
     }
 
+    /**
+     * Checks for an Airline Name, which is either enclosed in quotes or a single word. There are no
+     * rules for names, except that the name must be enclosed in quotes if applicable.
+     *
+     * @param input Current array of user input.
+     * @return A list of all strings included in the Airline Name, which may be one string.
+     */
     private static ArrayList<String> parseAirline(String[] input) {
         ArrayList<String> airline = new ArrayList<>();
         airline.add(input[AIRLINE]);
@@ -81,22 +123,48 @@ public class AirlineCommand {
         return airline;
     }
 
+    /**
+     * StringifyList is a helper function for parseAirline that collects all the strings in the name into
+     * a single string.
+     * @param list A list of strings.
+     * @return All strings in the list collected into one string, with words separated by spaces.
+     */
     private static String stringifyList(ArrayList<String> list) {
         return list.stream().collect(Collectors.joining(" "));
     }
 
+    /**
+     * Attempts to parse a Flight Code as an integer. If it fails, the input is incorrect. Otherwise
+     * it simply returns the same string.
+     *
+     * @param input Input representing a Flight Code.
+     * @return The same input string.
+     */
     private static String checkFlight(String input) {
         Integer.parseInt(input);
         return input;
     }
 
+    /**
+     * Checks an Airport Code to make sure that it only contains letters and has a length of 3.
+     * @param input Input representing an Airport Code.
+     *
+     * @return The same input string.
+     */
     private static String checkAirportCode(String input) {
-        if (input.length() > CODELEN || input.matches("[A-Za-z]]+"))
+        if (input.length() != CODELEN || input.matches("[A-Za-z]]+"))
             throw new IllegalArgumentException();
 
         return input;
     }
 
+    /**
+     * Attempts to parse a DateTime string. If it succeeds, then the input has been correctly formatted.
+     * Otherwise, it throws an exception.
+     *
+     * @param input Input representing a date and time.
+     * @return The same input string.
+     */
     private static String checkDateTime(String input) {
         LocalDateTime.parse(input, Flight.DATEFORMAT);
         return input;
