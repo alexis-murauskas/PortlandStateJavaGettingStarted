@@ -16,7 +16,7 @@ public class AirlineCommand {
 
     private static final int CODELEN = 3;
 
-    private static final List<String> validOptions = Arrays.asList(
+    public static final List<String> validOptions = Arrays.asList(
             "-README",
             "-PRINT"
     );
