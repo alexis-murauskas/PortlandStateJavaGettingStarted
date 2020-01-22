@@ -8,6 +8,19 @@ import edu.pdx.cs410J.AbstractFlight;
  */
 public class Project1 {
 
+    public static String readme = "usage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>\n\n" +
+            "args are (in this order):\n" +
+            "airline The name of the airline\n" +
+            "flightNumber The flight number\n" +
+            "src Three-letter code of departure airport\n" +
+            "depart Departure date and time (24-hour time)\n" +
+            "dest Three-letter code of arrival airport\n" +
+            "arrive Arrival date and time (24-hour time)\n\n" +
+            "options are (options may appear in any order):\n" +
+            "-print Prints a description of the new flight\n" +
+            "-README Prints a README for this project and exits\n\n" +
+            "Date and time should be in the format: mm/dd/yyyy hh:mm";
+
     public static void main(String[] args) {
         InputModel model = null;
         AirlineController controller = new AirlineController();
@@ -25,7 +38,7 @@ public class Project1 {
         }
 
         if (model.options.contains("-README")) {
-            System.out.println("README");
+            System.out.println(readme);
             System.exit(0);
         }
 
