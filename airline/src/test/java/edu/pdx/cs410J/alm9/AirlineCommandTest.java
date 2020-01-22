@@ -2,6 +2,8 @@ package edu.pdx.cs410J.alm9;
 
 import org.junit.Test;
 
+import java.time.format.DateTimeParseException;
+
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
@@ -122,5 +124,29 @@ public class AirlineCommandTest {
     public void validAirportCodeDoesNotThrowException() {
         InputModel rv = AirlineCommand.parse(inputWithQuotes);
         assertThat(rv.source, is("Src"));
+    }
+
+    @Test (expected = DateTimeParseException.class)
+    public void invalidDateTimeThrowsException() {
+        String[] badTime = new String[]{
+                "-README",
+                "'Airline",
+                "Name'",
+                "1",
+                "Src",
+                "11/11/",
+                "1:11",
+                "Dst",
+                "12/12/1212",
+                "12:12"
+        };
+
+        AirlineCommand.parse(badTime);
+    }
+
+    @Test
+    public void validDateTimeSucceeds() {
+        InputModel rv = AirlineCommand.parse(input);
+        assertThat(rv.departureTime, is("11/11/1111 11:11"));
     }
 }
