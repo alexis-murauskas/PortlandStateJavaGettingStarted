@@ -8,7 +8,7 @@ import edu.pdx.cs410J.AbstractFlight;
  */
 public class Project1 {
 
-    public static String readme = "usage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>\n\n" +
+    public static String readme = "\nusage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>\n\n" +
             "args are (in this order):\n" +
             "airline The name of the airline\n" +
             "flightNumber The flight number\n" +
@@ -19,7 +19,7 @@ public class Project1 {
             "options are (options may appear in any order):\n" +
             "-print Prints a description of the new flight\n" +
             "-README Prints a README for this project and exits\n\n" +
-            "Date and time should be in the format: mm/dd/yyyy hh:mm";
+            "Date and time should be in the format: mm/dd/yyyy hh:mm\n";
 
     public static void main(String[] args) {
         InputModel model = null;
