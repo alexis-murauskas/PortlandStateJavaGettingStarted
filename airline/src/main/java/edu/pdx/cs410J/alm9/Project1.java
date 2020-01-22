@@ -8,7 +8,8 @@ import edu.pdx.cs410J.AbstractFlight;
  */
 public class Project1 {
 
-    public static String readme = "\nusage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>\n\n" +
+    public static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project1\n\n" +
+            "usage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>\n\n" +
             "args are (in this order):\n" +
             "airline The name of the airline\n" +
             "flightNumber The flight number\n" +
