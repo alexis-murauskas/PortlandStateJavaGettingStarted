@@ -1,7 +1,5 @@
 package edu.pdx.cs410J.alm9;
 
-import javax.naming.InvalidNameException;
-import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -21,7 +19,8 @@ public class AirlineCommand {
 
     public static final List<String> validOptions = Arrays.asList(
             "-README",
-            "-PRINT"
+            "-print",
+            "-textFile"
     );
 
     /**
@@ -60,9 +59,10 @@ public class AirlineCommand {
         ArrayList<String> options = new ArrayList<>();
 
         for (String option : input) {
-            if (option.startsWith("-") && validOptions.contains(option.toUpperCase()))
-                options.add(option.toUpperCase());
-            if (option.startsWith("-") && !validOptions.contains(option.toUpperCase()))
+            if (option.startsWith("-") && validOptions.contains(option)) {
+                options.add(option);
+            }
+            if (option.startsWith("-") && !validOptions.contains(option))
                 throw new IllegalArgumentException("options");
         }
 

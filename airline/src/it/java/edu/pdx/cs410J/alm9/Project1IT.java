@@ -31,7 +31,7 @@ public class Project1IT extends InvokeMainTestCase {
 
   @Test
     public void testReadMeOption() {
-      MainMethodResult result = invokeMain("-readme");
+      MainMethodResult result = invokeMain("-README");
       assertThat(result.getExitCode(), equalTo(0));
   }
 
