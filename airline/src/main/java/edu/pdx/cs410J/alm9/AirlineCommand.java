@@ -58,7 +58,7 @@ public class AirlineCommand {
         ArrayList<String> options = new ArrayList<>();
 
         for (String option : input) {
-            if (option.startsWith("-") && validOptions.contains(option))
+            if (option.startsWith("-") && validOptions.contains(option.toUpperCase()))
                 options.add(option);
         }
 
