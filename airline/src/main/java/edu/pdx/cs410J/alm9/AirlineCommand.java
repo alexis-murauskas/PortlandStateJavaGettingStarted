@@ -59,7 +59,7 @@ public class AirlineCommand {
 
         for (String option : input) {
             if (option.startsWith("-") && validOptions.contains(option.toUpperCase()))
-                options.add(option);
+                options.add(option.toUpperCase());
         }
 
         return options;
