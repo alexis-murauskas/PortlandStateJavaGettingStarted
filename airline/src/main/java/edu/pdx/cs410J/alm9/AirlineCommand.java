@@ -1,5 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
+import javax.naming.InvalidNameException;
+import java.security.InvalidParameterException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
@@ -60,6 +62,8 @@ public class AirlineCommand {
         for (String option : input) {
             if (option.startsWith("-") && validOptions.contains(option.toUpperCase()))
                 options.add(option.toUpperCase());
+            if (option.startsWith("-") && !validOptions.contains(option.toUpperCase()))
+                throw new IllegalArgumentException("options");
         }
 
         return options;
@@ -152,8 +156,10 @@ public class AirlineCommand {
      * @return The same input string.
      */
     private static String checkAirportCode(String input) {
-        if (input.length() != CODELEN || input.matches("[A-Za-z]]+"))
-            throw new IllegalArgumentException();
+        if (input.length() != CODELEN)
+            throw new IllegalArgumentException("Airport code is too short");
+        if (input.matches("[A-Za-z]]+"))
+            throw new IllegalArgumentException("Airport code has number");
 
         return input;
     }

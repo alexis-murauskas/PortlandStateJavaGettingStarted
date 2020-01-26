@@ -3,6 +3,8 @@ package edu.pdx.cs410J.alm9;
 import edu.pdx.cs410J.AbstractAirline;
 import edu.pdx.cs410J.AbstractFlight;
 
+import java.time.format.DateTimeParseException;
+
 /**
  * The main class for the CS410J airline Project
  * Project 1: main will accept command line arguments that allow the user to create a flight, print a
@@ -35,7 +37,23 @@ public class Project1 {
 
         try {
             model = AirlineCommand.parse(args);
-        } catch (Exception e) {
+        }
+        catch (NumberFormatException e) {
+            System.err.println("Flight code is not numerical");
+            System.exit(1);
+        }
+        catch(DateTimeParseException e) {
+            System.err.println("Time is malformatted");
+            System.exit(1);
+        }
+        catch (IllegalArgumentException e) {
+            if(e.getMessage() == "options")
+                System.err.println("Unknown command line option");
+            else
+                System.err.println(e.getMessage());
+            System.exit(1);
+        }
+        catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Arguments could not be parsed");
             System.exit(1);
         }

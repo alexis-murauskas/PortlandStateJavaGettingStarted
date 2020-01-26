@@ -64,7 +64,7 @@ public class Project1IT extends InvokeMainTestCase {
               "12/12/1212",
               "12:12");
       assertThat(result.getExitCode(), equalTo(1));
-      assertThat(result.getTextWrittenToStandardError(), containsString("Arguments could not be parsed"));
+      assertThat(result.getTextWrittenToStandardError(), containsString("Unknown command line option"));
   }
 
   @Test
@@ -125,7 +125,7 @@ public class Project1IT extends InvokeMainTestCase {
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
-    assertThat(result.getTextWrittenToStandardError(), containsString("Arguments could not be parsed"));
+    assertThat(result.getTextWrittenToStandardError(), containsString("Flight code is not numerical"));
   }
 
   @Test
@@ -134,14 +134,14 @@ public class Project1IT extends InvokeMainTestCase {
             "'Airline",
             "Name'",
             "1",
-            "Src1234",
+            "Sr",
             "11/11/1111",
             "11:11",
             "Dst",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
-    assertThat(result.getTextWrittenToStandardError(), containsString("Arguments could not be parsed"));
+    assertThat(result.getTextWrittenToStandardError(), containsString("Airport code is too short"));
   }
 
   @Test
@@ -150,14 +150,14 @@ public class Project1IT extends InvokeMainTestCase {
             "'Airline",
             "Name'",
             "1",
-            "Src1234",
+            "Src",
             "11/11/",
             "11:11",
             "Dst",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
-    assertThat(result.getTextWrittenToStandardError(), containsString("Arguments could not be parsed"));
+    assertThat(result.getTextWrittenToStandardError(), containsString("Time is malformatted"));
   }
 
 
