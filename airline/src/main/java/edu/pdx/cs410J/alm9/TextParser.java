@@ -8,17 +8,31 @@ import java.io.File;
 import java.util.Scanner;
 
 public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
-    public static String fileName = "airline.txt";
+    private String fileName;
+
+    public TextParser(String fileName) {
+        this.fileName = fileName;
+    }
 
     @Override
     public T parse() throws ParserException {
-        AirlineController controller = new AirlineController();
-        InputModel model = new InputModel();
+        Airline airline = null;
 
         try {
+            String[] name;
+            String[] flight;
             File input = new File(this.fileName);
             Scanner reader = new Scanner(input);
-            
+
+            if (reader.hasNextLine()) {
+                String rv = reader.nextLine();
+                airline = new Airline(rv);
+                name = rv.split(" ");
+            }
+
+            while (reader.hasNextLine()) {
+                flight = reader.nextLine().split(";");
+            }
 
             reader.close();
         }
@@ -26,7 +40,6 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
             throw new ParserException(e.getMessage());
         }
 
-        controller.create(model);
-        return (T) controller.getAirline();
+        return (T) airline;
     }
 }
