@@ -16,22 +16,23 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
 
     @Override
     public T parse() throws ParserException {
-        Airline airline = null;
+        Airline<Flight> airline = null;
 
         try {
-            String[] name;
-            String[] flight;
-            File input = new File(this.fileName);
-            Scanner reader = new Scanner(input);
+            String[] input;
+            File file = new File("resources/"+this.fileName);
+            Scanner reader = new Scanner(file);
 
             if (reader.hasNextLine()) {
-                String rv = reader.nextLine();
-                airline = new Airline(rv);
-                name = rv.split(" ");
+                String name = reader.nextLine();
+                airline = new Airline<>(name);
             }
 
             while (reader.hasNextLine()) {
-                flight = reader.nextLine().split(";");
+                String line = "airline;" + reader.nextLine();
+                input = line.split(";");
+                InputModel rv = AirlineCommand.parse(input);
+                airline.addFlight(rv);
             }
 
             reader.close();

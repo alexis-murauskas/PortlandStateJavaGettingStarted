@@ -39,3 +39,4 @@ dependency-reduced-pom.xml
 # Temporary directories created by the koans
 */app/config/file_hashes.dat
 */app/data/
+airline/src/main/java/edu/pdx/cs410J/alm9/Resources/airline.txt

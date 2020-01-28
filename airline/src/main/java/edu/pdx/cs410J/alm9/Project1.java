@@ -22,6 +22,7 @@ public class Project1 {
             "dest Three-letter code of arrival airport\n" +
             "arrive Arrival date and time (24-hour time)\n\n" +
             "options are (options may appear in any order):\n" +
+            "-textFile file Where to read/write the airline info\n" +
             "-print Prints a description of the new flight\n" +
             "-README Prints a README for this project and exits\n\n" +
             "Date and time should be in the format: mm/dd/yyyy hh:mm\n";
