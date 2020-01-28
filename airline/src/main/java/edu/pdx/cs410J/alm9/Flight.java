@@ -8,11 +8,11 @@ import java.time.format.DateTimeFormatter;
 public class Flight extends AbstractFlight {
 
     public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-    private int flightNumber;
-    private String source;
-    private LocalDateTime departureTime;
-    private String destination;
-    private LocalDateTime arrivalTime;
+    private static int flightNumber;
+    private static String source;
+    private static LocalDateTime departureTime;
+    private static String destination;
+    private static LocalDateTime arrivalTime;
 
     public Flight() {
     }
@@ -73,5 +73,13 @@ public class Flight extends AbstractFlight {
             return null;
 
         return this.arrivalTime.format(DATEFORMAT);
+    }
+
+    public static String toFileFormat(Flight flight) {
+        return flight.flightNumber
+                + ";" + flight.source
+                + ";" + flight.departureTime.format(DATEFORMAT).replace(" ", ";")
+                + ";" + flight.destination
+                + ";" + flight.arrivalTime.format(DATEFORMAT).replace(" ", ";");
     }
 }

@@ -6,6 +6,7 @@ import edu.pdx.cs410J.AbstractFlight;
 import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.stream.Collectors;
 
 public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     private String name;

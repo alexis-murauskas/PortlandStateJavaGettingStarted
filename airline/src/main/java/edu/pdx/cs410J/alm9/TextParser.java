@@ -29,7 +29,7 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
             }
 
             while (reader.hasNextLine()) {
-                String line = "airline;" + reader.nextLine();
+                String line = "placeholder;" + reader.nextLine();
                 input = line.split(";");
                 InputModel rv = AirlineCommand.parse(input);
                 airline.addFlight(rv);
