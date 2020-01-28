@@ -20,7 +20,7 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
 
         try {
             String[] input;
-            File file = new File("resources/"+this.fileName);
+            File file = new File(this.fileName);
             Scanner reader = new Scanner(file);
 
             if (reader.hasNextLine()) {
