@@ -25,9 +25,8 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
             var isNew = file.createNewFile();
             FileWriter writer = new FileWriter(file, true);
 
-            if (isNew) {
+            if (isNew)
                 writer.write(airline.getName());
-            }
 
             String flights = airline.getFlights()
                     .stream()
@@ -44,7 +43,7 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
             writer.close();
 
         } catch (Exception e) {
-            throw new IOException(e.getMessage());
+            throw new IOException(e.getCause());
         }
     }
 

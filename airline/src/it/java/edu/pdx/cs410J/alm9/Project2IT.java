@@ -189,7 +189,7 @@ public class Project2IT extends InvokeMainTestCase {
                 "Dst",
                 "12/12/1212",
                 "12:12");
-        assertThat(result.getExitCode(), equalTo(0));
+        assertThat(result.getTextWrittenToStandardError(), equalTo(null));
     }
 
 

@@ -3,6 +3,8 @@ package edu.pdx.cs410J.alm9;
 import java.io.IOException;
 import java.time.format.DateTimeParseException;
 
+import static edu.pdx.cs410J.alm9.TextDumper.fileFormatAirlineName;
+
 public class Project2 {
 
     protected static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project1\n\n" +
@@ -87,14 +89,14 @@ public class Project2 {
         // Write out to file
         try {
             if (model.options.contains("-textFile")) {
-                if (fileName != TextDumper.fileFormatAirlineName(airline.getName()))
+                if (fileName.contains(fileFormatAirlineName(airline.getName())))
                     throw new IOException();
 
                 TextDumper<Airline<Flight>, Flight> dumper = new TextDumper();
                 dumper.dump(airline);
             }
         } catch (Exception e) {
-            System.err.println("Airline could not be written");
+            System.err.println("Airline could not be written to: " + fileName + e.getMessage());
             System.exit(1);
         }
 
