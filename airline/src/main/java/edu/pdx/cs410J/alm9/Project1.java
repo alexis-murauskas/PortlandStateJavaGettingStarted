@@ -1,8 +1,5 @@
 package edu.pdx.cs410J.alm9;
 
-import edu.pdx.cs410J.AbstractAirline;
-import edu.pdx.cs410J.AbstractFlight;
-
 import java.time.format.DateTimeParseException;
 
 /**
@@ -12,7 +9,7 @@ import java.time.format.DateTimeParseException;
  */
 public class Project1 {
 
-    public static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project1\n\n" +
+    protected static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project1\n\n" +
             "usage: java edu.pdx.cs410J.<login-id>.Project1 [options] <args>\n\n" +
             "args are (in this order):\n" +
             "airline The name of the airline\n" +
@@ -22,7 +19,6 @@ public class Project1 {
             "dest Three-letter code of arrival airport\n" +
             "arrive Arrival date and time (24-hour time)\n\n" +
             "options are (options may appear in any order):\n" +
-            "-textFile file Where to read/write the airline info\n" +
             "-print Prints a description of the new flight\n" +
             "-README Prints a README for this project and exits\n\n" +
             "Date and time should be in the format: mm/dd/yyyy hh:mm\n";
@@ -66,7 +62,7 @@ public class Project1 {
 
         try {
             String added = controller.create(model);
-            if (model.options.contains("-PRINT"))
+            if (model.options.contains("-print"))
                 System.out.println(added);
         } catch (Exception e) {
             System.err.println("Missing command line arguments");

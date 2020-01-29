@@ -1,12 +1,11 @@
 package edu.pdx.cs410J.alm9;
 
-import static org.hamcrest.CoreMatchers.*;
-import static org.hamcrest.MatcherAssert.assertThat;
-
 import org.junit.Test;
 
-public class Project1Test {
+import static org.hamcrest.CoreMatchers.containsString;
+import static org.hamcrest.MatcherAssert.assertThat;
 
+public class Project2Test {
     @Test
     public void callMain() {
         assertThat(Project1.readme,  containsString("Alexis Murauskas"));
