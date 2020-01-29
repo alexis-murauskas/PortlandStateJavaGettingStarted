@@ -25,7 +25,6 @@ public class Project1 {
 
     public static void main(String[] args) {
         InputModel model = null;
-        AirlineController controller = new AirlineController();
 
         // Null checking
         if (args == null) {
@@ -63,19 +62,12 @@ public class Project1 {
             System.exit(0);
         }
 
-        // Read and write to file
-        try {
-
-        }
-        catch (Exception e) {
-
-        }
-
         // Add to airline
         try {
-            String added = controller.create(model);
+            Airline<Flight> airline = new Airline<>(model.airline);
+            Flight rv = airline.addFlight(model);
             if (model.options.contains("-print"))
-                System.out.println(added);
+                System.out.println(rv.toString());
         } catch (Exception e) {
             System.err.println("Missing command line arguments");
             System.exit(1);

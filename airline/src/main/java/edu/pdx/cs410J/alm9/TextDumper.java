@@ -18,13 +18,10 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
         if (airline == null)
             throw new IOException();
 
-        String name = airline.getName()
-                .toLowerCase()
-                .replace(" ", "-")
-                .replace("'", "");
+        String name = fileFormatAirlineName(airline.getName());
 
         try {
-            File file = new File(this.dir + name + this.ext);
+            File file = new File(name);
             var isNew = file.createNewFile();
             FileWriter writer = new FileWriter(file, true);
 
@@ -49,5 +46,12 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
         } catch (Exception e) {
             throw new IOException(e.getMessage());
         }
+    }
+
+    public static String fileFormatAirlineName (String airline) {
+        return airline.toLowerCase()
+                .replace(" ", "-")
+                .replace("'", "")
+                + ext;
     }
 }

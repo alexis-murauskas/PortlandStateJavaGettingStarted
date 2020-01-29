@@ -126,6 +126,21 @@ public class AirlineCommandTest {
         assertThat(rv.source, is("Src"));
     }
 
+    @Test (expected = IllegalArgumentException.class)
+    public void invalidAirportCodeThrowsException() {
+        InputModel rv = AirlineCommand.parse(new String[]{
+                "-README",
+                "Airline",
+                "1",
+                "Srceeee",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12"
+        });
+    }
+
     @Test (expected = DateTimeParseException.class)
     public void invalidDateTimeThrowsException() {
         String[] badTime = new String[]{
@@ -148,5 +163,40 @@ public class AirlineCommandTest {
     public void validDateTimeSucceeds() {
         InputModel rv = AirlineCommand.parse(input);
         assertThat(rv.departureTime, is("11/11/1111 11:11"));
+    }
+
+    @Test
+    public void validTextFileNameSucceeds() {
+        InputModel rv = AirlineCommand.parse(new String[]{
+                "-textFile",
+                "airline.txt",
+                "Airline",
+                "1",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12"
+        });
+        assertThat(rv.options.stream().anyMatch(o -> o.contains("-textFile")), is(true));
+        assertThat(rv.options.stream().anyMatch(o -> o.contains("airline.txt")), is(true));
+    }
+
+    @Test
+    public void invalidTextFileNameSucceeds() {
+        InputModel rv = AirlineCommand.parse(new String[]{
+                "-textFile",
+                "",
+                "Airline",
+                "1",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12"
+        });
+        assertThat(rv.options.stream().anyMatch(o -> o.contains("-textFile")), is(true));
     }
 }

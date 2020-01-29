@@ -1,8 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
+import java.io.IOException;
 import java.time.format.DateTimeParseException;
-import java.util.Optional;
-import java.util.stream.Stream;
 
 public class Project2 {
 
@@ -24,14 +23,18 @@ public class Project2 {
     public static void main(String[] args) {
         InputModel model = null;
         Airline<Flight> airline = null;
+        String fileName = null;
 
         if (args == null) {
             System.err.println("Missing command line arguments");
             System.exit(1);
         }
 
+        // Attempt to parse input
         try {
+
             model = AirlineCommand.parse(args);
+
         } catch (NumberFormatException e) {
             System.err.println("Flight code is not numerical");
             System.exit(1);
@@ -49,29 +52,49 @@ public class Project2 {
             System.exit(1);
         }
 
+        // Print README and exit
         if (model.options.contains("-README")) {
             System.out.println(readme);
             System.exit(0);
         }
 
+        // Read in file if option is present
         try {
-            Optional<String> file = model.options.stream().filter("-textFile"::contains).findFirst();
-            if (file.isPresent() ) {
-                TextParser<Airline> parser = new TextParser(file.toString().split( " ")[1]);
+            if (model.options.contains("-textFile")) {
+                int index = model.options.indexOf("-textFile");
+                fileName = model.options.get(index + 1);
+                TextParser<Airline> parser = new TextParser(fileName);
                 airline = parser.parse();
             }
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             System.err.println("Text file name/contents are malformatted");
             System.exit(1);
         }
 
+        // Add new flight if requested
         try {
+            if (airline == null)
+                airline = new Airline<>(model.airline);
+
             Flight added = airline.addFlight(model);
             if (model.options.contains("-print"))
                 System.out.println(added.toString());
         } catch (Exception e) {
             System.err.println("Missing command line arguments");
+            System.exit(1);
+        }
+
+        // Write out to file
+        try {
+            if (model.options.contains("-textFile")) {
+                if (fileName != TextDumper.fileFormatAirlineName(airline.getName()))
+                    throw new IOException();
+
+                TextDumper<Airline<Flight>, Flight> dumper = new TextDumper();
+                dumper.dump(airline);
+            }
+        } catch (Exception e) {
+            System.err.println("Airline could not be written");
             System.exit(1);
         }
 
