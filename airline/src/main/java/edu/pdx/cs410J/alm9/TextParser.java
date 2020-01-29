@@ -21,6 +21,7 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
         try {
             String[] input;
             File file = new File(this.fileName);
+            file.createNewFile();
             Scanner reader = new Scanner(file);
 
             if (reader.hasNextLine()) {

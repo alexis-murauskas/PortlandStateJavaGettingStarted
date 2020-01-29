@@ -43,7 +43,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
      * Adds a new flight to the airline.
      * @param model A generic object that represents a flight.
      */
-    public void addFlight(InputModel model) {
+    public T addFlight(InputModel model) {
         Flight flight = new Flight(
                 Integer.parseInt(model.flightNumber),
                 model.source,
@@ -53,6 +53,8 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
         );
 
         this.flights.add((T) flight);
+
+        return (T) flight;
     }
 
     /**

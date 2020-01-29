@@ -1,6 +1,8 @@
 package edu.pdx.cs410J.alm9;
 
 import java.time.format.DateTimeParseException;
+import java.util.Optional;
+import java.util.stream.Stream;
 
 public class Project2 {
 
@@ -21,7 +23,7 @@ public class Project2 {
 
     public static void main(String[] args) {
         InputModel model = null;
-        AirlineController controller = new AirlineController();
+        Airline<Flight> airline = null;
 
         if (args == null) {
             System.err.println("Missing command line arguments");
@@ -53,9 +55,21 @@ public class Project2 {
         }
 
         try {
-            String added = controller.create(model);
+            Optional<String> file = model.options.stream().filter("-textFile"::contains).findFirst();
+            if (file.isPresent() ) {
+                TextParser<Airline> parser = new TextParser(file.toString().split( " ")[1]);
+                airline = parser.parse();
+            }
+        }
+        catch (Exception e) {
+            System.err.println("Text file name/contents are malformatted");
+            System.exit(1);
+        }
+
+        try {
+            Flight added = airline.addFlight(model);
             if (model.options.contains("-print"))
-                System.out.println(added);
+                System.out.println(added.toString());
         } catch (Exception e) {
             System.err.println("Missing command line arguments");
             System.exit(1);

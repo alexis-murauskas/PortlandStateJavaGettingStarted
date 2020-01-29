@@ -9,14 +9,13 @@ public class TextParserTest {
     public static String testDir = "resources/test/";
 
     @Test
-    public void incorrectFileNameThrowsException() {
+    public void nonExistentFileNameDoesNotThrowException() {
         TextParser<Airline<Flight>> parser = new TextParser<>("does-not-exist.txt");
         try {
             parser.parse();
         } catch (ParserException e) {
-            return;
+            assert(false);
         }
-        assert(false);
     }
 
     @Test
