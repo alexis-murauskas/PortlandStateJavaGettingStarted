@@ -58,11 +58,14 @@ public class AirlineCommand {
     private static ArrayList<String> parseOptions(String[] input) {
         ArrayList<String> options = new ArrayList<>();
 
-        for (String option : input) {
-            if (option.startsWith("-") && validOptions.contains(option)) {
-                options.add(option);
+        for (var i = 0; i < input.length; i++) {
+            if (input[i].startsWith("-") && input[i].equals("-textFile")) {
+                options.add(input[i] + " " + input[i+1]);
             }
-            if (option.startsWith("-") && !validOptions.contains(option))
+            else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
+                options.add(input[i]);
+            }
+            else if (input[i].startsWith("-"))
                 throw new IllegalArgumentException("options");
         }
 

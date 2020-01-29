@@ -27,11 +27,13 @@ public class Project1 {
         InputModel model = null;
         AirlineController controller = new AirlineController();
 
+        // Null checking
         if (args == null) {
             System.err.println("Missing command line arguments");
             System.exit(1);
         }
 
+        // Parse the input
         try {
             model = AirlineCommand.parse(args);
         }
@@ -55,11 +57,21 @@ public class Project1 {
             System.exit(1);
         }
 
+        // Check for README
         if (model.options.contains("-README")) {
             System.out.println(readme);
             System.exit(0);
         }
 
+        // Read and write to file
+        try {
+
+        }
+        catch (Exception e) {
+
+        }
+
+        // Add to airline
         try {
             String added = controller.create(model);
             if (model.options.contains("-print"))
