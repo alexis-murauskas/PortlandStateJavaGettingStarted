@@ -10,6 +10,7 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> implements AirlineDumper<T> {
+    public static String dir = "resources/data/";
     public static String ext = ".txt";
 
     @Override
@@ -17,26 +18,33 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
         if (airline == null)
             throw new IOException();
 
-        try {
-            File file = new File(airline.getName() + this.ext);
-            FileWriter writer = new FileWriter(file);
+        String name = airline.getName()
+                .toLowerCase()
+                .replace(" ", "-")
+                .replace("'", "");
 
-            if (file.createNewFile()) {
-                writer.write(airline.getName() + "\n");
+        try {
+            File file = new File(this.dir + name + this.ext);
+            var isNew = file.createNewFile();
+            FileWriter writer = new FileWriter(file, true);
+
+            if (isNew) {
+                writer.write(airline.getName());
             }
 
             String flights = airline.getFlights()
                     .stream()
                     .map(
-                            f -> f.getNumber()
-                                    + ";" + f.getDeparture()
+                            f -> "\n" + f.getNumber()
+                                    + ";" + f.getSource()
                                     + ";" + f.getDepartureString().replace(" ", ";")
-                                    + ";" + f.getArrival()
+                                    + ";" + f.getDestination()
                                     + ";" + f.getArrivalString().replace(" ", ";")
                     )
-                    .collect(Collectors.joining("\n"));
+                    .collect(Collectors.joining(""));
 
-            writer.append(flights);
+            writer.write(flights);
+            writer.close();
 
         } catch (Exception e) {
             throw new IOException(e.getMessage());
