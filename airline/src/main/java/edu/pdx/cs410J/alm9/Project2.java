@@ -54,7 +54,7 @@ public class Project2 {
 
         try {
             String added = controller.create(model);
-            if (model.options.contains("-PRINT"))
+            if (model.options.contains("-print"))
                 System.out.println(added);
         } catch (Exception e) {
             System.err.println("Missing command line arguments");
