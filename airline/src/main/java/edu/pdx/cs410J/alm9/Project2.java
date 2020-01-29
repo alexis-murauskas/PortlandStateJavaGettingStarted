@@ -89,8 +89,8 @@ public class Project2 {
         // Write out to file
         try {
             if (model.options.contains("-textFile")) {
-                if (fileName.contains(fileFormatAirlineName(airline.getName())))
-                    throw new IOException();
+                /*if (fileName.contains(fileFormatAirlineName(airline.getName())))
+                    throw new IOException();*/
 
                 TextDumper<Airline<Flight>, Flight> dumper = new TextDumper();
                 dumper.dump(airline);

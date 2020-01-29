@@ -43,7 +43,7 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
             writer.close();
 
         } catch (Exception e) {
-            throw new IOException(e.getCause());
+            throw new IOException();
         }
     }
 
