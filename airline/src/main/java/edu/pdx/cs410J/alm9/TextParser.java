@@ -14,6 +14,15 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
         this.fileName = fileName;
     }
 
+
+    /**
+     * TextParser reads in from a specified file. It expects that the file name is already properly formatted,
+     * and assumes it is reading in an Airline object. This means that the first line is always the name
+     * of the airline, followed by lines representing the associated flights. These are in standard CSV
+     * format.
+     * @return An airline object created from the file's contents
+     * @throws ParserException If there is an error during parsing because the file's contents are malformatted
+     */
     @Override
     public T parse() throws ParserException {
         Airline<Flight> airline = null;
@@ -21,8 +30,8 @@ public class TextParser<T extends AbstractAirline> implements AirlineParser<T> {
         try {
             String[] input;
             File file = new File(this.fileName);
-            if (file.createNewFile() == true)
-                return (T) airline;
+            if (!file.isFile())
+                return null;
 
             Scanner reader = new Scanner(file);
 

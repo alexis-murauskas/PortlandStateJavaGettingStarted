@@ -1,9 +1,6 @@
 package edu.pdx.cs410J.alm9;
 
-import java.io.IOException;
 import java.time.format.DateTimeParseException;
-
-import static edu.pdx.cs410J.alm9.TextDumper.fileFormatAirlineName;
 
 public class Project2 {
 
@@ -44,10 +41,7 @@ public class Project2 {
             System.err.println("Time is malformatted");
             System.exit(1);
         } catch (IllegalArgumentException e) {
-            if (e.getMessage() == "options")
-                System.err.println("Unknown command line option");
-            else
-                System.err.println(e.getMessage());
+            System.err.println(e.getMessage());
             System.exit(1);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Arguments could not be parsed");
@@ -69,7 +63,7 @@ public class Project2 {
                 airline = parser.parse();
             }
         } catch (Exception e) {
-            System.err.println("Text file name/contents are malformatted");
+            System.err.println("Text file contents are malformatted");
             System.exit(1);
         }
 
@@ -89,14 +83,11 @@ public class Project2 {
         // Write out to file
         try {
             if (model.options.contains("-textFile")) {
-                /*if (fileName.contains(fileFormatAirlineName(airline.getName())))
-                    throw new IOException();*/
-
                 TextDumper<Airline<Flight>, Flight> dumper = new TextDumper();
                 dumper.dump(airline);
             }
         } catch (Exception e) {
-            System.err.println("Airline could not be written to: " + fileName + e.getMessage());
+            System.err.println("Airline could not be written to: " + fileName);
             System.exit(1);
         }
 

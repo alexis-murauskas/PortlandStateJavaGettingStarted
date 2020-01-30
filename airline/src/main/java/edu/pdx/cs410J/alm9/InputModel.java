@@ -11,16 +11,5 @@ public class InputModel {
     public String destination;
     public String arrivalTime;
 
-    public InputModel() {
-    }
-
-    public InputModel(ArrayList<String> options, String airline, String flightNumber, String source, String departureTime, String destination, String arrivalTime) {
-        this.options = options;
-        this.airline = airline;
-        this.flightNumber = flightNumber;
-        this.source = source;
-        this.departureTime = departureTime;
-        this.destination = destination;
-        this.arrivalTime = arrivalTime;
-    }
+    public InputModel() { }
 }

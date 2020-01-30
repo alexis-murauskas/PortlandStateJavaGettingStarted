@@ -3,6 +3,7 @@ package edu.pdx.cs410J.alm9;
 import org.junit.Test;
 
 import java.time.format.DateTimeParseException;
+import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -183,8 +184,8 @@ public class AirlineCommandTest {
         assertThat(rv.options.stream().anyMatch(o -> o.contains("airline.txt")), is(true));
     }
 
-    @Test
-    public void invalidTextFileNameSucceeds() {
+    @Test (expected = IllegalArgumentException.class)
+    public void invalidTextFileNameFails() {
         InputModel rv = AirlineCommand.parse(new String[]{
                 "-textFile",
                 "",
@@ -197,6 +198,49 @@ public class AirlineCommandTest {
                 "12/12/1212",
                 "12:12"
         });
-        assertThat(rv.options.stream().anyMatch(o -> o.contains("-textFile")), is(true));
+    }
+
+    @Test
+    public void fileNameCheckSucceeds() {
+        InputModel model = new InputModel();
+        model.options = new ArrayList<String>();
+        model.options.add("-textFile");
+        model.options.add("airline.txt");
+        model.airline = "Airline";
+
+        AirlineCommand.compareFileName(model);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void fileNameCheckFails() {
+        InputModel model = new InputModel();
+        model.options = new ArrayList<String>();
+        model.options.add("-textFile");
+        model.options.add("invalid-name.txt");
+        model.airline = "Airline";
+
+        AirlineCommand.compareFileName(model);
+    }
+
+    @Test
+    public void longFileNameCheckSucceeds() {
+        InputModel model = new InputModel();
+        model.options = new ArrayList<String>();
+        model.options.add("-textFile");
+        model.options.add("long-airline.txt");
+        model.airline = "'Long Airline'";
+
+        AirlineCommand.compareFileName(model);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void longFileNameCheckFails() {
+        InputModel model = new InputModel();
+        model.options = new ArrayList<String>();
+        model.options.add("-textFile");
+        model.options.add("invalid-name.txt");
+        model.airline = "'Long Airline'";
+
+        AirlineCommand.compareFileName(model);
     }
 }

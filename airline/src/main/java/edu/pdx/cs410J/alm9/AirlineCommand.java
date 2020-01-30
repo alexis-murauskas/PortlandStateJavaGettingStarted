@@ -19,7 +19,8 @@ public class AirlineCommand {
 
     public static final List<String> validOptions = Arrays.asList(
             "-README",
-            "-print"
+            "-print",
+            "-textFile"
     );
 
     /**
@@ -45,6 +46,9 @@ public class AirlineCommand {
         InputModel model =  parseArgs(arguments);
         model.options = options;
 
+        if (options.contains("-textFile"))
+            compareFileName(model);
+
         return model;
     }
 
@@ -66,7 +70,7 @@ public class AirlineCommand {
                 options.add(input[i]);
             }
             else if (input[i].startsWith("-"))
-                throw new IllegalArgumentException("options");
+                throw new IllegalArgumentException("Unknown command line option");
         }
 
         return options;
@@ -177,5 +181,10 @@ public class AirlineCommand {
     private static String checkDateTime(String input) {
         LocalDateTime.parse(input, Flight.DATEFORMAT);
         return input;
+    }
+
+    public static void compareFileName(InputModel model) {
+        if(!model.options.stream().anyMatch(o -> o.contains(TextDumper.fileFormatAirlineName(model.airline))))
+            throw new IllegalArgumentException("File name is invalid");
     }
 }

@@ -1,6 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
 import static org.hamcrest.CoreMatchers.is;
+import static org.hamcrest.CoreMatchers.nullValue;
 import static org.hamcrest.MatcherAssert.assertThat;
 import edu.pdx.cs410J.ParserException;
 import org.junit.Test;
@@ -12,7 +13,7 @@ public class TextParserTest {
     public void nonExistentFileNameDoesNotThrowException() {
         TextParser<Airline<Flight>> parser = new TextParser<>("does-not-exist.txt");
         try {
-            parser.parse();
+            assertThat(parser.parse(), nullValue());
         } catch (ParserException e) {
             assert(false);
         }

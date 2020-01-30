@@ -192,5 +192,55 @@ public class Project2IT extends InvokeMainTestCase {
         assertThat(result.getExitCode(), equalTo(0));
     }
 
+    @Test
+    public void testLongTextFileNameSuccess() {
+        MainMethodResult result = invokeMain(
+                "-textFile",
+                "airline-name.txt",
+                "'Airline",
+                "Name'",
+                "1",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12");
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void testInvalidTextFileName() {
+        MainMethodResult result = invokeMain(
+                "-textFile",
+                "invalid.txt",
+                "Airline",
+                "1",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12");
+        assertThat(result.getExitCode(), equalTo(1));
+    }
+
+    @Test
+    public void testTextFileWithOptions() {
+        MainMethodResult result = invokeMain(
+                "-print",
+                "-textFile",
+                "airline.txt",
+                "Airline",
+                "1",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12");
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
 
 }
