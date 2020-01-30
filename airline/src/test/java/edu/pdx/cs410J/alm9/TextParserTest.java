@@ -7,7 +7,7 @@ import edu.pdx.cs410J.ParserException;
 import org.junit.Test;
 
 public class TextParserTest {
-    public static String testDir = "resources/test/";
+    public static String testDir = "proj2-test/";
 
     @Test
     public void nonExistentFileNameDoesNotThrowException() {
