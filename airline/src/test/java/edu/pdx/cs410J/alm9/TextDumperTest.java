@@ -7,8 +7,6 @@ import java.time.LocalDateTime;
 
 public class TextDumperTest {
 
-    private static String prefix = "dumper-";
-
     private Flight flight1 = new Flight(
             1,
             "SRC",

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class TextParserTest {
 
-    public static String prefix = "parser-";
+    public static String prefix = "src/test/resources/edu/pdx/cs410J/alm9/parser-";
 
     @Test
     public void nonExistentFileNameDoesNotThrowException() {

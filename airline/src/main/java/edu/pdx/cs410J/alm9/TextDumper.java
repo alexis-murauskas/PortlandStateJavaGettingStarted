@@ -10,7 +10,9 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> implements AirlineDumper<T> {
+
     private String fileName;
+
     public TextDumper(String fileName) {
         this.fileName = fileName;
     }
@@ -50,16 +52,5 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
         } catch (Exception e) {
             throw new IOException(e);
         }
-    }
-
-    /**
-     * Ensures that all files will be formatted in the same way, which is airline name follows by .txt.
-     * @param airline the name of the airline before formatting
-     * @return a formatted string
-     */
-    public static String fileFormatAirlineName (String airline) {
-        return airline.toLowerCase()
-                .replace(" ", "-")
-                .replace("'", "");
     }
 }
