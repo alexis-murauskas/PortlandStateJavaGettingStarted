@@ -10,7 +10,10 @@ import java.io.IOException;
 import java.util.stream.Collectors;
 
 public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> implements AirlineDumper<T> {
-    public static String ext = ".txt";
+    private String fileName;
+    public TextDumper(String fileName) {
+        this.fileName = fileName;
+    }
 
     /**
      * Given an airline object, dump will write it out to a file based on the name of the airline.
@@ -22,10 +25,8 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
         if (airline == null)
             throw new IOException();
 
-        String name = fileFormatAirlineName(airline.getName());
-
         try {
-            File file = new File(name);
+            File file = new File(this.fileName);
             var isNew = file.createNewFile();
             FileWriter writer = new FileWriter(file, true);
 
@@ -59,7 +60,6 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
     public static String fileFormatAirlineName (String airline) {
         return airline.toLowerCase()
                 .replace(" ", "-")
-                .replace("'", "")
-                + ext;
+                .replace("'", "");
     }
 }

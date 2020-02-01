@@ -35,7 +35,7 @@ public class Project2 {
             model = AirlineCommand.parse(args);
 
         } catch (NumberFormatException e) {
-            System.err.println("Flight code is not numerical");
+            System.err.println("Flight code isn't an integer");
             System.exit(1);
         } catch (DateTimeParseException e) {
             System.err.println("Time is malformatted");
@@ -83,7 +83,7 @@ public class Project2 {
         // Write out to file
         try {
             if (model.options.contains("-textFile")) {
-                TextDumper<Airline<Flight>, Flight> dumper = new TextDumper();
+                TextDumper<Airline<Flight>, Flight> dumper = new TextDumper(fileName);
                 dumper.dump(airline);
             }
         } catch (Exception e) {

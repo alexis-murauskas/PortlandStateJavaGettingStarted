@@ -1,10 +1,12 @@
 package edu.pdx.cs410J.alm9;
 
+import java.io.File;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Scanner;
 import java.util.stream.Collectors;
 
 public class AirlineCommand {
@@ -12,8 +14,10 @@ public class AirlineCommand {
     private static final int FLIGHT = 0;
     private static final int SRC = 1;
     private static final int DEPART = 2;
+    private static final int DPTTIME = 3;
     private static final int DEST = 4;
     private static final int ARRIVE = 5;
+    private static final int ARVTIME = 6;
 
     private static final int CODELEN = 3;
 
@@ -31,11 +35,11 @@ public class AirlineCommand {
      * @param input String array of user input, including options and arguments.
      * @return Returns input organized into a model if all error checks pass.
      * @throws ArrayIndexOutOfBoundsException if something goes wrong in parsing options or Airline Name
-     * because of invalid user input
-     * @throws IllegalArgumentException if Airport Code is the incorrect length
-     * or contains non-alphabetic characters
-     * @throws DateTimeParseException if the date and/or time are improperly formatted
-     * @throws NumberFormatException if the Flight Code is not numerical
+     *                                        because of invalid user input
+     * @throws IllegalArgumentException       if Airport Code is the incorrect length
+     *                                        or contains non-alphabetic characters
+     * @throws DateTimeParseException         if the date and/or time are improperly formatted
+     * @throws NumberFormatException          if the Flight Code is not numerical
      */
     public static InputModel parse(String[] input) {
         if (input == null)
@@ -43,7 +47,7 @@ public class AirlineCommand {
 
         ArrayList<String> options = parseOptions(input);
         String[] arguments = trimArguments(options, input);
-        InputModel model =  parseArgs(arguments);
+        InputModel model = parseArgs(arguments);
         model.options = options;
 
         if (options.contains("-textFile"))
@@ -55,6 +59,7 @@ public class AirlineCommand {
     /**
      * ParseOptions checks for optional flags from the user and adds them if they correctly denoted with
      * a leading hyphen and if they are among the listed valid options.
+     *
      * @param input User input that has been forwarded by Parse.
      * @return A list of extracted options to be placed into the InputModel.
      */
@@ -64,12 +69,10 @@ public class AirlineCommand {
         for (var i = 0; i < input.length; i++) {
             if (input[i].contains("-textFile")) {
                 options.add(input[i]);
-                options.add(input[i+1]);
-            }
-            else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
+                options.add(input[i + 1]);
+            } else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
                 options.add(input[i]);
-            }
-            else if (input[i].startsWith("-"))
+            } else if (input[i].startsWith("-"))
                 throw new IllegalArgumentException("Unknown command line option");
         }
 
@@ -81,7 +84,7 @@ public class AirlineCommand {
      * extracting items of variable length, such as options and the Airline Name.
      *
      * @param toRemove A list of already evaluated items.
-     * @param input Current array of user input.
+     * @param input    Current array of user input.
      * @return User input with already evaluated arguments removed.
      */
     private static String[] trimArguments(ArrayList<String> toRemove, String[] input) {
@@ -91,6 +94,7 @@ public class AirlineCommand {
     /**
      * ParseArgs checks if flight arguments are present and then evaluates them to be placed into the
      * InputModel.
+     *
      * @param input Current array of user input, possibly with options removed.
      * @return If all input items pass checks, an InputModel with the items included will be returned.
      */
@@ -105,9 +109,12 @@ public class AirlineCommand {
         model.airline = stringifyList(airline);
         model.flightNumber = checkFlight(args[FLIGHT]);
         model.source = checkAirportCode(args[SRC]);
-        model.departureTime = checkDateTime(args[DEPART] + " " + args[DEPART+1]);
+        model.departureTime = checkDateTime(args[DEPART] + " " + args[DPTTIME]);
         model.destination = checkAirportCode(args[DEST]);
-        model.arrivalTime = checkDateTime(args[ARRIVE] + " " + args[ARRIVE+1]);
+        model.arrivalTime = checkDateTime(args[ARRIVE] + " " + args[ARVTIME]);
+
+        if (args.length > ARVTIME + 1)
+            throw new IllegalArgumentException("Unknown command line argument");
 
         return model;
     }
@@ -127,7 +134,7 @@ public class AirlineCommand {
         if (!input[AIRLINE].startsWith("'"))
             return airline;
 
-        for (i = AIRLINE+1; i < input.length && !input[i].endsWith("'"); i++)
+        for (i = AIRLINE + 1; i < input.length && !input[i].endsWith("'"); i++)
             airline.add(input[i]);
 
         airline.add(input[i]);
@@ -137,6 +144,7 @@ public class AirlineCommand {
     /**
      * StringifyList is a helper function for parseAirline that collects all the strings in the name into
      * a single string.
+     *
      * @param list A list of strings.
      * @return All strings in the list collected into one string, with words separated by spaces.
      */
@@ -158,8 +166,8 @@ public class AirlineCommand {
 
     /**
      * Checks an Airport Code to make sure that it only contains letters and has a length of 3.
-     * @param input Input representing an Airport Code.
      *
+     * @param input Input representing an Airport Code.
      * @return The same input string.
      */
     private static String checkAirportCode(String input) {
@@ -184,7 +192,24 @@ public class AirlineCommand {
     }
 
     public static void compareFileName(InputModel model) {
-        if(!model.options.stream().anyMatch(o -> o.contains(TextDumper.fileFormatAirlineName(model.airline))))
-            throw new IllegalArgumentException("File name is invalid");
+        String airline = null;
+
+        try {
+            int fileIndex = model.options.indexOf("-textFile")+1;
+            String fileName = model.options.get(fileIndex);
+            File file = new File(fileName);
+            Scanner reader = new Scanner(file);
+
+            if (reader.hasNextLine())
+                airline = reader.nextLine();
+
+            reader.close();
+
+        } catch (Exception e) {
+            return;
+        }
+
+        if (!airline.equals(model.airline))
+            throw new IllegalArgumentException("Airline name does not match file contents");
     }
 }

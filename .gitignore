@@ -40,3 +40,13 @@ dependency-reduced-pom.xml
 */app/config/file_hashes.dat
 */app/data/
 airline/src/main/java/edu/pdx/cs410J/alm9/Resources/airline.txt
+
+airline/airline.txt
+
+airline/long-name.txt
+
+airline/multiple-flights.txt
+
+airline/multipleflights.txt
+
+airline/new-file.txt

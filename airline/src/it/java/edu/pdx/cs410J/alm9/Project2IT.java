@@ -126,7 +126,7 @@ public class Project2IT extends InvokeMainTestCase {
                 "12/12/1212",
                 "12:12");
         assertThat(result.getExitCode(), equalTo(1));
-        assertThat(result.getTextWrittenToStandardError(), containsString("Flight code is not numerical"));
+        assertThat(result.getTextWrittenToStandardError(), containsString("Flight code isn't an integer"));
     }
 
     @Test
@@ -210,10 +210,10 @@ public class Project2IT extends InvokeMainTestCase {
     }
 
     @Test
-    public void testInvalidTextFileName() {
+    public void testNewTextFileName() {
         MainMethodResult result = invokeMain(
                 "-textFile",
-                "invalid.txt",
+                "new-file.txt",
                 "Airline",
                 "1",
                 "Src",
@@ -222,7 +222,7 @@ public class Project2IT extends InvokeMainTestCase {
                 "Dst",
                 "12/12/1212",
                 "12:12");
-        assertThat(result.getExitCode(), equalTo(1));
+        assertThat(result.getExitCode(), equalTo(0));
     }
 
     @Test

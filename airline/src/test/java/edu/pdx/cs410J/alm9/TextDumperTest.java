@@ -6,6 +6,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class TextDumperTest {
+
+    private static String prefix = "dumper-";
+
     private Flight flight1 = new Flight(
             1,
             "SRC",
@@ -23,7 +26,7 @@ public class TextDumperTest {
 
     @Test
     public void nullArgThrowsException() {
-        TextDumper sut = new TextDumper();
+        TextDumper sut = new TextDumper("");
         try {
             sut.dump(null);
         } catch (IOException e) {
@@ -35,7 +38,7 @@ public class TextDumperTest {
     @Test
     public void validArgDoesNotThrowException() {
         Airline<Flight> airline = new Airline("Airline");
-        TextDumper<Airline<Flight>, Flight> sut = new TextDumper();
+        TextDumper<Airline<Flight>, Flight> sut = new TextDumper("airline.txt");
         airline.addFlight(flight1);
 
         try {
@@ -48,7 +51,7 @@ public class TextDumperTest {
     @Test
     public void airlineWithMultipleFlights() {
         Airline<Flight> airline = new Airline("MultipleFlights");
-        TextDumper<Airline<Flight>, Flight> sut = new TextDumper();
+        TextDumper<Airline<Flight>, Flight> sut = new TextDumper("multiple-flights.txt");
 
         airline.addFlight(flight1);
         airline.addFlight(flight2);
@@ -63,7 +66,7 @@ public class TextDumperTest {
     @Test
     public void airlineWithLongName() {
         Airline<Flight> airline = new Airline("'Long Name'");
-        TextDumper<Airline<Flight>, Flight> sut = new TextDumper();
+        TextDumper<Airline<Flight>, Flight> sut = new TextDumper("long-name.txt");
 
         airline.addFlight(flight1);
         airline.addFlight(flight2);

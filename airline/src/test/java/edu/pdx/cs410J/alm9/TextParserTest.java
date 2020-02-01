@@ -1,13 +1,13 @@
 package edu.pdx.cs410J.alm9;
 
-import static org.hamcrest.CoreMatchers.is;
-import static org.hamcrest.CoreMatchers.nullValue;
+import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
 import edu.pdx.cs410J.ParserException;
 import org.junit.Test;
 
 public class TextParserTest {
-    public static String testDir = "proj2-test/";
+
+    public static String prefix = "parser-";
 
     @Test
     public void nonExistentFileNameDoesNotThrowException() {
@@ -21,7 +21,7 @@ public class TextParserTest {
 
     @Test
     public void correctFileNameDoesNotThrowException() {
-        TextParser<Airline<Flight>> parser = new TextParser<>(this.testDir + "airline.txt");
+        TextParser<Airline<Flight>> parser = new TextParser<>(prefix+"airline.txt");
         try {
             parser.parse();
         } catch (ParserException e) {
@@ -31,7 +31,7 @@ public class TextParserTest {
 
     @Test
     public void singleWordAirlineNameReturnsAirline() {
-        TextParser<Airline<Flight>> parser = new TextParser<>(this.testDir + "airline.txt");
+        TextParser<Airline<Flight>> parser = new TextParser<>(prefix+"airline.txt");
         try {
             assertThat(parser.parse().getName(), is("Airline"));
         } catch (ParserException e) {
@@ -41,9 +41,9 @@ public class TextParserTest {
 
     @Test
     public void multiWordAirlineNameReturnsAirline() {
-        TextParser<Airline<Flight>> parser = new TextParser<>(this.testDir + "long-airline.txt");
+        TextParser<Airline<Flight>> parser = new TextParser<>(prefix+"long-name.txt");
         try {
-            assertThat(parser.parse().getName(), is("'Airline Name'"));
+            assertThat(parser.parse().getName(), is("'Long Airline'"));
         } catch (ParserException e) {
             assert(false);
         }
@@ -51,9 +51,9 @@ public class TextParserTest {
 
     @Test
     public void multipleFlightsAreAddedSuccessfully() {
-        TextParser<Airline<Flight>> parser = new TextParser<>(this.testDir + "airline.txt");
+        TextParser<Airline<Flight>> parser = new TextParser<>(prefix+"airline.txt");
         try {
-            assertThat(parser.parse().getFlights().size(), is(2));
+            assertThat(parser.parse().getFlights().size(), not(0));
         } catch (ParserException e) {
             assert(false);
         }
@@ -61,7 +61,7 @@ public class TextParserTest {
 
     @Test
     public void airlineCanHaveNoFlightsAdded() {
-        TextParser<Airline<Flight>> parser = new TextParser<>(this.testDir + "long-airline.txt");
+        TextParser<Airline<Flight>> parser = new TextParser<>(prefix+"long-name.txt");
         try {
             assertThat(parser.parse().getFlights().size(), is(0));
         } catch (ParserException e) {
@@ -71,7 +71,7 @@ public class TextParserTest {
 
     @Test
     public void malformattedFileThrowsException() {
-        TextParser<Airline<Flight>> parser = new TextParser<>(this.testDir + "malformatted.txt");
+        TextParser<Airline<Flight>> parser = new TextParser<>(prefix+"malformatted.txt");
         try {
             parser.parse();
         } catch (ParserException e) {
