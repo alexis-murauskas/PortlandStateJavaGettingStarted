@@ -4,10 +4,13 @@ import edu.pdx.cs410J.AbstractFlight;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Date;
 
-public class Flight extends AbstractFlight {
+public class Flight<T extends AbstractFlight> extends AbstractFlight implements Comparable<T> {
 
     public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
+    public static final DateTimeFormatter PRINTFORMAT = DateTimeFormatter.ofPattern("MM/dd/yy KK:mm a");
+
     private int flightNumber;
     private String source;
     private LocalDateTime departureTime;
@@ -42,6 +45,10 @@ public class Flight extends AbstractFlight {
         return this.source;
     }
 
+    public Date getDepature() {
+        return new Date();
+    }
+
     /**
      * Returns the date and time of departure.
      * @return Formatted time and date.
@@ -63,6 +70,10 @@ public class Flight extends AbstractFlight {
         return this.destination;
     }
 
+    public Date getArrival() {
+        return new Date();
+    }
+
     /**
      * Returns the date and time of the arrival.
      * @return A formatted date and time.
@@ -73,5 +84,10 @@ public class Flight extends AbstractFlight {
             return null;
 
         return this.arrivalTime.format(DATEFORMAT);
+    }
+
+    @Override
+    public int compareTo(T t) {
+        return 0;
     }
 }
