@@ -2,7 +2,7 @@ package edu.pdx.cs410J.alm9;
 
 import org.junit.Test;
 
-import java.time.format.DateTimeParseException;
+import java.text.ParseException;
 import java.util.ArrayList;
 
 import static org.hamcrest.CoreMatchers.is;
@@ -62,52 +62,52 @@ public class AirlineCommandTest {
     };
 
     @Test (expected = NullPointerException.class)
-    public void attemptingToParseNullThrowsException() {
+    public void attemptingToParseNullThrowsException() throws ParseException {
         AirlineCommand.parse(null);
     }
 
     @Test
-    public void validStringDoesNotThrowException() {
+    public void validStringDoesNotThrowException() throws ParseException {
         AirlineCommand.parse(new String[]{"-README"});
     }
 
     @Test
-    public void inputWithOptionsReturnsSameOptionsInModel() {
+    public void inputWithOptionsReturnsSameOptionsInModel() throws ParseException {
         InputModel rv = AirlineCommand.parse(new String[]{"-README"});
         assertThat(rv.options.contains("-README"), is(true));
     }
 
     @Test
-    public void inputWithoutOptionsReturnsEmptyOptionsInModel() {
+    public void inputWithoutOptionsReturnsEmptyOptionsInModel() throws ParseException {
         InputModel rv = AirlineCommand.parse(inputWithoutOptions);
         assertThat(rv.options.isEmpty(), is(true));
     }
 
     @Test
-    public void airlineWithoutQuotesIsSuccessful() {
+    public void airlineWithoutQuotesIsSuccessful() throws ParseException {
         InputModel rv = AirlineCommand.parse(input);
         assertThat(rv.airline, is("Airline"));
     }
 
     @Test
-    public void airlineWithQuotesIsSuccessful() {
+    public void airlineWithQuotesIsSuccessful() throws ParseException {
         InputModel rv = AirlineCommand.parse(inputWithQuotes);
         assertThat(rv.airline, is("'Airline Name'"));
     }
 
     @Test (expected = ArrayIndexOutOfBoundsException.class)
-    public void badlyFormedAirlineThrowsException() {
+    public void badlyFormedAirlineThrowsException() throws ParseException {
         AirlineCommand.parse(badInput);
     }
 
     @Test
-    public void correctFlightNumberDoesNotThrowException() {
+    public void correctFlightNumberDoesNotThrowException() throws ParseException {
         InputModel rv = AirlineCommand.parse(input);
         assertThat(rv.flightNumber, is("1"));
     }
 
     @Test (expected = NumberFormatException.class)
-    public void flightNumberCantBeALetter() {
+    public void flightNumberCantBeALetter() throws ParseException {
         String[] badFlight = new String[]{
                 "-README",
                 "Airline",
@@ -124,7 +124,7 @@ public class AirlineCommandTest {
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void unknownCommandLineArgument() {
+    public void unknownCommandLineArgument() throws ParseException {
         String[] badFlight = new String[]{
                 "-README",
                 "Airline",
@@ -142,13 +142,13 @@ public class AirlineCommandTest {
     }
 
     @Test
-    public void validAirportCodeDoesNotThrowException() {
+    public void validAirportCodeDoesNotThrowException() throws ParseException {
         InputModel rv = AirlineCommand.parse(inputWithQuotes);
         assertThat(rv.source, is("Src"));
     }
 
     @Test (expected = IllegalArgumentException.class)
-    public void invalidAirportCodeThrowsException() {
+    public void invalidAirportCodeThrowsException() throws ParseException {
         InputModel rv = AirlineCommand.parse(new String[]{
                 "-README",
                 "Airline",
@@ -162,8 +162,8 @@ public class AirlineCommandTest {
         });
     }
 
-    @Test (expected = DateTimeParseException.class)
-    public void invalidDateTimeThrowsException() {
+    @Test (expected = ParseException.class)
+    public void invalidDateTimeThrowsException() throws ParseException {
         String[] badTime = new String[]{
                 "-README",
                 "'Airline",
@@ -181,13 +181,13 @@ public class AirlineCommandTest {
     }
 
     @Test
-    public void validDateTimeSucceeds() {
+    public void validDateTimeSucceeds() throws ParseException {
         InputModel rv = AirlineCommand.parse(input);
         assertThat(rv.departureTime, is("11/11/1111 11:11"));
     }
 
     @Test
-    public void validTextFileNameSucceeds() {
+    public void validTextFileNameSucceeds() throws ParseException {
         InputModel rv = AirlineCommand.parse(new String[]{
                 "-textFile",
                 prefix+"airline.txt",
@@ -206,7 +206,7 @@ public class AirlineCommandTest {
 
 
     @Test (expected = NumberFormatException.class)
-    public void invalidTextFileNameFails() {
+    public void invalidTextFileNameFails() throws ParseException {
         AirlineCommand.parse(new String[]{
                 "-textFile",
                 "Airline",

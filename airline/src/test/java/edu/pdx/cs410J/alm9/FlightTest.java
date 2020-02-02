@@ -2,8 +2,8 @@ package edu.pdx.cs410J.alm9;
 
 import org.junit.Test;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 
 import static org.hamcrest.CoreMatchers.*;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -32,14 +32,14 @@ public class FlightTest {
     }
 
     @Test
-    public void initializedFlightReturnsValues() {
-        DateTimeFormatter formatter = Flight.DATEFORMAT;
+    public void initializedFlightReturnsValues() throws ParseException {
+        SimpleDateFormat formatter = Flight.PARSEFORMAT;
         Flight flight = new Flight(
                 1,
                 "SRC",
-                LocalDateTime.parse("11/11/1111 11:11", formatter),
+                formatter.parse("11/11/1111 11:11"),
                 "DST",
-                LocalDateTime.parse("12/12/1212 12:12", formatter)
+                formatter.parse("12/12/1212 12:12")
         );
 
         assertThat(flight.getNumber(), is(1));

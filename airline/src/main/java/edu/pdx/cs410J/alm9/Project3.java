@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.alm9;
 
+import java.text.ParseException;
 import java.time.format.DateTimeParseException;
 
 public class Project3 {
@@ -39,14 +40,14 @@ public class Project3 {
         } catch (NumberFormatException e) {
             System.err.println("Flight code isn't an integer");
             System.exit(1);
-        } catch (DateTimeParseException e) {
-            System.err.println("Time is malformatted");
-            System.exit(1);
         } catch (IllegalArgumentException e) {
             System.err.println(e.getMessage());
             System.exit(1);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Arguments could not be parsed");
+            System.exit(1);
+        } catch (ParseException e) {
+            System.err.println("Time is malformatted");
             System.exit(1);
         }
 

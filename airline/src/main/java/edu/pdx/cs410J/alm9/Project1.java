@@ -1,5 +1,6 @@
 package edu.pdx.cs410J.alm9;
 
+import java.text.ParseException;
 import java.time.format.DateTimeParseException;
 
 /**
@@ -53,6 +54,11 @@ public class Project1 {
         }
         catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Arguments could not be parsed");
+            System.exit(1);
+        }
+        catch (
+                ParseException e) {
+            System.err.println("Time is malformatted");
             System.exit(1);
         }
 

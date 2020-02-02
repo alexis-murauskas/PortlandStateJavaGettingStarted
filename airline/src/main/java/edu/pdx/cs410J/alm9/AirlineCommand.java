@@ -1,7 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
 import java.io.File;
-import java.time.LocalDateTime;
+import java.text.ParseException;
 import java.time.format.DateTimeParseException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -41,7 +41,7 @@ public class AirlineCommand {
      * @throws DateTimeParseException         if the date and/or time are improperly formatted
      * @throws NumberFormatException          if the Flight Code is not numerical
      */
-    public static InputModel parse(String[] input) {
+    public static InputModel parse(String[] input) throws ParseException {
         if (input == null)
             throw new NullPointerException();
 
@@ -98,7 +98,7 @@ public class AirlineCommand {
      * @param input Current array of user input, possibly with options removed.
      * @return If all input items pass checks, an InputModel with the items included will be returned.
      */
-    private static InputModel parseArgs(String[] input) {
+    private static InputModel parseArgs(String[] input) throws ParseException {
         InputModel model = new InputModel();
         if (input.length == 0)
             return model;
@@ -186,8 +186,8 @@ public class AirlineCommand {
      * @param input Input representing a date and time.
      * @return The same input string.
      */
-    private static String checkDateTime(String input) {
-        LocalDateTime.parse(input, Flight.DATEFORMAT);
+    private static String checkDateTime(String input) throws ParseException {
+        Flight.PARSEFORMAT.parse(input);
         return input;
     }
 

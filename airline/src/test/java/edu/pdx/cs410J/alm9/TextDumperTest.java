@@ -3,6 +3,7 @@ package edu.pdx.cs410J.alm9;
 import org.junit.Test;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.time.LocalDateTime;
 
 public class TextDumperTest {
@@ -10,17 +11,20 @@ public class TextDumperTest {
     private Flight flight1 = new Flight(
             1,
             "SRC",
-            LocalDateTime.parse("11/11/1111 11:11", Flight.DATEFORMAT),
+            Flight.PARSEFORMAT.parse("11/11/1111 11:11"),
             "DST",
-            LocalDateTime.parse("12/12/1212 12:12", Flight.DATEFORMAT)
+            Flight.PARSEFORMAT.parse("12/12/1212 12:12")
     );
     private Flight flight2 = new Flight(
             2,
             "SRC2",
-            LocalDateTime.parse("11/11/1111 11:11", Flight.DATEFORMAT),
+            Flight.PARSEFORMAT.parse("11/11/1111 11:11"),
             "DST2",
-            LocalDateTime.parse("12/12/1212 12:12", Flight.DATEFORMAT)
+            Flight.PARSEFORMAT.parse("12/12/1212 12:12")
     );
+
+    public TextDumperTest() throws ParseException {
+    }
 
     @Test
     public void nullArgThrowsException() {

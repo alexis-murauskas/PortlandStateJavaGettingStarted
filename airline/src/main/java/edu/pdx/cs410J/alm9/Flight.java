@@ -2,6 +2,7 @@ package edu.pdx.cs410J.alm9;
 
 import edu.pdx.cs410J.AbstractFlight;
 
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Date;
@@ -9,23 +10,28 @@ import java.util.Date;
 public class Flight<T extends AbstractFlight> extends AbstractFlight implements Comparable<T> {
 
     public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-    public static final DateTimeFormatter PRINTFORMAT = DateTimeFormatter.ofPattern("MM/dd/yy KK:mm a");
+
+    public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm");
+    public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy KK:mm a");
 
     private int flightNumber;
     private String source;
     private LocalDateTime departureTime;
+    private Date departure;
+
     private String destination;
     private LocalDateTime arrivalTime;
+    private Date arrival;
 
     public Flight() {
     }
 
-    public Flight(int flightNumber, String source, LocalDateTime departureTime, String destination, LocalDateTime arrivalTime) {
+    public Flight(int flightNumber, String source, Date departure, String destination, Date arrival) {
         this.flightNumber = flightNumber;
         this.source = source;
-        this.departureTime = departureTime;
+        this.departure = departure;
         this.destination = destination;
-        this.arrivalTime = arrivalTime;
+        this.arrival = arrival;
     }
 
     /**
@@ -45,8 +51,8 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
         return this.source;
     }
 
-    public Date getDepature() {
-        return new Date();
+    public Date getDeparture() {
+        return this.departure;
     }
 
     /**
@@ -55,10 +61,10 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
      */
     @Override
     public String getDepartureString() {
-        if (this.departureTime == null)
+        if (this.departure == null)
             return null;
 
-        return this.departureTime.format(DATEFORMAT);
+        return this.PARSEFORMAT.format(this.departure);
     }
 
     /**
@@ -71,7 +77,7 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
     }
 
     public Date getArrival() {
-        return new Date();
+        return this.arrival;
     }
 
     /**
@@ -80,10 +86,10 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
      */
     @Override
     public String getArrivalString() {
-        if (this.arrivalTime == null)
+        if (this.arrival == null)
             return null;
 
-        return this.arrivalTime.format(DATEFORMAT);
+        return this.PARSEFORMAT.format(this.arrival);
     }
 
     @Override
