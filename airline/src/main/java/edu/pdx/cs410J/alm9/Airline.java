@@ -9,6 +9,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.stream.Collectors;
 
 public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     private String name;
@@ -56,7 +57,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
         );
 
         this.flights.add((T) flight);
-        this.flights.stream().sorted();
+        this.flights = this.flights.stream().sorted(new FlightComparator<AbstractFlight>()).collect(Collectors.toList());
         return (T) flight;
     }
 

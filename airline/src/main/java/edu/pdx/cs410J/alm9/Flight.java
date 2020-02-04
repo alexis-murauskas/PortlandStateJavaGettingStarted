@@ -3,11 +3,9 @@ package edu.pdx.cs410J.alm9;
 import edu.pdx.cs410J.AbstractFlight;
 
 import java.text.SimpleDateFormat;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.Date;
 
-public class Flight<T extends AbstractFlight> extends AbstractFlight implements Comparable<T> {
+public class Flight<T extends AbstractFlight> extends AbstractFlight implements AbstractComparable<T> {
 
     public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy KK:mm a");
