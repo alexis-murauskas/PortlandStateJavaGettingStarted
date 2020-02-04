@@ -16,7 +16,8 @@ public class FlightTest {
     @Test
     public void flightsMayBeInitializedToNull() {
         Flight flight = new Flight();
-        flight.getArrivalString();
+
+        assertThat(flight.getArrivalString(), nullValue());
     }
 
     @Test
@@ -43,9 +44,9 @@ public class FlightTest {
         );
 
         assertThat(flight.getNumber(), is(1));
-        assertThat(flight.getSource() == "SRC", is(true));
-        assertThat(flight.getDepartureString(), isA(String.class));
+        assertThat(flight.getSource().equals("SRC"), is(true));
+        assertThat(flight.getDepartureString().equals("11/11/1111 11:11"), is(false));
+        assertThat(flight.getArrivalString().equals("12/12/1212 12:12"), is(false));
+        assertThat(Flight.PRETTYFORMAT.format(flight.getDeparture()).equals("11/11/11 11:11 AM"), is(true));
     }
-
-
 }

@@ -40,9 +40,9 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
                     .map(
                             f -> "\n" + f.getNumber()
                                     + ";" + f.getSource()
-                                    + ";" + f.getDepartureString().replace(" ", ";")
+                                    + ";" + Flight.PARSEFORMAT.format(f.getDeparture()).replace(" ", ";")
                                     + ";" + f.getDestination()
-                                    + ";" + f.getArrivalString().replace(" ", ";")
+                                    + ";" + Flight.PARSEFORMAT.format(f.getArrival()).replace(" ", ";")
                     )
                     .collect(Collectors.joining(""));
 

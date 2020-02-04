@@ -56,7 +56,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
         );
 
         this.flights.add((T) flight);
-
+        this.flights.stream().sorted();
         return (T) flight;
     }
 

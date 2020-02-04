@@ -9,18 +9,13 @@ import java.util.Date;
 
 public class Flight<T extends AbstractFlight> extends AbstractFlight implements Comparable<T> {
 
-    public static final DateTimeFormatter DATEFORMAT = DateTimeFormatter.ofPattern("MM/dd/yyyy HH:mm");
-
     public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy KK:mm a");
 
     private int flightNumber;
     private String source;
-    private LocalDateTime departureTime;
     private Date departure;
-
     private String destination;
-    private LocalDateTime arrivalTime;
     private Date arrival;
 
     public Flight() {
@@ -64,7 +59,7 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
         if (this.departure == null)
             return null;
 
-        return this.PARSEFORMAT.format(this.departure);
+        return this.PRETTYFORMAT.format(this.departure);
     }
 
     /**
@@ -89,11 +84,16 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
         if (this.arrival == null)
             return null;
 
-        return this.PARSEFORMAT.format(this.arrival);
+        return this.PRETTYFORMAT.format(this.arrival);
     }
 
     @Override
     public int compareTo(T t) {
-        return 0;
+        int rv = this.source.compareToIgnoreCase(t.getSource());
+
+        if (rv == 0)
+            rv = this.departure.compareTo(t.getDeparture());
+
+        return rv;
     }
 }
