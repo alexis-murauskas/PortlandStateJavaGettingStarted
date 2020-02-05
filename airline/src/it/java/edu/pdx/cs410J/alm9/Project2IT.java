@@ -10,6 +10,7 @@ import static org.hamcrest.MatcherAssert.assertThat;
 /**
  * An integration test for the {@link Project2} main class.
  */
+
 public class Project2IT extends InvokeMainTestCase {
 
     /**
@@ -22,6 +23,7 @@ public class Project2IT extends InvokeMainTestCase {
     /**
      * Tests that invoking the main method with no arguments issues an error
      */
+
     @Test
     public void testNoCommandLineArguments() {
         MainMethodResult result = invokeMain();
