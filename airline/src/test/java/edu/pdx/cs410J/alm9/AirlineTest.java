@@ -49,7 +49,7 @@ public class AirlineTest {
     }
 
     @Test
-    public void airlineWithMultipleFlights() throws ParseException {
+    public void airlineWithMultipleFlightsCorrectlySorts() throws ParseException {
         SimpleDateFormat formatter = Flight.PARSEFORMAT;
         Flight flight1 = new Flight(
                 1,
@@ -81,5 +81,7 @@ public class AirlineTest {
         airline.addFlight(flight3);
 
         assertThat(airline.getFlights().toArray()[0], equalTo(flight2));
+        assertThat(airline.getFlights().toArray()[1], equalTo(flight1));
+        assertThat(airline.getFlights().toArray()[2], equalTo(flight3));
     }
 }

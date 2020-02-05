@@ -3,15 +3,12 @@ package edu.pdx.cs410J.alm9;
 import edu.pdx.cs410J.AbstractAirline;
 import edu.pdx.cs410J.AbstractFlight;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.stream.Collectors;
 
-public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
+public class Airline<T extends AbstractFlight & AbstractComparable> extends AbstractAirline<T> {
     private String name;
     private Collection<T> flights = new ArrayList<T>();
 
@@ -41,6 +38,7 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
     @Override
     public void addFlight(T flight) {
         this.flights.add(flight);
+        this.flights = sortFlights(this.flights);
     }
 
     /**
@@ -57,8 +55,12 @@ public class Airline<T extends AbstractFlight> extends AbstractAirline<T> {
         );
 
         this.flights.add((T) flight);
-        this.flights = this.flights.stream().sorted(new FlightComparator<AbstractFlight>()).collect(Collectors.toList());
+        this.flights = sortFlights(this.flights);
         return (T) flight;
+    }
+
+    private Collection<T> sortFlights(Collection<T> flights) {
+        return flights.stream().sorted(new FlightComparator<>()).collect(Collectors.toList());
     }
 
     /**

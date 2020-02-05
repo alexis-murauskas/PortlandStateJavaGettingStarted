@@ -5,7 +5,7 @@ import edu.pdx.cs410J.AbstractFlight;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-public class Flight<T extends AbstractFlight> extends AbstractFlight implements AbstractComparable<T> {
+public class Flight<T extends AbstractFlight, Q extends Flight> extends AbstractFlight implements AbstractComparable<Q> {
 
     public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm");
     public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy KK:mm a");
@@ -86,11 +86,11 @@ public class Flight<T extends AbstractFlight> extends AbstractFlight implements 
     }
 
     @Override
-    public int compareTo(T t) {
-        int rv = this.source.compareToIgnoreCase(t.getSource());
+    public int compareTo(Q q) {
+        int rv = this.source.compareToIgnoreCase(q.getSource());
 
         if (rv == 0)
-            rv = this.departure.compareTo(t.getDeparture());
+            rv = this.departure.compareTo(q.getDeparture());
 
         return rv;
     }

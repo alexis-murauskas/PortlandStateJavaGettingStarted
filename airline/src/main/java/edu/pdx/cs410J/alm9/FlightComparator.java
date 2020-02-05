@@ -7,6 +7,6 @@ import java.util.Comparator;
 public class FlightComparator<T extends AbstractComparable> implements Comparator<T> {
     @Override
     public int compare(T t, T t1) {
-        return t.compareTo(t1);
+        return t.compareTo((Flight) t1);
     }
 }
