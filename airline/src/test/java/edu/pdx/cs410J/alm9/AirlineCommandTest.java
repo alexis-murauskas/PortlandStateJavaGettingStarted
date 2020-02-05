@@ -4,7 +4,6 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;

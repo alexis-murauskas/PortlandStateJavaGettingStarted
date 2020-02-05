@@ -41,10 +41,10 @@ public class Project1IT extends InvokeMainTestCase {
             "-README",
             "Airline",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(0));
@@ -57,10 +57,10 @@ public class Project1IT extends InvokeMainTestCase {
               "'Airline",
               "Name'",
               "1",
-              "Src",
+              "PDX",
               "11/11/",
               "1:11",
-              "Dst",
+              "ABQ",
               "12/12/1212",
               "12:12");
       assertThat(result.getExitCode(), equalTo(1));
@@ -72,10 +72,10 @@ public class Project1IT extends InvokeMainTestCase {
     MainMethodResult result = invokeMain(
             "Airline",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(0));
@@ -86,10 +86,10 @@ public class Project1IT extends InvokeMainTestCase {
             "-print",
             "Airline",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(0));
@@ -101,10 +101,10 @@ public class Project1IT extends InvokeMainTestCase {
             "'Airline",
             "Name",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
@@ -118,10 +118,10 @@ public class Project1IT extends InvokeMainTestCase {
             "'Airline",
             "Name'",
             "NUMBER",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
@@ -137,7 +137,7 @@ public class Project1IT extends InvokeMainTestCase {
             "Sr",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
@@ -150,10 +150,10 @@ public class Project1IT extends InvokeMainTestCase {
             "'Airline",
             "Name'",
             "1",
-            "Src",
+            "PDX",
             "11/11/",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12");
     assertThat(result.getExitCode(), equalTo(1));
