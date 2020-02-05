@@ -17,10 +17,10 @@ public class AirlineCommandTest {
             "-README",
             "Airline",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12"
     };
@@ -28,10 +28,10 @@ public class AirlineCommandTest {
     private static String[] inputWithoutOptions = new String[]{
             "Airline",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12"
     };
@@ -41,10 +41,10 @@ public class AirlineCommandTest {
             "'Airline",
             "Name'",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12"
     };
@@ -54,10 +54,10 @@ public class AirlineCommandTest {
             "'Airline",
             "Name",
             "1",
-            "Src",
+            "PDX",
             "11/11/1111",
             "11:11",
-            "Dst",
+            "ABQ",
             "12/12/1212",
             "12:12"
     };
@@ -113,10 +113,10 @@ public class AirlineCommandTest {
                 "-README",
                 "Airline",
                 "q",
-                "Src",
+                "PDX",
                 "11/11/1111",
                 "11:11",
-                "Dst",
+                "ABQ",
                 "12/12/1212",
                 "12:12"
         };
@@ -130,10 +130,10 @@ public class AirlineCommandTest {
                 "-README",
                 "Airline",
                 "1",
-                "Src",
+                "PDX",
                 "11/11/1111",
                 "11:11",
-                "Dst",
+                "ABQ",
                 "12/12/1212",
                 "12:12",
                 "fred"
@@ -145,7 +145,7 @@ public class AirlineCommandTest {
     @Test
     public void validAirportCodeDoesNotThrowException() throws ParseException {
         InputModel rv = AirlineCommand.parse(inputWithQuotes);
-        assertThat(rv.source, is("Src"));
+        assertThat(rv.source, is("PDX"));
     }
 
     @Test (expected = IllegalArgumentException.class)
@@ -154,10 +154,10 @@ public class AirlineCommandTest {
                 "-README",
                 "Airline",
                 "1",
-                "Srceeee",
+                "PDXeeee",
                 "11/11/1111",
                 "11:11",
-                "Dst",
+                "ABQ",
                 "12/12/1212",
                 "12:12"
         });
@@ -170,10 +170,10 @@ public class AirlineCommandTest {
                 "'Airline",
                 "Name'",
                 "1",
-                "Src",
+                "PDX",
                 "11/11/",
                 "1:11",
-                "Dst",
+                "ABQ",
                 "12/12/1212",
                 "12:12"
         };
@@ -194,10 +194,10 @@ public class AirlineCommandTest {
                 prefix+"airline.txt",
                 "Airline",
                 "1",
-                "Src",
+                "PDX",
                 "11/11/1111",
                 "11:11",
-                "Dst",
+                "ABQ",
                 "12/12/1212",
                 "12:12"
         });
@@ -212,10 +212,10 @@ public class AirlineCommandTest {
                 "-textFile",
                 "Airline",
                 "1",
-                "Src",
+                "PDX",
                 "11/11/1111",
                 "11:11",
-                "Dst",
+                "ABQ",
                 "12/12/1212",
                 "12:12"
         });

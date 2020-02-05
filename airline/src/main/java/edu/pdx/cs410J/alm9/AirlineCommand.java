@@ -1,5 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
+import edu.pdx.cs410J.AirportNames;
+
 import java.io.File;
 import java.text.ParseException;
 import java.time.format.DateTimeParseException;
@@ -174,6 +176,8 @@ public class AirlineCommand {
             throw new IllegalArgumentException("Airport code is too short");
         if (input.matches("[A-Za-z]]+"))
             throw new IllegalArgumentException("Airport code has number");
+        if(AirportNames.getName(input) == null)
+            throw new IllegalArgumentException("Airport code does not match a known airport");
 
         return input;
     }

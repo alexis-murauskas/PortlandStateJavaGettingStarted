@@ -53,25 +53,25 @@ public class AirlineTest {
         SimpleDateFormat formatter = Flight.PARSEFORMAT;
         Flight flight1 = new Flight(
                 1,
-                "SRC",
+                "PDX",
                 formatter.parse("11/11/3333 11:11"),
-                "DST",
+                "ABQ",
                 formatter.parse("12/12/1212 12:12")
         );
 
         Flight flight2 = new Flight(
                 2,
-                "SRC",
+                "PDX",
                 formatter.parse("11/11/2222 11:11"),
-                "DST",
+                "ABQ",
                 formatter.parse("12/12/1212 12:12")
         );
 
         Flight flight3 = new Flight(
                 3,
-                "SRC",
+                "PDX",
                 formatter.parse("11/11/4444 11:11"),
-                "DST",
+                "ABQ",
                 formatter.parse("12/12/1212 12:12")
         );
 

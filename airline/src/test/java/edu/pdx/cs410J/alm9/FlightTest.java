@@ -37,14 +37,14 @@ public class FlightTest {
         SimpleDateFormat formatter = Flight.PARSEFORMAT;
         Flight flight = new Flight(
                 1,
-                "SRC",
+                "PDX",
                 formatter.parse("11/11/1111 11:11"),
-                "DST",
+                "ABQ",
                 formatter.parse("12/12/1212 12:12")
         );
 
         assertThat(flight.getNumber(), is(1));
-        assertThat(flight.getSource().equals("SRC"), is(true));
+        assertThat(flight.getSource().equals("PDX"), is(true));
         assertThat(flight.getDepartureString().equals("11/11/1111 11:11"), is(false));
         assertThat(flight.getArrivalString().equals("12/12/1212 12:12"), is(false));
         assertThat(Flight.PRETTYFORMAT.format(flight.getDeparture()).equals("11/11/11 11:11 AM"), is(true));

@@ -4,22 +4,21 @@ import org.junit.Test;
 
 import java.io.IOException;
 import java.text.ParseException;
-import java.time.LocalDateTime;
 
 public class TextDumperTest {
 
     private Flight flight1 = new Flight(
             1,
-            "SRC",
+            "PDX",
             Flight.PARSEFORMAT.parse("11/11/1111 11:11"),
-            "DST",
+            "ABQ",
             Flight.PARSEFORMAT.parse("12/12/1212 12:12")
     );
     private Flight flight2 = new Flight(
             2,
-            "SRC2",
+            "PDX",
             Flight.PARSEFORMAT.parse("11/11/1111 11:11"),
-            "DST2",
+            "ABQ",
             Flight.PARSEFORMAT.parse("12/12/1212 12:12")
     );
 
