@@ -195,6 +195,13 @@ public class AirlineCommand {
         return input;
     }
 
+    /**
+     * Checks if the departure time comes before arrival time
+     * @param departure string input representing the departure time
+     * @param arrival string input representing the arrival time
+     * @throws ParseException if parsing is unsuccessful with the dates
+     * @throws IllegalArgumentException if departure is after arrival
+     */
     public static void compareDepartureArrivalTimes(String departure, String arrival) throws ParseException {
         Date departs = Flight.PARSEFORMAT.parse(departure);
         Date arrives = Flight.PARSEFORMAT.parse(arrival);
@@ -203,6 +210,11 @@ public class AirlineCommand {
             throw new IllegalArgumentException("Arrival time cannot come before departure time");
     }
 
+    /**
+     * Checks that the airline name matches the one in the indicated file
+     * @param model contains the parsed and checked user input
+     * @throws IllegalArgumentException if the names do not match
+     */
     public static void compareFileName(InputModel model) {
         String airline = null;
 

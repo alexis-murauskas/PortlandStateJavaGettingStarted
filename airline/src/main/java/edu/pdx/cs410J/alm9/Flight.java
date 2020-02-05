@@ -85,6 +85,13 @@ public class Flight<T extends AbstractFlight, Q extends Flight> extends Abstract
         return this.PRETTYFORMAT.format(this.arrival);
     }
 
+    /**
+     * Compares two AbstractFlight objects first based on the source airport, and then on
+     * the departure time if the codes are the same.
+     * @param q the object to compare to
+     * @return 0 indicates the two values are equal, >0 indicates that the calling object is "greater,"
+     * and <0 otherwise.
+     */
     @Override
     public int compareTo(Q q) {
         int rv = this.source.compareToIgnoreCase(q.getSource());
