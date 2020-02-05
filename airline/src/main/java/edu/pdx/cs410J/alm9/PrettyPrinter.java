@@ -13,8 +13,6 @@ public class PrettyPrinter<T extends AbstractAirline<Q>, Q extends AbstractFligh
 
     private String fileName;
 
-    public PrettyPrinter() {}
-
     public PrettyPrinter(String fileName) {
         this.fileName = fileName;
     }
@@ -39,7 +37,7 @@ public class PrettyPrinter<T extends AbstractAirline<Q>, Q extends AbstractFligh
                 .collect(Collectors.joining(""));
 
         try {
-            if (this.fileName == null) {
+            if (this.fileName.equals("-")) {
                 System.out.println(toWrite);
                 return;
             }

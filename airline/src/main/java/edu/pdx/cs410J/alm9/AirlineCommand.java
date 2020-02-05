@@ -23,7 +23,8 @@ public class AirlineCommand {
     public static final List<String> validOptions = Arrays.asList(
             "-README",
             "-print",
-            "-textFile"
+            "-textFile",
+            "-pretty"
     );
 
     /**
@@ -66,7 +67,7 @@ public class AirlineCommand {
         ArrayList<String> options = new ArrayList<>();
 
         for (var i = 0; i < input.length; i++) {
-            if (input[i].contains("-textFile")) {
+            if (input[i].contains("-textFile") || input[i].contains("-pretty")) {
                 options.add(input[i]);
                 options.add(input[i + 1]);
             } else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
