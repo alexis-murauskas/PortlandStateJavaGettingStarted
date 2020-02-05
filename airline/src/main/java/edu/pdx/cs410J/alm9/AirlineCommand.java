@@ -199,7 +199,7 @@ public class AirlineCommand {
         Date departs = Flight.PARSEFORMAT.parse(departure);
         Date arrives = Flight.PARSEFORMAT.parse(arrival);
 
-        if (departs.compareTo(arrives) > 0)
+        if (departs.after(arrives))
             throw new IllegalArgumentException("Arrival time cannot come before departure time");
     }
 

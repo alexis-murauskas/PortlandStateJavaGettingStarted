@@ -22,7 +22,15 @@ public class Project1Test extends InvokeMainTestCase {
 
     @Test
     public void callMain() {
-        var rv = invokeMain(new String[]{"-README"});
+        var rv = invokeMain("-print",
+                "Airline",
+                "1",
+                "PDX",
+                "11/11/1111",
+                "11:11",
+                "ABQ",
+                "12/12/1212",
+                "12:12");
         assertThat(rv.getExitCode(), is(0));
     }
 }
