@@ -280,4 +280,19 @@ public class AirlineCommandTest {
 
         AirlineCommand.compareDepartureArrivalTimes(departure, arrival);
     }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void nonexistentAirportCodeThrowsException() throws ParseException {
+        AirlineCommand.parse(new String[]{
+                "-README",
+                "Airline",
+                "1",
+                "Src",
+                "11/11/1111",
+                "11:11",
+                "Dst",
+                "12/12/1212",
+                "12:12"
+        });
+    }
 }
