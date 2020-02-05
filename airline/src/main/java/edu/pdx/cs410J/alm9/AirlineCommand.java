@@ -72,7 +72,7 @@ public class AirlineCommand {
                 options.add(input[i + 1]);
             } else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
                 options.add(input[i]);
-            } else if (input[i].startsWith("-"))
+            } else if (input[i].startsWith("-") && input[i].length() > 1)
                 throw new IllegalArgumentException("Unknown command line option");
         }
 
