@@ -4,6 +4,7 @@ import org.junit.Test;
 
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Date;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
@@ -262,5 +263,21 @@ public class AirlineCommandTest {
         model.airline = "'Long Airline'";
 
         AirlineCommand.compareFileName(model);
+    }
+
+    @Test
+    public void correctDatesDoNotThrowException() throws ParseException {
+        String departure = "11/11/1111 11:11";
+        String arrival = "12/12/1212 12:12";
+
+        AirlineCommand.compareDepartureArrivalTimes(departure, arrival);
+    }
+
+    @Test (expected = IllegalArgumentException.class)
+    public void invalidDatesThrowException() throws ParseException {
+        String departure = "11/11/1111 11:11";
+        String arrival = "10/10/1010 10:10";
+
+        AirlineCommand.compareDepartureArrivalTimes(departure, arrival);
     }
 }

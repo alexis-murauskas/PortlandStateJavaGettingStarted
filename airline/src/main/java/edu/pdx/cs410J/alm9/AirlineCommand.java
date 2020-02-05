@@ -3,10 +3,7 @@ package edu.pdx.cs410J.alm9;
 import java.io.File;
 import java.text.ParseException;
 import java.time.format.DateTimeParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Scanner;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class AirlineCommand {
@@ -116,6 +113,8 @@ public class AirlineCommand {
         if (args.length > ARVTIME + 1)
             throw new IllegalArgumentException("Unknown command line argument");
 
+        compareDepartureArrivalTimes(model.departureTime, model.arrivalTime);
+
         return model;
     }
 
@@ -189,6 +188,14 @@ public class AirlineCommand {
     private static String checkDateTime(String input) throws ParseException {
         Flight.PARSEFORMAT.parse(input);
         return input;
+    }
+
+    public static void compareDepartureArrivalTimes(String departure, String arrival) throws ParseException {
+        Date departs = Flight.PARSEFORMAT.parse(departure);
+        Date arrives = Flight.PARSEFORMAT.parse(arrival);
+
+        if (departs.compareTo(arrives) > 0)
+            throw new IllegalArgumentException("Arrival time cannot come before departure time");
     }
 
     public static void compareFileName(InputModel model) {
