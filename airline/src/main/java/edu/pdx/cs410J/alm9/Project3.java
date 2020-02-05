@@ -89,6 +89,13 @@ public class Project3 {
                 TextDumper<Airline<Flight>, Flight> dumper = new TextDumper(fileName);
                 dumper.dump(airline);
             }
+
+            if (model.options.contains("-pretty")) {
+                int index = model.options.indexOf("-pretty");
+                String output = model.options.get(index + 1);
+                PrettyPrinter<Airline<Flight>, Flight> pretty = new PrettyPrinter(output);
+                pretty.dump(airline);
+            }
         } catch (Exception e) {
             System.err.println("Airline could not be written to: " + fileName);
             System.exit(1);
