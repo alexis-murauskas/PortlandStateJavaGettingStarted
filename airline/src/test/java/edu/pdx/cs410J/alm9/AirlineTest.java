@@ -49,7 +49,7 @@ public class AirlineTest {
     }
 
     @Test
-    public void airlineWithMultipleFlightsCorrectlySorts() throws ParseException {
+    public void airlineWithMultipleFlightsFromSameSourceCorrectlySorts() throws ParseException {
         SimpleDateFormat formatter = Flight.PARSEFORMAT;
         Flight flight1 = new Flight(
                 1,
@@ -73,6 +73,43 @@ public class AirlineTest {
                 formatter.parse("11/11/4444 11:11"),
                 "ABQ",
                 formatter.parse("12/12/1212 12:12")
+        );
+
+        Airline<Flight> airline = new Airline("Airline");
+        airline.addFlight(flight1);
+        airline.addFlight(flight2);
+        airline.addFlight(flight3);
+
+        assertThat(airline.getFlights().toArray()[0], equalTo(flight2));
+        assertThat(airline.getFlights().toArray()[1], equalTo(flight1));
+        assertThat(airline.getFlights().toArray()[2], equalTo(flight3));
+    }
+
+    @Test
+    public void airlineWithMultipleFlightsFromDifferentSourcesCorrectlySorts() throws ParseException {
+        SimpleDateFormat formatter = Flight.PARSEFORMAT;
+        Flight flight1 = new Flight(
+                1,
+                "PDX",
+                formatter.parse("02/04/2020 11:00"),
+                "ABQ",
+                formatter.parse("02/04/2020 14:00")
+        );
+
+        Flight flight2 = new Flight(
+                2,
+                "BOI",
+                formatter.parse("02/05/2020 11:00"),
+                "ABQ",
+                formatter.parse("02/05/2020 15:00")
+        );
+
+        Flight flight3 = new Flight(
+                3,
+                "PDX",
+                formatter.parse("02/06/2020 11:00"),
+                "ABQ",
+                formatter.parse("02/06/2020 16:43")
         );
 
         Airline<Flight> airline = new Airline("Airline");

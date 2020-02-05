@@ -31,8 +31,8 @@ public class PrettyPrinter<T extends AbstractAirline<Q>, Q extends AbstractFligh
                                 + " " + f.getDepartureString()
                                 + " " + f.getDestination()
                                 + " " + f.getArrivalString()
-                                + " Flight Time: "
-                                + ((f.getDeparture().getTime()-f.getArrival().getTime())/1000)
+                                + " (" + ((f.getArrival().getTime()-f.getDeparture().getTime())/60000)
+                                + " mins)"
                 )
                 .collect(Collectors.joining(""));
 
