@@ -29,12 +29,8 @@ public class TextDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> 
 
         try {
             File file = new File(this.fileName);
-            var isNew = file.createNewFile();
-            FileWriter writer = new FileWriter(file, true);
-
-            if (isNew)
-                writer.write(airline.getName());
-
+            FileWriter writer = new FileWriter(file);
+            writer.write(airline.getName());
             String flights = airline.getFlights()
                     .stream()
                     .map(

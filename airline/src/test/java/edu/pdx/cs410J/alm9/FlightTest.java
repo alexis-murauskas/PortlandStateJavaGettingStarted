@@ -40,7 +40,7 @@ public class FlightTest {
                 "PDX",
                 formatter.parse("11/11/1111 11:11 AM"),
                 "ABQ",
-                formatter.parse("12/12/1212 00:12 PM")
+                formatter.parse("12/12/1212 12:12 PM")
         );
 
         assertThat(flight.getNumber(), is(1));

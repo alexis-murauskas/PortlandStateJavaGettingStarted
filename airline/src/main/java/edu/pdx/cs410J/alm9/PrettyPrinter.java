@@ -50,7 +50,7 @@ public class PrettyPrinter<T extends AbstractAirline<Q>, Q extends AbstractFligh
             }
 
             File file = new File(this.fileName);
-            FileWriter writer = new FileWriter(file, true);
+            FileWriter writer = new FileWriter(file);
             writer.write(toWrite);
             writer.close();
 
