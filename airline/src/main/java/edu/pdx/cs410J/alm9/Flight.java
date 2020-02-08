@@ -7,8 +7,8 @@ import java.util.Date;
 
 public class Flight<T extends AbstractFlight, Q extends Flight> extends AbstractFlight implements AbstractComparable<Q> {
 
-    public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm");
-    public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy KK:mm a");
+    public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy KK:mm a");
+    public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy HH:mm a");
 
     private int flightNumber;
     private String source;

@@ -19,9 +19,11 @@ public class AirlineCommandTest {
             "PDX",
             "11/11/1111",
             "11:11",
+            "AM",
             "ABQ",
             "12/12/1212",
-            "12:12"
+            "12:12",
+            "PM"
     };
 
     private static String[] inputWithoutOptions = new String[]{
@@ -30,9 +32,11 @@ public class AirlineCommandTest {
             "PDX",
             "11/11/1111",
             "11:11",
+            "AM",
             "ABQ",
             "12/12/1212",
-            "12:12"
+            "12:12",
+            "PM"
     };
 
     private static String[] inputWithQuotes = new String[]{
@@ -43,9 +47,11 @@ public class AirlineCommandTest {
             "PDX",
             "11/11/1111",
             "11:11",
+            "AM",
             "ABQ",
             "12/12/1212",
-            "12:12"
+            "12:12",
+            "PM"
     };
 
     private static String[] badInput = new String[]{
@@ -56,9 +62,11 @@ public class AirlineCommandTest {
             "PDX",
             "11/11/1111",
             "11:11",
+            "AM",
             "ABQ",
             "12/12/1212",
-            "12:12"
+            "12:12",
+            "PM"
     };
 
     @Test (expected = NullPointerException.class)
@@ -115,9 +123,11 @@ public class AirlineCommandTest {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12"
+                "12:12",
+                "PM"
         };
 
         AirlineCommand.parse(badFlight);
@@ -132,9 +142,11 @@ public class AirlineCommandTest {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
                 "12:12",
+                "PM",
                 "fred"
         };
 
@@ -156,9 +168,11 @@ public class AirlineCommandTest {
                 "PDXeeee",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12"
+                "12:12",
+                "PM"
         });
     }
 
@@ -172,9 +186,11 @@ public class AirlineCommandTest {
                 "PDX",
                 "11/11/",
                 "1:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12"
+                "12:12",
+                "PM"
         };
 
         AirlineCommand.parse(badTime);
@@ -183,7 +199,7 @@ public class AirlineCommandTest {
     @Test
     public void validDateTimeSucceeds() throws ParseException {
         InputModel rv = AirlineCommand.parse(input);
-        assertThat(rv.departureTime, is("11/11/1111 11:11"));
+        assertThat(rv.departureTime, is("11/11/1111 11:11 AM"));
     }
 
     @Test
@@ -196,9 +212,11 @@ public class AirlineCommandTest {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12"
+                "12:12",
+                "PM"
         });
         assertThat(rv.options.stream().anyMatch(o -> o.contains("-textFile")), is(true));
         assertThat(rv.options.stream().anyMatch(o -> o.contains(prefix + "airline.txt")), is(true));
@@ -214,9 +232,11 @@ public class AirlineCommandTest {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12"
+                "12:12",
+                "PM"
         });
     }
 
@@ -266,16 +286,16 @@ public class AirlineCommandTest {
 
     @Test
     public void correctDatesDoNotThrowException() throws ParseException {
-        String departure = "11/11/1111 11:11";
-        String arrival = "12/12/1212 12:12";
+        String departure = "11/11/1111 11:11 AM";
+        String arrival = "12/12/1212 12:12 PM";
 
         AirlineCommand.compareDepartureArrivalTimes(departure, arrival);
     }
 
     @Test (expected = IllegalArgumentException.class)
     public void invalidDatesThrowException() throws ParseException {
-        String departure = "11/11/1111 11:11";
-        String arrival = "10/10/1010 10:10";
+        String departure = "11/11/1111 11:11 AM";
+        String arrival = "10/10/1010 10:10 AM";
 
         AirlineCommand.compareDepartureArrivalTimes(departure, arrival);
     }
@@ -289,9 +309,11 @@ public class AirlineCommandTest {
                 "Src",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "Dst",
                 "12/12/1212",
-                "12:12"
+                "12:12",
+                "PM"
         });
     }
 }

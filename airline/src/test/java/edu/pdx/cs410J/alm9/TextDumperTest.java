@@ -10,16 +10,16 @@ public class TextDumperTest {
     private Flight flight1 = new Flight(
             1,
             "PDX",
-            Flight.PARSEFORMAT.parse("11/11/1111 11:11"),
+            Flight.PARSEFORMAT.parse("11/11/1111 11:11 AM"),
             "ABQ",
-            Flight.PARSEFORMAT.parse("12/12/1212 12:12")
+            Flight.PARSEFORMAT.parse("12/12/1212 12:12 PM")
     );
     private Flight flight2 = new Flight(
             2,
             "PDX",
-            Flight.PARSEFORMAT.parse("11/11/1111 11:11"),
+            Flight.PARSEFORMAT.parse("11/11/1111 11:11 AM"),
             "ABQ",
-            Flight.PARSEFORMAT.parse("12/12/1212 12:12")
+            Flight.PARSEFORMAT.parse("12/12/1212 12:12 PM")
     );
 
     public TextDumperTest() throws ParseException {

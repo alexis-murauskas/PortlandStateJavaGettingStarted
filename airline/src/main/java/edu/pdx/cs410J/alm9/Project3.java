@@ -4,7 +4,7 @@ import java.text.ParseException;
 
 public class Project3 {
 
-    protected static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project1\n\n" +
+    protected static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project3\n\n" +
             "usage: java edu.pdx.cs410J.<login-id>.Project3 [options] <args>\n\n" +
             "args are (in this order):\n" +
             "airline The name of the airline\n" +
@@ -39,14 +39,14 @@ public class Project3 {
         } catch (NumberFormatException e) {
             System.err.println("Flight code isn't an integer");
             System.exit(1);
-        } catch (IllegalArgumentException e) {
-            System.err.println(e.getMessage());
-            System.exit(1);
         } catch (ArrayIndexOutOfBoundsException e) {
             System.err.println("Arguments could not be parsed");
             System.exit(1);
         } catch (ParseException e) {
             System.err.println("Time is malformatted");
+            System.exit(1);
+        } catch (Exception e) {
+            System.err.println(e.getMessage());
             System.exit(1);
         }
 
@@ -61,7 +61,7 @@ public class Project3 {
             if (model.options.contains("-textFile")) {
                 int index = model.options.indexOf("-textFile");
                 fileName = model.options.get(index + 1);
-                TextParser<Airline> parser = new TextParser(fileName);
+                TextParser<Airline<Flight>> parser = new TextParser(fileName);
                 airline = parser.parse();
             }
         } catch (Exception e) {

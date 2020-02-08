@@ -13,14 +13,16 @@ public class AirlineCommand {
     private static final int FLIGHT = 0;
     private static final int SRC = 1;
     private static final int DEPART = 2;
-    private static final int DPTTIME = 3;
-    private static final int DEST = 4;
-    private static final int ARRIVE = 5;
-    private static final int ARVTIME = 6;
+    private static final int DTIME = 3;
+    private static final int DPRD = 4;
+    private static final int DEST = 5;
+    private static final int ARRIVE = 6;
+    private static final int ATIME = 7;
+    private static final int APRD = 8;
 
     private static final int CODELEN = 3;
 
-    public static final List<String> validOptions = Arrays.asList(
+    private static final List<String> validOptions = Arrays.asList(
             "-README",
             "-print",
             "-textFile",
@@ -36,17 +38,18 @@ public class AirlineCommand {
      * @return Returns input organized into a model if all error checks pass.
      * @throws ArrayIndexOutOfBoundsException if something goes wrong in parsing options or Airline Name
      *                                        because of invalid user input
-     * @throws IllegalArgumentException       if Airport Code is the incorrect length
-     *                                        or contains non-alphabetic characters
+     * @throws IllegalArgumentException       if Airport Code is the incorrect length,
+     *                                        contains non-alphabetic characters,
+     *                                        or is not among known airport codes;
+     *                                        if there are extraneous or invalid arguments;
+     *                                        if the Airline Name does not match the target file
      * @throws DateTimeParseException         if the date and/or time are improperly formatted
      * @throws NumberFormatException          if the Flight Code is not numerical
      */
     public static InputModel parse(String[] input) throws ParseException {
-        if (input == null)
-            throw new NullPointerException();
-
         ArrayList<String> options = parseOptions(input);
         String[] arguments = trimArguments(options, input);
+
         InputModel model = parseArgs(arguments);
         model.options = options;
 
@@ -100,20 +103,21 @@ public class AirlineCommand {
      */
     private static InputModel parseArgs(String[] input) throws ParseException {
         InputModel model = new InputModel();
+
         if (input.length == 0)
             return model;
 
         ArrayList<String> airline = parseAirline(input);
         String[] args = trimArguments(airline, input);
-
         model.airline = stringifyList(airline);
+
         model.flightNumber = checkFlight(args[FLIGHT]);
         model.source = checkAirportCode(args[SRC]);
-        model.departureTime = checkDateTime(args[DEPART] + " " + args[DPTTIME]);
+        model.departureTime = checkDateTime(args[DEPART] + " " + args[DTIME] + " " + args[DPRD]);
         model.destination = checkAirportCode(args[DEST]);
-        model.arrivalTime = checkDateTime(args[ARRIVE] + " " + args[ARVTIME]);
+        model.arrivalTime = checkDateTime(args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]);
 
-        if (args.length > ARVTIME + 1)
+        if (args.length > APRD + 1)
             throw new IllegalArgumentException("Unknown command line argument");
 
         compareDepartureArrivalTimes(model.departureTime, model.arrivalTime);

@@ -11,6 +11,7 @@ import java.util.stream.Collectors;
 
 public class PrettyPrinter<T extends AbstractAirline<Q>, Q extends AbstractFlight> implements AirlineDumper<T> {
 
+    private static final int MSPERMIN = 60000;
     private String fileName;
 
     public PrettyPrinter(String fileName) {
@@ -37,7 +38,7 @@ public class PrettyPrinter<T extends AbstractAirline<Q>, Q extends AbstractFligh
                                 + " " + f.getDepartureString()
                                 + " " + f.getDestination()
                                 + " " + f.getArrivalString()
-                                + " (" + ((f.getArrival().getTime()-f.getDeparture().getTime())/60000)
+                                + " (" + ((f.getArrival().getTime()-f.getDeparture().getTime())/MSPERMIN)
                                 + " mins)"
                 )
                 .collect(Collectors.joining(""));

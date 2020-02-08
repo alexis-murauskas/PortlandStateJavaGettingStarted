@@ -47,9 +47,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -62,10 +65,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "1",
                 "PDX",
                 "11/11/",
-                "1:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Unknown command line option"));
     }
@@ -78,9 +83,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -93,9 +101,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -108,9 +119,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Arguments could not be parsed"));
     }
@@ -125,9 +139,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Flight code isn't an integer"));
     }
@@ -141,9 +158,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "Sr",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Airport code is too short"));
     }
@@ -157,9 +177,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Time is malformatted"));
     }
@@ -173,9 +196,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
     }
 
@@ -189,9 +215,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -206,9 +235,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -222,9 +254,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -239,9 +274,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
     }
 
@@ -255,9 +293,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "02/04/2020",
                 "11:00",
+                "AM",
                 "ABQ",
                 "02/04/2020",
-                "14:00");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
 
         String out = result.getTextWrittenToStandardOut();
@@ -275,9 +316,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "02/04/2020",
                 "11:00",
+                "AM",
                 "ABQ",
                 "02/04/2020",
-                "14:00");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
         File file = new File("itpretty.txt");
         assertThat(file.isFile(), is(true));
@@ -292,9 +336,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "02/04/2020",
                 "11:00",
+                "AM",
                 "ABQ",
                 "02/04/2020",
-                "14:00");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(1));
     }
 
@@ -310,9 +357,12 @@ public class Project3IT extends InvokeMainTestCase {
                 "PDX",
                 "02/04/2020",
                 "11:00",
+                "AM",
                 "ABQ",
                 "02/04/2020",
-                "14:00");
+                "12:12",
+                "PM"
+        );
         assertThat(result.getExitCode(), equalTo(0));
 
         File file = new File("itpretty.txt");

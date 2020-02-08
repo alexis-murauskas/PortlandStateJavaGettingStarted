@@ -54,25 +54,25 @@ public class AirlineTest {
         Flight flight1 = new Flight(
                 1,
                 "PDX",
-                formatter.parse("11/11/3333 11:11"),
+                formatter.parse("11/11/3333 11:11 AM"),
                 "ABQ",
-                formatter.parse("12/12/1212 12:12")
+                formatter.parse("12/12/1212 12:12 PM")
         );
 
         Flight flight2 = new Flight(
                 2,
                 "PDX",
-                formatter.parse("11/11/2222 11:11"),
+                formatter.parse("11/11/2222 11:11 AM"),
                 "ABQ",
-                formatter.parse("12/12/1212 12:12")
+                formatter.parse("12/12/1212 12:12 PM")
         );
 
         Flight flight3 = new Flight(
                 3,
                 "PDX",
-                formatter.parse("11/11/4444 11:11"),
+                formatter.parse("11/11/4444 11:11 AM"),
                 "ABQ",
-                formatter.parse("12/12/1212 12:12")
+                formatter.parse("12/12/1212 12:12 PM")
         );
 
         Airline<Flight> airline = new Airline("Airline");
@@ -91,25 +91,25 @@ public class AirlineTest {
         Flight flight1 = new Flight(
                 1,
                 "PDX",
-                formatter.parse("02/04/2020 11:00"),
+                formatter.parse("02/04/2020 11:00 AM"),
                 "ABQ",
-                formatter.parse("02/04/2020 14:00")
+                formatter.parse("02/04/2020 2:00 PM")
         );
 
         Flight flight2 = new Flight(
                 2,
                 "BOI",
-                formatter.parse("02/05/2020 11:00"),
+                formatter.parse("02/05/2020 11:00 AM"),
                 "ABQ",
-                formatter.parse("02/05/2020 15:00")
+                formatter.parse("02/05/2020 3:00 PM")
         );
 
         Flight flight3 = new Flight(
                 3,
                 "PDX",
-                formatter.parse("02/06/2020 11:00"),
+                formatter.parse("02/06/2020 11:00 AM"),
                 "ABQ",
-                formatter.parse("02/06/2020 16:43")
+                formatter.parse("02/06/2020 4:43 PM")
         );
 
         Airline<Flight> airline = new Airline("Airline");

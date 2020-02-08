@@ -30,9 +30,11 @@ public class Project3Test extends InvokeMainTestCase {
                 "PDX",
                 "11/11/1111",
                 "11:11",
+                "AM",
                 "ABQ",
                 "12/12/1212",
-                "12:12");
+                "12:12",
+                "PM");
         assertThat(rv.getExitCode(), is(0));
     }
 }
