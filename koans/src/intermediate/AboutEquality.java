@@ -2,6 +2,8 @@ package intermediate;
 
 import com.sandwich.koan.Koan;
 
+import java.util.Comparator;
+
 import static com.sandwich.koan.constant.KoanConstants.__;
 import static com.sandwich.util.Assert.assertEquals;
 
@@ -12,20 +14,20 @@ public class AboutEquality {
     public void sameObject() {
         Object a = new Object();
         Object b = a;
-        assertEquals(a == b, __);
+        assertEquals(a == b, true);
     }
 
     @Koan
     public void equalObject() {
         Integer a = new Integer(1);
         Integer b = new Integer(1);
-        assertEquals(a.equals(b), __);
-        assertEquals(b.equals(a), __);
+        assertEquals(a.equals(b), true);
+        assertEquals(b.equals(a), true);
     }
 
     @Koan
     public void noObjectShouldBeEqualToNull() {
-        assertEquals(new Object().equals(null), __);
+        assertEquals(new Object().equals(null), false);
     }
 
     static class Car {
@@ -39,6 +41,15 @@ public class AboutEquality {
 
         @Override
         public boolean equals(Object other) {
+            if (other == this)
+                return true;
+            if (other == null || other.getClass() != this.getClass())
+                return false;
+
+            Car car = (Car) other;
+            if (this.name.equals(car.name) && this.horsepower == car.horsepower)
+                return true;
+
             // Change this implementation to match the equals contract
             // Car objects with same horsepower and name values should be considered equal
             // http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#equals(java.lang.Object)
@@ -47,8 +58,14 @@ public class AboutEquality {
 
         @Override
         public int hashCode() {
+            final int prime = 31;
+            int result = 1;
+            result = prime * result
+                    + ((name == null) ? 0 : name.hashCode());
+            result = prime * result + horsepower;
+            return result;
+
             // @see http://download.oracle.com/javase/6/docs/api/java/lang/Object.html#hashCode()
-            return super.hashCode();
         }
     }
 
@@ -103,13 +120,20 @@ public class AboutEquality {
 
         @Override
         public int hashCode() {
-            return 4000;
+            final int prime = 31;
+            int result = 1;
+            result = prime * result
+                    + ((color == null) ? 0 : color.hashCode());
+            return result;
         }
 
         @Override
         public boolean equals(Object other) {
-            if (!(other instanceof Chicken))
+            if (other == this)
+                return true;
+            if (other == null || other.getClass() != this.getClass())
                 return false;
+
             return ((Chicken) other).color.equals(color);
         }
     }
@@ -119,8 +143,8 @@ public class AboutEquality {
         Chicken chicken1 = new Chicken();
         chicken1.color = "black";
         Chicken chicken2 = new Chicken();
-        assertEquals(chicken1.equals(chicken2), __);
-        assertEquals(chicken1.hashCode() == chicken2.hashCode(), __);
+        assertEquals(chicken1.equals(chicken2), false);
+        assertEquals(chicken1.hashCode() == chicken2.hashCode(), false);
         // Does this still fit the hashCode contract? Why (not)?
         // Fix the Chicken class to correct this.
     }

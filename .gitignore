@@ -39,3 +39,6 @@ dependency-reduced-pom.xml
 # Temporary directories created by the koans
 */app/config/file_hashes.dat
 */app/data/
+koans/file.txt
+
+koans/SerializeFile
