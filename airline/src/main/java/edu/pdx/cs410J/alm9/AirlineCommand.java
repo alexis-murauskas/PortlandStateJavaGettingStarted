@@ -111,11 +111,14 @@ public class AirlineCommand {
         String[] args = trimArguments(airline, input);
         model.airline = stringifyList(airline);
 
+        String departs = (args[DEPART] + " " + args[DTIME] + " " + args[DPRD]).toUpperCase();
+        String arrives = (args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]).toUpperCase();
+
         model.flightNumber = checkFlight(args[FLIGHT]);
         model.source = checkAirportCode(args[SRC]);
-        model.departureTime = checkDateTime(args[DEPART] + " " + args[DTIME] + " " + args[DPRD]);
+        model.departureTime = checkDateTime(departs);
         model.destination = checkAirportCode(args[DEST]);
-        model.arrivalTime = checkDateTime(args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]);
+        model.arrivalTime = checkDateTime(arrives);
 
         if (args.length > APRD + 1)
             throw new IllegalArgumentException("Unknown command line argument");

@@ -45,7 +45,9 @@ public class FlightTest {
 
         assertThat(flight.getNumber(), is(1));
         assertThat(flight.getSource().equals("PDX"), is(true));
-        assertThat(flight.getDepartureString().equals("11/11/11 11:11 AM"), is(true));
+
+        var rv = flight.getDepartureString();
+        assertThat(rv.equals("11/11/11 11:11 AM"), is(true));
         assertThat(flight.getArrivalString().equals("12/12/12 12:12 PM"), is(true));
     }
 }

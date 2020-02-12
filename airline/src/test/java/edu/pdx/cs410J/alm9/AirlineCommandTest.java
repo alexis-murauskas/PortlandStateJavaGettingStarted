@@ -161,7 +161,7 @@ public class AirlineCommandTest {
 
     @Test (expected = IllegalArgumentException.class)
     public void invalidAirportCodeThrowsException() throws ParseException {
-        InputModel rv = AirlineCommand.parse(new String[]{
+        AirlineCommand.parse(new String[]{
                 "-README",
                 "Airline",
                 "1",
@@ -179,7 +179,6 @@ public class AirlineCommandTest {
     @Test (expected = ParseException.class)
     public void invalidDateTimeThrowsException() throws ParseException {
         String[] badTime = new String[]{
-                "-README",
                 "'Airline",
                 "Name'",
                 "1",
@@ -194,6 +193,24 @@ public class AirlineCommandTest {
         };
 
         AirlineCommand.parse(badTime);
+    }
+
+    @Test
+    public void validDateTimeWithMixedCase() throws ParseException {
+        String[] args = new String[]{
+                "Project3",
+                "100",
+                "CVG",
+                "03/02/2020",
+                "12:57",
+                "pm",
+                "DBQ",
+                "03/02/2020",
+                "4:00",
+                "pm"
+        };
+
+        AirlineCommand.parse(args);
     }
 
     @Test
@@ -223,7 +240,7 @@ public class AirlineCommandTest {
     }
 
 
-    @Test (expected = NumberFormatException.class)
+    @Test (expected = ArrayIndexOutOfBoundsException.class)
     public void invalidTextFileNameFails() throws ParseException {
         AirlineCommand.parse(new String[]{
                 "-textFile",

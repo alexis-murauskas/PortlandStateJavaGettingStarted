@@ -2,13 +2,15 @@ package edu.pdx.cs410J.alm9;
 
 import edu.pdx.cs410J.AbstractFlight;
 
+import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 
 public class Flight<T extends AbstractFlight, Q extends Flight> extends AbstractFlight implements AbstractComparable<Q> {
 
-    public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy HH:mm a");
-    public static final SimpleDateFormat PRETTYFORMAT = new SimpleDateFormat("MM/dd/yy HH:mm a");
+    public static final SimpleDateFormat PARSEFORMAT = new SimpleDateFormat("MM/dd/yyyy hh:mm a");
+    public static final DateFormat PRETTYFORMAT = DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT);
 
     private int flightNumber;
     private String source;
@@ -57,7 +59,7 @@ public class Flight<T extends AbstractFlight, Q extends Flight> extends Abstract
         if (this.departure == null)
             return null;
 
-        return this.PRETTYFORMAT.format(this.departure);
+        return PRETTYFORMAT.format(this.departure).replace(",", "");
     }
 
     /**
@@ -82,7 +84,7 @@ public class Flight<T extends AbstractFlight, Q extends Flight> extends Abstract
         if (this.arrival == null)
             return null;
 
-        return this.PRETTYFORMAT.format(this.arrival);
+        return PRETTYFORMAT.format(this.arrival).replace(",", "");
     }
 
     /**
