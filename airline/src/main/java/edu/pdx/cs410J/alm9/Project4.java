@@ -2,10 +2,9 @@ package edu.pdx.cs410J.alm9;
 
 import java.text.ParseException;
 
-public class Project3 {
-
-    protected static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project3\n\n" +
-            "usage: java edu.pdx.cs410J.<login-id>.Project3 [options] <args>\n\n" +
+public class Project4 {
+    protected static String readme = "Alexis Murauskas - CS410J - Winter2020 - Project4\n\n" +
+            "usage: java edu.pdx.cs410J.<login-id>.Project4 [options] <args>\n\n" +
             "args are (in this order):\n" +
             "airline The name of the airline\n" +
             "flightNumber The flight number\n" +
@@ -14,6 +13,7 @@ public class Project3 {
             "dest Three-letter code of arrival airport\n" +
             "arrive Arrival date and time (24-hour time)\n\n" +
             "options are (options may appear in any order):\n" +
+            "-xmlFile file Where to read/write the airline info\n" +
             "-pretty file Pretty print the airline’s flights to" +
             "a text file or standard out (file -)\n" +
             "-textFile file Where to read/write the airline info\n" +

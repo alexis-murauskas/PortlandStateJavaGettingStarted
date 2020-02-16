@@ -6,18 +6,18 @@ import org.junit.Test;
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class Project3Test extends InvokeMainTestCase {
+public class Project4Test extends InvokeMainTestCase {
 
     /**
-     * Invokes the main method of {@link Project3} with the given arguments.
+     * Invokes the main method of {@link Project4} with the given arguments.
      */
     private InvokeMainTestCase.MainMethodResult invokeMain(String... args) {
-        return invokeMain(Project3.class, args);
+        return invokeMain(Project4.class, args);
     }
 
     @Test
     public void checkReadme() {
-        assertThat(Project3.readme.contains("-pretty"), is(true));
+        assertThat(Project4.readme.contains("-pretty"), is(true));
     }
 
     @Test
