@@ -52,3 +52,7 @@ airline/multipleflights.txt
 airline/new-file.txt
 
 airline/airline-name.txt
+
+airline/invalid-airline.xml
+
+airline/valid-airline.xml
