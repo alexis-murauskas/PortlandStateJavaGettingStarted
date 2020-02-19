@@ -64,8 +64,14 @@ public class Project4 {
                 TextParser<Airline<Flight>> parser = new TextParser(fileName);
                 airline = parser.parse();
             }
+            if (model.options.contains("-xmlFile")) {
+                int index = model.options.indexOf("-xmlFile");
+                fileName = model.options.get(index + 1);
+                XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(fileName);
+                airline = parser.parse();
+            }
         } catch (Exception e) {
-            System.err.println("Text file contents are malformatted");
+            System.err.println("File contents are malformatted");
             System.exit(1);
         }
 
@@ -86,6 +92,11 @@ public class Project4 {
         try {
             if (model.options.contains("-textFile")) {
                 TextDumper<Airline<Flight>, Flight> dumper = new TextDumper(fileName);
+                dumper.dump(airline);
+            }
+
+            if (model.options.contains("-xmlFile")) {
+                XmlDumper<Airline<Flight>, Flight> dumper = new XmlDumper(fileName);
                 dumper.dump(airline);
             }
 

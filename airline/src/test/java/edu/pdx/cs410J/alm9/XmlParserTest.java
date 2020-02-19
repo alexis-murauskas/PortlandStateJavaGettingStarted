@@ -3,28 +3,27 @@ package edu.pdx.cs410J.alm9;
 import edu.pdx.cs410J.ParserException;
 import org.junit.Test;
 
-import java.util.Collection;
-
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
 public class XmlParserTest {
+    public static String prefix = "src/test/resources/edu/pdx/cs410J/alm9/";
 
     @Test
     public void parserCanReadInValidFile() throws ParserException {
-        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>("valid-airline.xml");
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"valid-airline.xml");
         parser.parse();
     }
 
     @Test (expected = ParserException.class)
     public void parserThrowsExceptionForInvalidFIle() throws ParserException {
-        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>("invalid-airline.xml");
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"invalid-airline.xml");
         parser.parse();
     }
 
     @Test
     public void airlineHasCorrectName() throws ParserException {
-        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>("valid-airline.xml");
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"valid-airline.xml");
         Airline<Flight> rv = parser.parse();
 
         assertThat(!rv.getName().isEmpty(), is(true));
@@ -33,7 +32,7 @@ public class XmlParserTest {
 
     @Test
     public void airlineHasCorrectNumberOfFlights() throws ParserException {
-        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>("valid-airline.xml");
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"valid-airline.xml");
         Airline<Flight> rv = parser.parse();
 
         assertThat(rv.getFlights().size(), is(2));
@@ -41,7 +40,7 @@ public class XmlParserTest {
 
     @Test
     public void flightDataIsCorrect() throws ParserException {
-        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>("valid-airline.xml");
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"valid-airline.xml");
         Airline<Flight> rv = parser.parse();
         Flight flight = (Flight) rv.getFlights().toArray()[0];
 

@@ -70,7 +70,7 @@ public class AirlineCommand {
         ArrayList<String> options = new ArrayList<>();
 
         for (var i = 0; i < input.length; i++) {
-            if (input[i].contains("-textFile") || input[i].contains("-pretty")) {
+            if (input[i].contains("-textFile") || input[i].contains("-pretty") || input[i].contains("-xmlFile")) {
                 options.add(input[i]);
                 options.add(input[i + 1]);
             } else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
@@ -78,6 +78,9 @@ public class AirlineCommand {
             } else if (input[i].startsWith("-") && input[i].length() > 1)
                 throw new IllegalArgumentException("Unknown command line option");
         }
+
+        if (options.contains("-textFile") && options.contains("-xmlFile"))
+            throw new IllegalArgumentException("Cannot specify both XML and text file I/O");
 
         return options;
     }
