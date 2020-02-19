@@ -1,2 +1,2 @@
 clean :
-	rm -f *.txt
+	rm -f *.txt airline.xml

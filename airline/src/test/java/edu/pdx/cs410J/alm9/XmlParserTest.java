@@ -3,6 +3,8 @@ package edu.pdx.cs410J.alm9;
 import edu.pdx.cs410J.ParserException;
 import org.junit.Test;
 
+import java.util.Collection;
+
 import static org.hamcrest.MatcherAssert.*;
 import static org.hamcrest.CoreMatchers.*;
 
@@ -35,5 +37,16 @@ public class XmlParserTest {
         Airline<Flight> rv = parser.parse();
 
         assertThat(rv.getFlights().size(), is(2));
+    }
+
+    @Test
+    public void flightDataIsCorrect() throws ParserException {
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>("valid-airline.xml");
+        Airline<Flight> rv = parser.parse();
+        Flight flight = (Flight) rv.getFlights().toArray()[0];
+
+        assertThat(flight.getNumber(), is(1437));
+        assertThat(flight.getSource(), is("BJX"));
+        assertThat(flight.getDepartureString(), is("9/25/20 5:00 PM"));
     }
 }
