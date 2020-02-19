@@ -33,8 +33,9 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
 
             for (var flight : flights)
                 airline.addFlight(flight);
+
         } catch (Exception e) {
-            throw new ParserException(e.toString());
+            throw new ParserException(e.getMessage());
         }
 
         return (T) airline;
@@ -80,14 +81,22 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         in.add(flight.getElementsByTagName("number").item(0).getTextContent());
 
         in.add(flight.getElementsByTagName("src").item(0).getTextContent());
-        String departString = processDateTime(flight.getElementsByTagName("depart"));
+        String departString = processDateTime(
+                flight.getElementsByTagName("date").item(0),
+                flight.getElementsByTagName("time").item(0)
+                );
+
         String[] depart = departString.split(";");
         in.add(depart[0]);
         in.add(depart[1]);
         in.add(depart[2]);
 
         in.add(flight.getElementsByTagName("dest").item(0).getTextContent());
-        String arriveString =  processDateTime(flight.getElementsByTagName("arrive"));
+        String arriveString =  processDateTime(
+                flight.getElementsByTagName("date").item(1),
+                flight.getElementsByTagName("time").item(1)
+        );
+
         String[] arrive = arriveString.split(";");
         in.add(arrive[0]);
         in.add(arrive[1]);
@@ -99,8 +108,33 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return AirlineCommand.parse(array);
     }
 
-    private String processDateTime(NodeList list) {
-        String rv = "2/2/2020;4:00;pm";
+    private String processDateTime(Node dateNode, Node timeNode) {
+        String rv = "";
+
+        Element date = (Element) dateNode;
+        Element time = (Element) timeNode;
+
+        rv += date.getAttribute("month") + "/";
+        rv += date.getAttribute("day") + "/";
+        rv += date.getAttribute("year") + ";";
+
+        // Parse time
+        int rawHour = Integer.parseInt(time.getAttribute("hour"));
+        int converted = rawHour % 12;
+
+        rv += converted + ":";
+        String minute = time.getAttribute("minute");
+
+        if (minute.length() < 2)
+            rv += "0" + minute + ";";
+        else
+            rv += minute + ";";
+
+        // Parse period
+        if (rawHour == converted)
+            rv += "am";
+        else
+            rv += "pm";
 
         return rv;
     }
