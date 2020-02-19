@@ -1,13 +1,13 @@
-package edu.pdx.cs410J.alm9.Converter;
+package edu.pdx.cs410J.alm9;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import edu.pdx.cs410J.alm9.Project4;
+import edu.pdx.cs410J.alm9.Converter.Converter;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-public class ConverterTest extends InvokeMainTestCase {
+public class ConverterIT extends InvokeMainTestCase {
 
     /**
      * Invokes the main method of {@link Converter} with the given arguments.

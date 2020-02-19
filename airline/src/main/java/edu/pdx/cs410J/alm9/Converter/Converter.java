@@ -1,9 +1,6 @@
 package edu.pdx.cs410J.alm9.Converter;
 
-import edu.pdx.cs410J.alm9.Airline;
-import edu.pdx.cs410J.alm9.Flight;
-import edu.pdx.cs410J.alm9.XmlDumper;
-import edu.pdx.cs410J.alm9.XmlParser;
+import edu.pdx.cs410J.alm9.*;
 
 public class Converter {
 
@@ -11,7 +8,7 @@ public class Converter {
         if (args.length != 2)
             System.exit(1);
 
-        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(args[0]);
+        TextParser<Airline> parser = new TextParser<>(args[0]);
         XmlDumper<Airline<Flight>, Flight> dumper = new XmlDumper<>(args[1]);
 
         try {
