@@ -24,6 +24,13 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         this.fileName = fileName;
     }
 
+    /**
+     * Given an available XML file, this method will parse the file and return an airline object.
+     * If there is no XML file, the parser exits and returns null. If the text contents are mal-
+     * formatted, an error will be thrown.
+     * @return Parsed airline object
+     * @throws ParserException if XML file contents are malformatted
+     */
     @Override
     public T parse() throws ParserException {
         Airline<Flight> airline;
@@ -45,6 +52,15 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return (T) airline;
     }
 
+    /**
+     * Based on the file name given at instantiation, this method will create an XML document
+     * and build the contents using the SAX API. If the file is not present, an exception
+     * will be thrown.
+     * @return A new document object
+     * @throws IOException if the contents of the file are malformatted
+     * @throws SAXException if there is an error accessing the DOM elements
+     * @throws ParserConfigurationException if the parser was incorrectly configured
+     */
     private Document createDocument() throws IOException, SAXException, ParserConfigurationException {
         File in = new File(fileName);
 
@@ -60,6 +76,13 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return document;
     }
 
+    /**
+     * All airlines must have an associated name. Here the document checks if a name is present.
+     * If it is a multi-word name, then quotes are added to correct the formatting. A new airline
+     * object is returned
+     * @param document an airline document
+     * @return a new airline object with the name indicated in the document
+     */
     private Airline processAirlineName(Document document) {
         NodeList airlineElement = document.getElementsByTagName("name");
         String name = airlineElement.item(0).getTextContent();
@@ -70,6 +93,15 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return new Airline<Flight>(name);
     }
 
+    /**
+     * This is the entry point for flight processing. Based on an airline document, this method
+     * attempts to parse flight objects. Each flight has a number, departure location and date,
+     * and arrival location and date. This is the wrapper that iterates through flight elements
+     * and sends them for processing.
+     * @param document an airline document
+     * @return a collection of flight objects
+     * @throws ParseException if an error occurs while parsing the XML
+     */
     private Collection<InputModel> processFlights(Document document) throws ParseException {
         ArrayList<InputModel> flights = new ArrayList<>();
         NodeList nodes = document.getElementsByTagName("flight");
@@ -82,6 +114,13 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return flights;
     }
 
+    /**
+     * Each flight must be processed for each sub-element it contains. The date and time elements
+     * are the only ones with attributes.
+     * @param node a flight node
+     * @return model representing a flight
+     * @throws ParseException if file contents are malformatted
+     */
     private InputModel processFlight(Node node) throws ParseException {
         Element flight = (Element) node;
         ArrayList<String> in = new ArrayList<>();
@@ -117,6 +156,13 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return AirlineCommand.parse(array);
     }
 
+    /**
+     * Because flight arrivals and departures have complex formatting they must be processed
+     * separately.
+     * @param dateNode a date element
+     * @param timeNode a time element
+     * @return string of date/time pairing separated by semi-colons
+     */
     private String processDateTime(Node dateNode, Node timeNode) {
         String rv = "";
 
