@@ -1,7 +1,6 @@
 package edu.pdx.cs410J.alm9;
 
 import edu.pdx.cs410J.InvokeMainTestCase;
-import edu.pdx.cs410J.alm9.Converter.Converter;
 import org.junit.Test;
 
 import static org.hamcrest.CoreMatchers.is;
