@@ -26,6 +26,12 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         this.fileName = fileName;
     }
 
+    /**
+     * Takes an airline object, formats the contents, and dumps to an XML file. If the specified
+     * file name does not already exist, it is created.
+     * @param airline airline data to be dumped
+     * @throws IOException if there is an error writing to the file
+     */
     @Override
     public void dump(T airline) throws IOException {
         try {
@@ -50,6 +56,12 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         }
     }
 
+    /**
+     * Given a file name, a new document object is created. If the file did not exist before
+     * it is created now.
+     * @return a new document object
+     * @throws ParserConfigurationException if there is an error creating the document
+     */
     private Document createDocument() throws ParserConfigurationException {
         DocumentBuilderFactory documentFactory = DocumentBuilderFactory.newInstance();
         DocumentBuilder documentBuilder = documentFactory.newDocumentBuilder();
@@ -57,6 +69,13 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return documentBuilder.newDocument();
     }
 
+    /**
+     * Processes each flight associated with the airline. Elements must be created for the next level
+     * of tags, and then the data formatted correctly.
+     * @param document an airline document
+     * @param flight a flight to be processed
+     * @return the flight element to be attached to the airline element
+     */
     private Element processFlight(Document document, Q flight) {
         Element child = document.createElement("flight");
         Element number = document.createElement("number");
@@ -85,6 +104,11 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return child;
     }
 
+    /**
+     * Converts date instance to a calendar instance.
+     * @param dateTime a date object
+     * @return a new calendar object
+     */
     private Calendar convertDateTime(Date dateTime){
         Calendar calendar = Calendar.getInstance();
         calendar.setTime(dateTime);
@@ -92,6 +116,12 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return calendar;
     }
 
+    /**
+     * Given a date and an airline document, create a new date node to attach to a flight
+     * @param document an airline document
+     * @param dateTime date associated with flight
+     * @return the date element to be attached to the flight
+     */
     private Element processDate(Document document, Date dateTime) {
         Element date = document.createElement("date");
         Calendar calendar = convertDateTime(dateTime);
@@ -111,6 +141,12 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return date;
     }
 
+    /**
+     * Similar to the processDate method, this method processes a given time.
+     * @param document an airline document
+     * @param dateTime date associated with flight
+     * @return the time element to be attached to the flight
+     */
     private Element processTime(Document document, Date dateTime) {
         Element time = document.createElement("time");
         Calendar calendar = convertDateTime(dateTime);
@@ -127,6 +163,12 @@ public class XmlDumper<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
         return time;
     }
 
+    /**
+     * Based on the given document, writes out an XML file to the name the dumper was
+     * instantiated with and transforms the document with necessary keys.
+     * @param document an XML document to be written
+     * @throws TransformerException if there was an error in configuring the transformer
+     */
     private void createXml(Document document) throws TransformerException {
         TransformerFactory transformerFactory = TransformerFactory.newInstance();
         Transformer transformer = transformerFactory.newTransformer();
