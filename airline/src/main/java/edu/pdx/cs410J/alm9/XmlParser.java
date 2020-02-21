@@ -4,6 +4,7 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.ParserConfigurationException;
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.text.ParseException;
 import java.util.ArrayList;
@@ -34,7 +35,10 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
             for (var flight : flights)
                 airline.addFlight(flight);
 
-        } catch (Exception e) {
+        } catch (FileNotFoundException e) {
+            return null;
+        }
+        catch (Exception e) {
             throw new ParserException(e.getMessage());
         }
 
@@ -43,6 +47,11 @@ public class XmlParser<T extends AbstractAirline<Q>, Q extends AbstractFlight> i
 
     private Document createDocument() throws IOException, SAXException, ParserConfigurationException {
         File in = new File(fileName);
+
+        if (!in.isFile()) {
+            throw new FileNotFoundException();
+        }
+
         DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
         DocumentBuilder builder = factory.newDocumentBuilder();
         Document document = builder.parse(in);

@@ -15,6 +15,12 @@ public class XmlParserTest {
         parser.parse();
     }
 
+    @Test
+    public void nonexistentFileDoesNotThrowError() throws ParserException {
+        XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"does-not-exist.xml");
+        parser.parse();
+    }
+
     @Test (expected = ParserException.class)
     public void parserThrowsExceptionForInvalidFIle() throws ParserException {
         XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(prefix+"invalid-airline.xml");
