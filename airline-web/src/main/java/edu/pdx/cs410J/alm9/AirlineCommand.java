@@ -25,8 +25,9 @@ public class AirlineCommand {
     private static final List<String> validOptions = Arrays.asList(
             "-README",
             "-print",
-            "-textFile",
-            "-pretty"
+            "-host",
+            "-port",
+            "-search"
     );
 
     /**
@@ -53,9 +54,6 @@ public class AirlineCommand {
         InputModel model = parseArgs(arguments);
         model.options = options;
 
-        if (options.contains("-textFile"))
-            compareFileName(model);
-
         return model;
     }
 
@@ -70,7 +68,7 @@ public class AirlineCommand {
         ArrayList<String> options = new ArrayList<>();
 
         for (var i = 0; i < input.length; i++) {
-            if (input[i].contains("-textFile") || input[i].contains("-pretty") || input[i].contains("-xmlFile")) {
+            if (input[i].contains("-host") || input[i].contains("-port")) {
                 options.add(input[i]);
                 options.add(input[i + 1]);
             } else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
@@ -78,9 +76,6 @@ public class AirlineCommand {
             } else if (input[i].startsWith("-") && input[i].length() > 1)
                 throw new IllegalArgumentException("Unknown command line option");
         }
-
-        if (options.contains("-textFile") && options.contains("-xmlFile"))
-            throw new IllegalArgumentException("Cannot specify both XML and text file I/O");
 
         return options;
     }
@@ -218,32 +213,5 @@ public class AirlineCommand {
 
         if (departs.after(arrives))
             throw new IllegalArgumentException("Arrival time cannot come before departure time");
-    }
-
-    /**
-     * Checks that the airline name matches the one in the indicated file
-     * @param model contains the parsed and checked user input
-     * @throws IllegalArgumentException if the names do not match
-     */
-    public static void compareFileName(InputModel model) {
-        String airline = null;
-
-        try {
-            int fileIndex = model.options.indexOf("-textFile")+1;
-            String fileName = model.options.get(fileIndex);
-            File file = new File(fileName);
-            Scanner reader = new Scanner(file);
-
-            if (reader.hasNextLine())
-                airline = reader.nextLine();
-
-            reader.close();
-
-        } catch (Exception e) {
-            return;
-        }
-
-        if (!airline.equals(model.airline))
-            throw new IllegalArgumentException("Airline name does not match file contents");
     }
 }

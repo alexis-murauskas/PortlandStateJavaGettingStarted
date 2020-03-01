@@ -48,8 +48,18 @@ public class AirlineRestClient extends HttpRequestHelper {
         return response.getContent();
     }
 
-    public void postAirline(String name, int flightNumber ) {
+    public void postAirline(InputModel input) throws IOException {
+        Response response = postToMyURL(Map.of
+                (
+                        "airline", input.airline,
+                        "flightNumber", input.flightNumber,
+                        "src", input.source,
+                        "depart", input.departureTime,
+                        "dest", input.destination,
+                        "arrive", input.arrivalTime
+                ));
 
+        throwExceptionIfNotOkayHttpStatus(response);
     }
 
 
