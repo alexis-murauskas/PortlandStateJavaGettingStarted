@@ -1,6 +1,4 @@
-package edu.pdx.cs410J.alm9.Converter;
-
-import edu.pdx.cs410J.alm9.*;
+package edu.pdx.cs410J.alm9;
 
 public class Converter {
 
