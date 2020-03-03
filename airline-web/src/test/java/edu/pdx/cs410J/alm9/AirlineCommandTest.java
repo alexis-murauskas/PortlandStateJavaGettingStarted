@@ -11,6 +11,10 @@ import static org.hamcrest.MatcherAssert.assertThat;
 public class AirlineCommandTest {
 
     private static String[] input = new String[]{
+            "-host",
+            "localhost",
+            "-port",
+            "8080",
             "-README",
             "Airline",
             "1",
@@ -25,6 +29,10 @@ public class AirlineCommandTest {
     };
 
     private static String[] inputWithoutOptions = new String[]{
+            "-host",
+            "localhost",
+            "-port",
+            "8080",
             "Airline",
             "1",
             "PDX",
@@ -38,6 +46,10 @@ public class AirlineCommandTest {
     };
 
     private static String[] inputWithQuotes = new String[]{
+            "-host",
+            "localhost",
+            "-port",
+            "8080",
             "-README",
             "'Airline",
             "Name'",
@@ -53,6 +65,10 @@ public class AirlineCommandTest {
     };
 
     private static String[] badInput = new String[]{
+            "-host",
+            "localhost",
+            "-port",
+            "8080",
             "-README",
             "'Airline",
             "Name",
@@ -84,9 +100,9 @@ public class AirlineCommandTest {
     }
 
     @Test
-    public void inputWithoutOptionsReturnsEmptyOptionsInModel() throws ParseException {
+    public void inputWithoutAdditionalOptionsReturnsEmptyOptionsInModel() throws ParseException {
         InputModel rv = AirlineCommand.parse(inputWithoutOptions);
-        assertThat(rv.options, is(0));
+        assertThat(rv.options, is(4));
     }
 
     @Test
@@ -115,6 +131,10 @@ public class AirlineCommandTest {
     @Test (expected = NumberFormatException.class)
     public void flightNumberCantBeALetter() throws ParseException {
         String[] badFlight = new String[]{
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
                 "-README",
                 "Airline",
                 "q",
@@ -134,6 +154,10 @@ public class AirlineCommandTest {
     @Test (expected = IllegalArgumentException.class)
     public void unknownCommandLineArgument() throws ParseException {
         String[] badFlight = new String[]{
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
                 "-README",
                 "Airline",
                 "1",
@@ -160,6 +184,10 @@ public class AirlineCommandTest {
     @Test (expected = IllegalArgumentException.class)
     public void invalidAirportCodeThrowsException() throws ParseException {
         AirlineCommand.parse(new String[]{
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
                 "-README",
                 "Airline",
                 "1",
@@ -177,6 +205,10 @@ public class AirlineCommandTest {
     @Test (expected = ParseException.class)
     public void invalidDateTimeThrowsException() throws ParseException {
         String[] badTime = new String[]{
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
                 "'Airline",
                 "Name'",
                 "1",
@@ -196,6 +228,10 @@ public class AirlineCommandTest {
     @Test
     public void validDateTimeWithMixedCase() throws ParseException {
         String[] args = new String[]{
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
                 "Project3",
                 "100",
                 "CVG",
@@ -237,6 +273,10 @@ public class AirlineCommandTest {
     @Test (expected = IllegalArgumentException.class)
     public void nonexistentAirportCodeThrowsException() throws ParseException {
         AirlineCommand.parse(new String[]{
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
                 "-README",
                 "Airline",
                 "1",

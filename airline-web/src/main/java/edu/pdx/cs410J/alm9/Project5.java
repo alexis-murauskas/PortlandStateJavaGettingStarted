@@ -35,16 +35,14 @@ public class Project5 {
         InputModel model = null;
         Airline<Flight> airline = null;
 
-        if (args == null) {
+        if (args == null || args.length < 2) {
             System.err.println("Missing command line arguments");
             System.exit(1);
         }
 
         // Attempt to parse input
         try {
-
             model = AirlineCommand.parse(args);
-
         } catch (NumberFormatException e) {
             System.err.println("Flight code isn't an integer");
             System.exit(1);
@@ -65,6 +63,11 @@ public class Project5 {
             System.exit(0);
         }
 
+        if (model.host == null || model.port <= 0) {
+            System.err.println("Missing command line arguments");
+            System.exit(1);
+        }
+
         AirlineRestClient client = new AirlineRestClient(model.host, model.port);
 
         // Print if requested
@@ -83,31 +86,6 @@ public class Project5 {
     {
         PrintStream err = System.err;
         err.println("** " + message);
-
-        System.exit(1);
-    }
-
-    /**
-     * Prints usage information for this program and exits
-     * @param message An error message to print
-     */
-    private static void usage( String message )
-    {
-        PrintStream err = System.err;
-        err.println("** " + message);
-        err.println();
-        err.println("usage: java Project5 host port [word] [definition]");
-        err.println("  host         Host of web server");
-        err.println("  port         Port of web server");
-        err.println("  word         Word in dictionary");
-        err.println("  definition   Definition of word");
-        err.println();
-        err.println("This simple program posts words and their definitions");
-        err.println("to the server.");
-        err.println("If no definition is specified, then the word's definition");
-        err.println("is printed.");
-        err.println("If no word is specified, all dictionary entries are printed");
-        err.println();
 
         System.exit(1);
     }

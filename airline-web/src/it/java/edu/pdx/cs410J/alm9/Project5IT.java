@@ -21,12 +21,12 @@ public class Project5IT extends InvokeMainTestCase {
     private static final String HOSTNAME = "localhost";
     private static final String PORT = System.getProperty("http.port", "8080");
 
-    /*@Test
+    @Test
     public void test1NoCommandLineArguments() {
         MainMethodResult result = invokeMain( Project5.class );
-        assertThat(result.getExitCode(), equalTo(0));
+        assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString(Project5.MISSING_ARGS));
-    }*/
+    }
 
     @Test
     public void test2EmptyServer() {

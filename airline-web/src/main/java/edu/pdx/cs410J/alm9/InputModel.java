@@ -7,8 +7,8 @@ public class InputModel {
     public boolean print;
     public boolean search;
 
-    public String host = "localhost";
-    public int port = 8080;
+    public String host;
+    public int port;
 
     public String airline;
     public String flightNumber;
