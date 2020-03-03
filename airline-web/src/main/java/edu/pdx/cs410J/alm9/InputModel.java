@@ -6,6 +6,7 @@ public class InputModel {
     public boolean readme;
     public boolean print;
     public boolean search;
+    public boolean getAirline;
 
     public String host;
     public int port;

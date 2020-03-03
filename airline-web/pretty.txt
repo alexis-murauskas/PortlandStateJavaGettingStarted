@@ -1,5 +1,0 @@
-*** 'Airline Name' ***
-
-1 PDX 2/4/20 11:00 AM ABQ 2/4/20 2:00 PM (180 mins)
-2 PDX 2/5/20 11:00 AM ABQ 2/5/20 3:00 PM (240 mins)
-3 PDX 2/6/20 11:00 AM ABQ 2/6/20 4:43 PM (343 mins)

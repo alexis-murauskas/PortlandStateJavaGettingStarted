@@ -128,6 +128,11 @@ public class AirlineCommand {
         String[] args = trimArguments(airline.size(), input);
         model.airline = stringifyList(airline);
 
+        if (args.length == 0) {
+            model.getAirline = true;
+            return model;
+        }
+
         String departs = (args[DEPART] + " " + args[DTIME] + " " + args[DPRD]).toUpperCase();
         String arrives = (args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]).toUpperCase();
 

@@ -3,6 +3,8 @@ package edu.pdx.cs410J.alm9;
 import com.google.common.annotations.VisibleForTesting;
 import edu.pdx.cs410J.web.HttpRequestHelper;
 
+import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Map;
 
@@ -33,7 +35,13 @@ public class AirlineRestClient extends HttpRequestHelper {
     public String getAirline(String name) throws IOException {
         Response response = get(this.url, Map.of("airline", name));
         throwExceptionIfNotOkayHttpStatus(response);
-        return response.getContent();
+
+        File file = new File("return.xml");
+        file.createNewFile();
+        FileWriter writer = new FileWriter(file);
+        writer.write(response.getContent());
+
+        return "return.xml";
     }
 
     public String getAirline(String name, String src, String dest) throws IOException {
@@ -45,7 +53,12 @@ public class AirlineRestClient extends HttpRequestHelper {
                 ));
 
         throwExceptionIfNotOkayHttpStatus(response);
-        return response.getContent();
+
+        File file = new File("return.xml");
+        file.createNewFile();
+        FileWriter writer = new FileWriter(file);
+        writer.write(response.getContent());
+        return "return.xml";
     }
 
     public void postAirline(InputModel input) throws IOException {

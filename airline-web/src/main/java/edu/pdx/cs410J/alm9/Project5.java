@@ -33,7 +33,6 @@ public class Project5 {
 
     public static void main(String... args) {
         InputModel model = null;
-        Airline<Flight> airline = null;
 
         if (args == null || args.length < 2) {
             System.err.println("Missing command line arguments");
@@ -68,25 +67,34 @@ public class Project5 {
             System.exit(1);
         }
 
-        AirlineRestClient client = new AirlineRestClient(model.host, model.port);
-
-        // Print if requested
         try {
-            if (model.print)
-                System.out.println("flights");
+            AirlineRestClient client = new AirlineRestClient(model.host, model.port);
+
+            if (model.search) {
+                var file = client.getAirline(model.airline, model.source, model.destination);
+                XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(file);
+                PrettyPrinter<Airline<Flight>, Flight> printer = new PrettyPrinter<>("-");
+                printer.dump(parser.parse());
+            }
+            else if (model.getAirline) {
+                var file = client.getAirline(model.airline);
+                XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(file);
+                PrettyPrinter<Airline<Flight>, Flight> printer = new PrettyPrinter<>("-");
+                printer.dump(parser.parse());
+            }
+            else {
+                /*client.postAirline(model);*/
+            }
+
+            if (model.print) {
+                var airline = client.getAirline(model.airline);
+                System.out.println(airline);
+            }
         } catch (Exception e) {
-            System.err.println("Missing command line arguments");
+            System.err.println(e.getMessage());
             System.exit(1);
         }
 
         System.exit(0);
-    }
-
-    private static void error( String message )
-    {
-        PrintStream err = System.err;
-        err.println("** " + message);
-
-        System.exit(1);
     }
 }
