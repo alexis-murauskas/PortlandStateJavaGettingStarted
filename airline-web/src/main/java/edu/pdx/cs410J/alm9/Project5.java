@@ -32,13 +32,8 @@ public class Project5 {
             "-README Prints a README for this project and exits";
 
     public static void main(String... args) {
-        String hostName = null;
-        String portString = null;
-        String word = null;
-        String definition = null;
         InputModel model = null;
         Airline<Flight> airline = null;
-        String fileName = null;
 
         if (args == null) {
             System.err.println("Missing command line arguments");
@@ -65,42 +60,16 @@ public class Project5 {
         }
 
         // Print README and exit
-        if (model.options.contains("-README")) {
+        if (model.readme) {
             System.out.println(readme);
             System.exit(0);
         }
 
-        for (String arg : args) {
-            if (hostName == null) {
-                hostName = arg;
-
-            } else if ( portString == null) {
-                portString = arg;
-
-            }
-        }
-
-        if (hostName == null) {
-            usage( MISSING_ARGS );
-
-        } else if ( portString == null) {
-            usage( "Missing port" );
-        }
-
-        int port;
-        try {
-            port = Integer.parseInt( portString );
-
-        } catch (NumberFormatException ex) {
-            usage("Port \"" + portString + "\" must be an integer");
-            return;
-        }
-
-        AirlineRestClient client = new AirlineRestClient(hostName, port);
+        AirlineRestClient client = new AirlineRestClient(model.host, model.port);
 
         // Print if requested
         try {
-            if (model.options.contains("-print"))
+            if (model.print)
                 System.out.println("flights");
         } catch (Exception e) {
             System.err.println("Missing command line arguments");

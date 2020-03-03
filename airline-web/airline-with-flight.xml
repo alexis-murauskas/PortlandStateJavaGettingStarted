@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?><!DOCTYPE airline SYSTEM "http://www.cs.pdx.edu/~whitlock/dtds/airline.dtd">
+<airline><name>Airline</name><flight><number>1</number><src>PDX</src><depart><date day="11" month="10" year="1111"/><time hour="11" minute="11"/></depart><dest>ABQ</dest><arrive><date day="12" month="11" year="1212"/><time hour="12" minute="12"/></arrive></flight></airline>

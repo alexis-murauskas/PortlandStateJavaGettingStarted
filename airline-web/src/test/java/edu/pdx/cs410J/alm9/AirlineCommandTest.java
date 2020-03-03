@@ -80,13 +80,13 @@ public class AirlineCommandTest {
     @Test
     public void inputWithOptionsReturnsSameOptionsInModel() throws ParseException {
         InputModel rv = AirlineCommand.parse(new String[]{"-README"});
-        assertThat(rv.options.contains("-README"), is(true));
+        assertThat(rv.options, is(1));
     }
 
     @Test
     public void inputWithoutOptionsReturnsEmptyOptionsInModel() throws ParseException {
         InputModel rv = AirlineCommand.parse(inputWithoutOptions);
-        assertThat(rv.options.isEmpty(), is(true));
+        assertThat(rv.options, is(0));
     }
 
     @Test

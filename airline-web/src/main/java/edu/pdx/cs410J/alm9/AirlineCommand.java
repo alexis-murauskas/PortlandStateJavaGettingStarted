@@ -7,6 +7,7 @@ import java.text.ParseException;
 import java.time.format.DateTimeParseException;
 import java.util.*;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class AirlineCommand {
     private static final int AIRLINE = 0;
@@ -25,9 +26,9 @@ public class AirlineCommand {
     private static final List<String> validOptions = Arrays.asList(
             "-README",
             "-print",
+            "-search",
             "-host",
-            "-port",
-            "-search"
+            "-port"
     );
 
     /**
@@ -48,11 +49,11 @@ public class AirlineCommand {
      * @throws NumberFormatException          if the Flight Code is not numerical
      */
     public static InputModel parse(String[] input) throws ParseException {
-        ArrayList<String> options = parseOptions(input);
-        String[] arguments = trimArguments(options, input);
+        InputModel model = new InputModel();
+        model = parseOptions(model, input);
+        String[] arguments = trimArguments(model.options, input);
 
-        InputModel model = parseArgs(arguments);
-        model.options = options;
+        model = parseArgs(model, arguments);
 
         return model;
     }
@@ -64,32 +65,52 @@ public class AirlineCommand {
      * @param input User input that has been forwarded by Parse.
      * @return A list of extracted options to be placed into the InputModel.
      */
-    private static ArrayList<String> parseOptions(String[] input) {
-        ArrayList<String> options = new ArrayList<>();
+    private static InputModel parseOptions(InputModel model, String[] input) {
+        int count = 0;
+        var in = Arrays.asList(input);
 
-        for (var i = 0; i < input.length; i++) {
-            if (input[i].contains("-host") || input[i].contains("-port")) {
-                options.add(input[i]);
-                options.add(input[i + 1]);
-            } else if (input[i].startsWith("-") && validOptions.contains(input[i])) {
-                options.add(input[i]);
-            } else if (input[i].startsWith("-") && input[i].length() > 1)
-                throw new IllegalArgumentException("Unknown command line option");
+        for (String option : validOptions) {
+            boolean inputContains = in.contains(option);
+            int position = in.indexOf(option);
+
+            if (inputContains) {
+                ++count;
+                switch (validOptions.indexOf(option)) {
+                    case 0:
+                        model.readme = true;
+                        break;
+                    case 1:
+                        model.print = true;
+                        break;
+                    case 2:
+                        model.search = true;
+                        break;
+                    case 3:
+                        model.host = input[position + 1];
+                        ++count;
+                        break;
+                    case 4:
+                        model.port = Integer.parseInt(input[position + 1]);
+                        ++count;
+                        break;
+                }
+            }
         }
 
-        return options;
+        model.options = count;
+        return model;
     }
 
     /**
      * Trims arguments that have already been evaluated by the parser. This is intended for use with
      * extracting items of variable length, such as options and the Airline Name.
      *
-     * @param toRemove A list of already evaluated items.
-     * @param input    Current array of user input.
+     * @param size  Size of sub-list to be removed
+     * @param input Current array of user input.
      * @return User input with already evaluated arguments removed.
      */
-    private static String[] trimArguments(ArrayList<String> toRemove, String[] input) {
-        return Arrays.copyOfRange(input, toRemove.size(), input.length);
+    private static String[] trimArguments(int size, String[] input) {
+        return Arrays.copyOfRange(input, size, input.length);
     }
 
     /**
@@ -99,29 +120,34 @@ public class AirlineCommand {
      * @param input Current array of user input, possibly with options removed.
      * @return If all input items pass checks, an InputModel with the items included will be returned.
      */
-    private static InputModel parseArgs(String[] input) throws ParseException {
-        InputModel model = new InputModel();
-
+    private static InputModel parseArgs(InputModel model, String[] input) throws ParseException {
         if (input.length == 0)
             return model;
 
         ArrayList<String> airline = parseAirline(input);
-        String[] args = trimArguments(airline, input);
+        String[] args = trimArguments(airline.size(), input);
         model.airline = stringifyList(airline);
 
         String departs = (args[DEPART] + " " + args[DTIME] + " " + args[DPRD]).toUpperCase();
         String arrives = (args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]).toUpperCase();
 
-        model.flightNumber = checkFlight(args[FLIGHT]);
-        model.source = checkAirportCode(args[SRC]);
-        model.departureTime = checkDateTime(departs);
-        model.destination = checkAirportCode(args[DEST]);
-        model.arrivalTime = checkDateTime(arrives);
+        int max = APRD + 1;
+        if (model.search) {
+            model.source = checkAirportCode(args[0]);
+            model.destination = checkAirportCode(args[1]);
+            max = 2;
+        }
+        else {
+            model.flightNumber = checkFlight(args[FLIGHT]);
+            model.source = checkAirportCode(args[SRC]);
+            model.departureTime = checkDateTime(departs);
+            model.destination = checkAirportCode(args[DEST]);
+            model.arrivalTime = checkDateTime(arrives);
+            compareDepartureArrivalTimes(model.departureTime, model.arrivalTime);
+        }
 
-        if (args.length > APRD + 1)
+        if (args.length > max)
             throw new IllegalArgumentException("Unknown command line argument");
-
-        compareDepartureArrivalTimes(model.departureTime, model.arrivalTime);
 
         return model;
     }
@@ -182,7 +208,7 @@ public class AirlineCommand {
             throw new IllegalArgumentException("Airport code is too short");
         if (input.matches("[A-Za-z]]+"))
             throw new IllegalArgumentException("Airport code has number");
-        if(AirportNames.getName(input) == null)
+        if (AirportNames.getName(input) == null)
             throw new IllegalArgumentException("Airport code does not match a known airport");
 
         return input;
@@ -202,9 +228,10 @@ public class AirlineCommand {
 
     /**
      * Checks if the departure time comes before arrival time
+     *
      * @param departure string input representing the departure time
-     * @param arrival string input representing the arrival time
-     * @throws ParseException if parsing is unsuccessful with the dates
+     * @param arrival   string input representing the arrival time
+     * @throws ParseException           if parsing is unsuccessful with the dates
      * @throws IllegalArgumentException if departure is after arrival
      */
     public static void compareDepartureArrivalTimes(String departure, String arrival) throws ParseException {
