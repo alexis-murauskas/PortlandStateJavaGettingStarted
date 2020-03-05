@@ -31,6 +31,6 @@ public class Project5IT extends InvokeMainTestCase {
     @Test
     public void test2EmptyServer() {
         MainMethodResult result = invokeMain( Project5.class, "-host", HOSTNAME, "-port", PORT );
-        assertThat(result.getExitCode(), equalTo(0));
+        assertThat(result.getExitCode(), equalTo(1));
     }
 }

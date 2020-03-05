@@ -1,11 +1,7 @@
 package edu.pdx.cs410J.alm9;
 
-import java.io.IOException;
-import java.io.PrintStream;
-import java.io.PrintWriter;
-import java.io.StringWriter;
+import java.rmi.NoSuchObjectException;
 import java.text.ParseException;
-import java.util.Map;
 
 /**
  * The main class that parses the command line and communicates with the
@@ -69,28 +65,33 @@ public class Project5 {
 
         try {
             AirlineRestClient client = new AirlineRestClient(model.host, model.port);
+            String file = null;
 
+            // Call API
             if (model.search) {
-                var file = client.getAirline(model.airline, model.source, model.destination);
-                XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(file);
-                PrettyPrinter<Airline<Flight>, Flight> printer = new PrettyPrinter<>("-");
-                printer.dump(parser.parse());
+                file = client.getAirline(model.airline, model.source, model.destination);
             }
             else if (model.getAirline) {
-                var file = client.getAirline(model.airline);
+                file = client.getAirline(model.airline);
+            }
+            else if (!model.flightNumber.isEmpty()) {
+                client.postAirline(model);
+            }
+
+            // Print get response
+            if (file != null && (model.search || model.getAirline)) {
                 XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(file);
                 PrettyPrinter<Airline<Flight>, Flight> printer = new PrettyPrinter<>("-");
                 printer.dump(parser.parse());
             }
-            else {
-                /*client.postAirline(model);*/
-            }
 
+            // Print given airline
             if (model.print) {
                 var airline = client.getAirline(model.airline);
                 System.out.println(airline);
             }
-        } catch (Exception e) {
+        }
+        catch (Exception e) {
             System.err.println(e.getMessage());
             System.exit(1);
         }

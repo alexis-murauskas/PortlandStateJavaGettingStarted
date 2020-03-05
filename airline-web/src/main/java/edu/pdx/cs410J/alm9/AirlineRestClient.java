@@ -6,8 +6,10 @@ import edu.pdx.cs410J.web.HttpRequestHelper;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.rmi.NoSuchObjectException;
 import java.util.Map;
 
+import static java.net.HttpURLConnection.HTTP_NOT_FOUND;
 import static java.net.HttpURLConnection.HTTP_OK;
 
 /**
@@ -34,6 +36,9 @@ public class AirlineRestClient extends HttpRequestHelper {
 
     public String getAirline(String name) throws IOException {
         Response response = get(this.url, Map.of("airline", name));
+        if (response.getCode() == HTTP_NOT_FOUND)
+            return null;
+
         throwExceptionIfNotOkayHttpStatus(response);
 
         File file = new File("return.xml");
@@ -51,6 +56,9 @@ public class AirlineRestClient extends HttpRequestHelper {
                         "src", src,
                         "dest,", dest
                 ));
+
+        if (response.getCode() == HTTP_NOT_FOUND)
+            return null;
 
         throwExceptionIfNotOkayHttpStatus(response);
 
@@ -81,47 +89,21 @@ public class AirlineRestClient extends HttpRequestHelper {
         return post(this.url, dictionaryEntries);
     }
 
-    public void removeAllDictionaryEntries() throws IOException {
-        Response response = delete(this.url, Map.of());
-        throwExceptionIfNotOkayHttpStatus(response);
-    }
-
     private Response throwExceptionIfNotOkayHttpStatus(Response response) {
         int code = response.getCode();
+        if (code == HTTP_NOT_FOUND) {
+            return response;
+        }
         if (code != HTTP_OK) {
-            throw new AirlineRestException(code);
+            throw new AirlineRestException(code + " " + "\nException: " + response.getContent());
         }
         return response;
     }
 
     @VisibleForTesting
     class AirlineRestException extends RuntimeException {
-        AirlineRestException(int httpStatusCode) {
-            super("Got an HTTP Status Code of " + httpStatusCode);
+        AirlineRestException(String message) {
+            super("Got an HTTP Status Code of " + message);
         }
-    }
-
-
-    /**
-     * Returns all dictionary entries from the server
-     */
-    public Map<String, String> getAllDictionaryEntries() throws IOException {
-        Response response = get(this.url, Map.of());
-        return Messages.parseDictionary(response.getContent());
-    }
-
-    /**
-     * Returns the definition for the given word
-     */
-    public String getDefinition(String word) throws IOException {
-        Response response = get(this.url, Map.of("word", word));
-        throwExceptionIfNotOkayHttpStatus(response);
-        String content = response.getContent();
-        return Messages.parseDictionaryEntry(content).getValue();
-    }
-
-    public void addDictionaryEntry(String word, String definition) throws IOException {
-        Response response = postToMyURL(Map.of("word", word, "definition", definition));
-        throwExceptionIfNotOkayHttpStatus(response);
     }
 }

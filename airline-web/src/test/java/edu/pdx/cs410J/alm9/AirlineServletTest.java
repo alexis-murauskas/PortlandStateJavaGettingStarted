@@ -18,4 +18,9 @@ import static org.mockito.Mockito.*;
  */
 public class AirlineServletTest {
 
+    @Test
+    public void canCreateServlet() {
+        new AirlineServlet();
+    }
+
 }

@@ -12,10 +12,7 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 /**
@@ -64,12 +61,18 @@ public class AirlineServlet extends HttpServlet {
                 for (var flight : flights) {
                     found.addFlight(flight);
                 }
-            }
 
-            dumpAirline(found, response);
+                dumpAirline(found, response);
+            }
+            else if (found != null) {
+                dumpAirline(found, response);
+            }
+            else {
+                notFoundResponse(response);
+            }
         }
         catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+            errorResponse(response, e);
         }
     }
 
@@ -110,7 +113,7 @@ public class AirlineServlet extends HttpServlet {
             dumpAirline(found, response);
         }
         catch (Exception e) {
-            response.sendError(HttpServletResponse.SC_BAD_REQUEST, e.getMessage());
+            errorResponse(response, e);
         }
     }
 
@@ -135,6 +138,18 @@ public class AirlineServlet extends HttpServlet {
         pw.flush();
 
         response.setStatus(HttpServletResponse.SC_OK);
+    }
+
+    private void notFoundResponse(HttpServletResponse response) {
+        response.setStatus(HttpServletResponse.SC_NOT_FOUND);
+    }
+
+    private void errorResponse(HttpServletResponse response, Exception e) throws IOException {
+        var pw = response.getWriter();
+        pw.write(String.valueOf(e.getStackTrace()));
+        pw.flush();
+
+        response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
     }
 
     /**
