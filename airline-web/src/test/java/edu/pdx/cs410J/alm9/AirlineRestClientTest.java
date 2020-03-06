@@ -8,4 +8,9 @@ public class AirlineRestClientTest {
     public void canCreateClient() {
         new AirlineRestClient("localhost", 8080);
     }
+
+    @Test (expected = AirlineRestException.class)
+    public void canThrowAirlineException() {
+        throw new AirlineRestException("");
+    }
 }

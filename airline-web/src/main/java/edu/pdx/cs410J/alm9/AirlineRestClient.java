@@ -99,11 +99,5 @@ public class AirlineRestClient extends HttpRequestHelper {
         }
         return response;
     }
-
-    @VisibleForTesting
-    class AirlineRestException extends RuntimeException {
-        AirlineRestException(String message) {
-            super("Got an HTTP Status Code of " + message);
-        }
-    }
 }
+
