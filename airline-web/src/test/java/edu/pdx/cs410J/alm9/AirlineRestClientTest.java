@@ -1,8 +1,9 @@
 package edu.pdx.cs410J.alm9;
 
+import edu.pdx.cs410J.InvokeMainTestCase;
 import org.junit.Test;
 
-public class AirlineRestClientTest {
+public class AirlineRestClientTest extends InvokeMainTestCase {
 
     @Test
     public void canCreateClient() {
@@ -13,4 +14,5 @@ public class AirlineRestClientTest {
     public void canThrowAirlineException() {
         throw new AirlineRestException("");
     }
+
 }

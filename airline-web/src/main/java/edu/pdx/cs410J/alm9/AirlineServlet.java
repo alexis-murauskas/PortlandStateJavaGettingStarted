@@ -1,8 +1,5 @@
 package edu.pdx.cs410J.alm9;
 
-import com.google.common.annotations.VisibleForTesting;
-import edu.pdx.cs410J.web.HttpRequestHelper;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -12,8 +9,6 @@ import java.io.PrintWriter;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * This servlet ultimately provides a REST API for working with an
@@ -29,7 +24,17 @@ public class AirlineServlet extends HttpServlet {
     public final static String DEST = "dest";
     public final static String ARRIVE = "arrive";
 
-    private List<Airline<Flight>> airlines = new ArrayList<>();
+    private AirlineController controller;
+
+    public AirlineServlet(){
+        super();
+        this.controller = new AirlineController();
+    }
+
+    public AirlineServlet(AirlineController controller){
+        super();
+        this.controller = controller;
+    }
 
     /**
      * Handles an HTTP GET request from a client by writing the definition of the
@@ -38,7 +43,7 @@ public class AirlineServlet extends HttpServlet {
      * are written to the HTTP response.
      */
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException {
         response.setContentType("text/plain");
         var airline = getParameter(AIRLINE, request);
         var src = getParameter(SRC, request);
@@ -50,21 +55,15 @@ public class AirlineServlet extends HttpServlet {
         }
 
         try {
-            var found = findAirline(airline);
-
-            if (found != null && src != null && dest != null) {
-                var flights = found.getFlights().stream()
-                        .filter(f -> f.getSource().equals(src) && f.getDestination().equals(dest))
-                        .collect(Collectors.toList());
-
-                found = new Airline<>(airline);
-                for (var flight : flights) {
-                    found.addFlight(flight);
-                }
-
-                dumpAirline(found, response);
+            Airline<Flight> found;
+            if (src != null && dest != null) {
+                found = controller.findAirline(airline, src, dest);
             }
-            else if (found != null) {
+            else {
+                found = controller.findAirline(airline);
+            }
+
+            if (found != null) {
                 dumpAirline(found, response);
             }
             else {
@@ -84,18 +83,22 @@ public class AirlineServlet extends HttpServlet {
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         response.setContentType("text/plain");
-        var airline = getParameter(AIRLINE, request);
-        var flightNo = getParameter(FLIGHT_NO, request);
-        var src = getParameter(SRC, request);
-        var depart = getParameter(DEPART, request);
-        var dest = getParameter(DEST, request);
-        var arrive = getParameter(ARRIVE, request);
-        SimpleDateFormat formatter = Flight.PARSEFORMAT;
 
         try {
-            var found = findAirline(airline);
-            if (found == null)
+            var airline = getParameter(AIRLINE, request);
+            var flightNo = getParameter(FLIGHT_NO, request);
+            var src = getParameter(SRC, request);
+            var depart = getParameter(DEPART, request);
+            var dest = getParameter(DEST, request);
+            var arrive = getParameter(ARRIVE, request);
+            SimpleDateFormat formatter = Flight.PARSEFORMAT;
+            var add = false;
+
+            var found = controller.findAirline(airline);
+            if (found == null) {
                 found = new Airline<>(airline);
+                add = true;
+            }
 
             var toAdd = new Flight(
                     Integer.parseInt(flightNo),
@@ -107,25 +110,14 @@ public class AirlineServlet extends HttpServlet {
 
             found.addFlight(toAdd);
 
-            if (!airlines.contains(found))
-                airlines.add(found);
+            if (add)
+                controller.addAirline(found);
 
             dumpAirline(found, response);
         }
         catch (Exception e) {
             errorResponse(response, e);
         }
-    }
-
-    private Airline<Flight> findAirline(String name) {
-        var rv = airlines.stream()
-                .filter(a -> a.getName().equals(name))
-                .findAny();
-
-        if (rv.isPresent())
-            return rv.get();
-
-        return null;
     }
 
     private void dumpAirline(Airline<Flight> airline, HttpServletResponse response) throws IOException {

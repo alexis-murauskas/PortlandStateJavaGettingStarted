@@ -239,4 +239,64 @@ public class Project5IT extends InvokeMainTestCase {
         assertThat(result.getExitCode(), equalTo(1));
         assertThat(result.getTextWrittenToStandardError(), containsString("Time is malformatted"));
     }
+
+    @Test
+    public void testGetAirline() {
+        MainMethodResult result = invokeMain(
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
+                "Airline"
+        );
+        
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void testSearchAirline() {
+        MainMethodResult result = invokeMain(
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
+                "-search",
+                "Airline",
+                "PDX",
+                "ABQ"
+        );
+
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void testGetAirlineWithLongName() {
+        MainMethodResult result = invokeMain(
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
+                "'Airline",
+                "Name'"
+        );
+
+        assertThat(result.getExitCode(), equalTo(0));
+    }
+
+    @Test
+    public void testSearchAirlineWithLongName() {
+        MainMethodResult result = invokeMain(
+                "-host",
+                "localhost",
+                "-port",
+                "8080",
+                "-search",
+                "'Airline",
+                "Name'",
+                "PDX",
+                "ABQ"
+        );
+
+        assertThat(result.getExitCode(), equalTo(0));
+    }
 }

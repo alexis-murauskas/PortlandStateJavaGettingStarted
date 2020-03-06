@@ -75,20 +75,23 @@ public class Project5 {
                 file = client.getAirline(model.airline);
             }
             else if (!model.flightNumber.isEmpty()) {
-                client.postAirline(model);
+                file = client.postAirline(model);
             }
+
+
+            PrettyPrinter<Airline<Flight>, Flight> printer = new PrettyPrinter<>("-");
 
             // Print get response
             if (file != null && (model.search || model.getAirline)) {
                 XmlParser<Airline<Flight>, Flight> parser = new XmlParser<>(file);
-                PrettyPrinter<Airline<Flight>, Flight> printer = new PrettyPrinter<>("-");
                 printer.dump(parser.parse());
             }
 
-            // Print given airline
+            // Print new flight
             if (model.print) {
-                var airline = client.getAirline(model.airline);
-                System.out.println(airline);
+                var airline = new Airline<Flight>(model.airline);
+                airline.addFlight(model);
+                printer.dump(airline);
             }
         }
         catch (Exception e) {

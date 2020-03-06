@@ -86,4 +86,9 @@ public class AirlineRestClientIT {
 
         client.postAirline(post);
     }
+
+    @Test
+    public void doNothing() {
+
+    }
 }

@@ -133,9 +133,6 @@ public class AirlineCommand {
             return model;
         }
 
-        String departs = (args[DEPART] + " " + args[DTIME] + " " + args[DPRD]).toUpperCase();
-        String arrives = (args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]).toUpperCase();
-
         int max = APRD + 1;
         if (model.search) {
             model.source = checkAirportCode(args[0]);
@@ -143,6 +140,8 @@ public class AirlineCommand {
             max = 2;
         }
         else {
+            var departs = (args[DEPART] + " " + args[DTIME] + " " + args[DPRD]).toUpperCase();
+            var arrives = (args[ARRIVE] + " " + args[ATIME] + " " + args[APRD]).toUpperCase();
             model.flightNumber = checkFlight(args[FLIGHT]);
             model.source = checkAirportCode(args[SRC]);
             model.departureTime = checkDateTime(departs);

@@ -69,7 +69,7 @@ public class AirlineRestClient extends HttpRequestHelper {
         return "return.xml";
     }
 
-    public void postAirline(InputModel input) throws IOException {
+    public String postAirline(InputModel input) throws IOException {
         Response response = postToMyURL(Map.of
                 (
                         "airline", input.airline,
@@ -81,6 +81,12 @@ public class AirlineRestClient extends HttpRequestHelper {
                 ));
 
         throwExceptionIfNotOkayHttpStatus(response);
+
+        File file = new File("return.xml");
+        file.createNewFile();
+        FileWriter writer = new FileWriter(file);
+        writer.write(response.getContent());
+        return "return.xml";
     }
 
 
